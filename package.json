@@ -1,0 +1,22 @@
+{
+  "name": "canine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngopal/canine.git"
+  },
+  "author": "Nikhil Gopal (http://www.nikhilgopal.com)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ngopal/canine/issues"
+  },
+  "homepage": "https://github.com/ngopal/canine#readme",
+  "dependencies": {
+    "d3": "^3.5.14"
+  }
+}
