@@ -370,6 +370,18 @@
         console.log(this.id);
     });
 
+    // Let's read in some data
+    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(error, data) {
+        if (error !== null) {
+            console.log(error);
+        }
+        else {
+            data.forEach(function(item) {
+                console.log(item);
+                console.log([item.GENETHON, Math.log10(item.High_Dose_SSAN_104)]);
+            });
+        }
+    });
 
 
 </script>
