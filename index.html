@@ -310,6 +310,9 @@
 
 <script src="node_modules/d3/d3.min.js"></script>
 <script src="node_modules/colorbrewer/colorbrewer.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery.tipsy/src/jquery.tipsy.js"></script>
+<link href="node_modules/jquery.tipsy/src/jquery.tipsy.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
     var color = d3.scale.category20();
@@ -380,6 +383,15 @@
                 console.log(item);
                 console.log([item.GENETHON, Math.log10(item.High_Dose_SSAN_104)]);
             });
+        }
+    });
+
+    // Adding tooltips
+    $('svg path').tipsy({
+        gravity: 'w',
+        html: true,
+        title: function() {
+            return '<span style="color:ghostwhite">' + this.id + '</span>';
         }
     });
 

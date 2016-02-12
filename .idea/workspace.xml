@@ -26,9 +26,12 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92671007">
-              <caret line="380" column="81" selection-start-line="380" selection-start-column="81" selection-end-line="380" selection-end-column="81" />
-              <folding />
+            <state vertical-scroll-proportion="0.6824104">
+              <caret line="392" column="27" selection-start-line="392" selection-start-column="27" selection-end-line="392" selection-end-column="27" />
+              <folding>
+                <marker date="1455313435000" expanded="true" signature="34470:34476" placeholder="..." />
+                <marker date="1455313435000" expanded="true" signature="34470:34486" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,8 +87,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="4" />
-    <option name="y" value="23" />
+    <option name="x" value="-1785" />
+    <option name="y" value="326" />
     <option name="width" value="1260" />
     <option name="height" value="734" />
   </component>
@@ -248,7 +251,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="23" width="1260" height="734" extended-state="0" />
+    <frame x="-1785" y="326" width="1260" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -336,9 +339,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92671007">
-          <caret line="380" column="81" selection-start-line="380" selection-start-column="81" selection-end-line="380" selection-end-column="81" />
-          <folding />
+        <state vertical-scroll-proportion="0.6824104">
+          <caret line="392" column="27" selection-start-line="392" selection-start-column="27" selection-end-line="392" selection-end-column="27" />
+          <folding>
+            <marker date="1455313435000" expanded="true" signature="34470:34476" placeholder="..." />
+            <marker date="1455313435000" expanded="true" signature="34470:34486" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
