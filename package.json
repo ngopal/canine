@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ngopal/canine#readme",
   "dependencies": {
-    "d3": "^3.5.14"
+    "colorbrewer": "^1.0.0",
+    "d3": "^3.5.15"
   }
 }

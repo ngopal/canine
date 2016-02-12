@@ -309,19 +309,67 @@
 
 
 <script src="node_modules/d3/d3.min.js"></script>
+<script src="node_modules/colorbrewer/colorbrewer.js"></script>
 <script type="text/javascript">
 
     var color = d3.scale.category20();
 
+    var ordinalRedColorScale = d3.scale.ordinal()
+            .domain([0,1])
+            .range(colorbrewer.Reds[9].reverse());
+
+    var faked_data = {"Liver": ["0.3184646", "0.5816115", "0.4499772"],
+                    "Spleen":["0.6817344", "ND", "0.2633045"],
+                    "Kidneys":["0.08333361", "ND", "ND"]};
+
+    var lookuptable = {
+        // Maps variable names in file to svg ids
+        "Liver": "liver",
+        "Spleen": "spleen",
+        "Kidneys": "kidney"
+    };
+
+    function average_data(fakedata) {
+        var hash_array_index_tracker = {};
+        Object.keys(fakedata).forEach(function (n) {
+            var denom = 1;
+            var sum = fakedata[n].reduce(function (previousValue, currentValue, currentIndex, array) {
+                var prevvalue = +previousValue;
+                var curvalue = +currentValue;
+                if (!isNaN(curvalue) & !isNaN(prevvalue)) {
+                    denom = denom + 1;
+                    return prevvalue + curvalue;
+                }
+                else {
+                    return prevvalue;
+                }
+            });
+            hash_array_index_tracker[ lookuptable[n] ] = sum / denom;
+        });
+        return hash_array_index_tracker;
+    }
+
+    var averagedfakedata = average_data(faked_data);
+
+
+
     var paths = d3
             .selectAll("path")
             .attr("fill", function(d,i) {
-                return color(Math.floor(Math.random()*20));
+                if (Object.keys(averagedfakedata).indexOf(this.id) !== -1) {
+                    console.log([this.id, averagedfakedata[this.id]]);
+					return ordinalRedColorScale(averagedfakedata[this.id]);
+                }
+                else {
+					return ordinalRedColorScale(1);
+                    //return color(Math.floor(Math.random() * 20));
+                }
             });
 
     paths.on("click", function(d) {
         console.log(this.id);
     });
+
 
 
 </script>
