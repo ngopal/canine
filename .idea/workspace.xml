@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="canine.iws" />
@@ -28,11 +26,11 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4869707">
-              <caret line="376" column="69" selection-start-line="376" selection-start-column="69" selection-end-line="376" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.0732899">
+              <caret line="373" column="52" selection-start-line="373" selection-start-column="52" selection-end-line="373" selection-end-column="52" />
               <folding>
-                <marker date="1455572349000" expanded="true" signature="34872:34878" placeholder="..." />
-                <marker date="1455572349000" expanded="true" signature="34872:34888" placeholder="..." />
+                <marker date="1455575878000" expanded="true" signature="35453:35459" placeholder="..." />
+                <marker date="1455575878000" expanded="true" signature="35453:35469" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -348,11 +346,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4869707">
-          <caret line="376" column="69" selection-start-line="376" selection-start-column="69" selection-end-line="376" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0732899">
+          <caret line="373" column="52" selection-start-line="373" selection-start-column="52" selection-end-line="373" selection-end-column="52" />
           <folding>
-            <marker date="1455572349000" expanded="true" signature="34872:34878" placeholder="..." />
-            <marker date="1455572349000" expanded="true" signature="34872:34888" placeholder="..." />
+            <marker date="1455575878000" expanded="true" signature="35453:35459" placeholder="..." />
+            <marker date="1455575878000" expanded="true" signature="35453:35469" placeholder="..." />
           </folding>
         </state>
       </provider>
