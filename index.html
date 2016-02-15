@@ -379,49 +379,84 @@
 
     var svgs = d3.selectAll("svg").attr("width", "100%").attr("height", "100%");
 
-    var paths = d3
-            .selectAll("path")
-            .attr("fill", function(d,i) {
-                if (Object.keys(averagedfakedata).indexOf(this.id) !== -1) {
-                    console.log([this.id, averagedfakedata[this.id]]);
-					return ordinalRedColorScale(averagedfakedata[this.id]);
-                }
-                else {
-					return ordinalRedColorScale(0);
-                    //return color(Math.floor(Math.random() * 20));
-                }
-            });
-
     var deepMuscleGroup = d3.select("#deep_muscle_group").style("opacity", 0.7);
     var organGroup = d3.select("#organ_group").style("opacity", 0.7);
     var middleMuscleGroup = d3.select("#middle_muscle_group").style("opacity", 0.7);
     var superficialMuscleGroup = d3.select("#superficial_muscle_group").style("opacity", 0.7);
 
-    paths.on("click", function(d) {
+    var paths = d3
+            .selectAll("path")
+            .attr("fill", function(d,i) {
+                if (Object.keys(averagedfakedata).indexOf(this.id) !== -1) {
+                    console.log([this.id, averagedfakedata[this.id]]);
+                    return ordinalRedColorScale(averagedfakedata[this.id]);
+                }
+                else {
+                    return ordinalRedColorScale(0);
+                    //return color(Math.floor(Math.random() * 20));
+                }
+            });
+
+    /*paths.on("click", function(d) {
         console.log(this.id);
-    });
+    });*/
 
     // Let's read in some data
+
+    var wbdata = [];
     d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(error, data) {
         if (error !== null) {
-            console.log(error);
+            alert(error);
         }
         else {
-            data.forEach(function(item) {
-                console.log(item);
-                console.log([item.GENETHON, Math.log10(item.High_Dose_SSAN_104)]);
-            });
+            //all code would need to be nested in here
+             wbdata = data;
+
+            var anatomyToSVGPart = {
+                "undefined" : [
+                    "TRI bra",
+                    "BI bra",
+                    "VL",
+                    "BI fem",
+                    "TA",
+                    "GA",
+                    "Paravert",
+                    "Interc",
+                    "Dia",
+                    "Heart RV",
+                    "Heart RA",
+                    "Heart LA",
+                    "Heart Papillary",
+                    "Bladder",
+                    "stomach"
+                ],
+                "heart" : "Heart LV",
+                "liver" : "Liver",
+                "lung" : "Lung",
+                "spleen" : "Spleen",
+                "kidney" : "Kidneys",
+                "brain" : "Brain"};
+
+            var paths = d3
+                    .selectAll("path")
+                    .attr("fill", function(d, i) {
+                        if (anatomyToSVGPart[this.id] !== undefined) {
+                            console.log([this.id, anatomyToSVGPart[this.id]])
+                        };
+                    });
+
+
         }
     });
 
     // Adding tooltips
-    $('svg path').tipsy({
+/*    $('svg path').tipsy({
         gravity: 'w',
         html: true,
         title: function() {
             return '<span style="color:ghostwhite">' + this.id + '</span>';
         }
-    });
+    });*/
 
 
 </script>
