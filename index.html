@@ -3,14 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>Canine Visualization</title>
+    <style>
+        .leftcontainer {
+            float: left;
+            clear: left;
+        }
+        .rightcontainer {
+            float: right;
+            clear: right;
+        }
+    </style>
 </head>
 <body>
-<table>
-    <tr>
-        <td>
+
+<div class="leftcontainer" id="chart1">
 <svg version="1.1" id="superficial_muscles" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1447 1179.1"
-	 enable-background="new 0 0 1447 1179.1" xml:space="preserve" width="100%" height="100%">
+	 enable-background="new 0 0 1447 1179.1" xml:space="preserve">
     			<image overflow="visible" width="6029" height="4913" xlink:href="svgs/VECTORS_SUPERFICIAL_MUSCLES.png"  transform="matrix(0.24 0 0 0.24 -1.421255e-03 -1.208173e-03)">
 		</image>
      <g id="superficial_muscle_group">
@@ -110,12 +119,12 @@
 			c-2.1-5.6-5.3-15.8-1-20.4C1084.2,641,1086.2,641,1088.2,640.1z"/>
      </g>
 </svg>
-        </td>
+    </div>
 
-<td>
+<div class="rightcontainer" id="chart2">
 <svg version="1.1" id="middle_muscles" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1426.3 1283"
-	 enable-background="new 0 0 1426.3 1283" xml:space="preserve" width="100%" height="100%">
+	 enable-background="new 0 0 1426.3 1283" xml:space="preserve">
 			<image overflow="visible" width="5943" height="5346" xlink:href="svgs/VECTORS_MIDDLE_MUSCLES.png"  transform="matrix(0.24 0 0 0.24 -1.400981e-03 0.9974)">
 		</image>
 		<!--<path id="outline" fill-rule="evenodd" clip-rule="evenodd" fill="none" d="M1220.8,781.5c-58.5-58-67.4-120.6-68-151-->
@@ -213,14 +222,12 @@
 			c-0.1,0.1-0.2,0.2-0.2,0.2c-0.3,0-0.6,0-1,0c-24.2-16.2-35-42.5-50.4-67.2C1095.4,721.9,1074.1,690.9,1066.3,662.2z"/>
     </g>
 </svg>
-</td>
-        </tr>
+    </div>
 
-<tr>
-    <td>
+<div class="leftcontainer" id="chart3">
 <svg version="1.1" id="deep_muscles" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1451.5 1225.9"
-	 enable-background="new 0 0 1451.5 1225.9" xml:space="preserve" width="100%" height="100%">
+	 enable-background="new 0 0 1451.5 1225.9" xml:space="preserve">
 			<image overflow="visible" width="6048" height="5108" xlink:href="svgs/VECTORS_DEEP_MUSCLES_base.png"  transform="matrix(0.24 0 0 0.24 -1.0029 -2.0013)">
 		</image>
 		<!--<path id="outline" fill-rule="evenodd" clip-rule="evenodd" fill="none" d="M1278.6,799.5c-58.5-58-67.4-120.6-68-151-->
@@ -269,11 +276,12 @@
 			C1143.6,764,1133,733,1133,733S1135.3,719.7,1144.8,732z"/>
     </g>
 </svg>
-        </td>
-<td>
+    </div>
+
+<div class="rightcontainer" id="chart4">
 <svg version="1.1" id="organs" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1407.6 1201.7"
-	 enable-background="new 0 0 1407.6 1201.7" xml:space="preserve" width="100%" height="100%">
+	 enable-background="new 0 0 1407.6 1201.7" xml:space="preserve">
 			<image overflow="visible" width="5865" height="5007" xlink:href="svgs/VECTORS_ORGANS.png"  transform="matrix(0.24 0 0 0.24 0 -1)">
 		</image>
 		<!--<path id="outline" fill-rule="evenodd" clip-rule="evenodd" fill="none" d="M1213.6,734.5c-58.5-58-67.4-120.6-68-151-->
@@ -320,9 +328,7 @@
         			C235,74,254.2,72.3,258.5,73.9z"/>
     </g>
 </svg>
-    </td>
-</tr>
-</table>
+    </div>
 
 
 <script src="node_modules/d3/d3.min.js"></script>
@@ -371,7 +377,7 @@
 
     var averagedfakedata = average_data(faked_data);
 
-    var svgs = d3.selectAll("svg").attr("width", "150%").attr("height", "150%");
+    var svgs = d3.selectAll("svg").attr("width", "100%").attr("height", "100%");
 
     var paths = d3
             .selectAll("path")
