@@ -344,38 +344,13 @@
             .domain([0,1])
             .range(colorbrewer.Reds[9].reverse());
 
-    var faked_data = {"Liver": ["0.3184646", "0.5816115", "0.4499772"],
-                    "Spleen":["0.6817344", "ND", "0.2633045"],
-                    "Kidneys":["0.08333361", "ND", "ND"]};
+    var Rscale = ["#FF0000FF", "#FF8B00FF", "#E8FF00FF", "#5DFF00FF", "#00FF2EFF", "#00FFB9FF", "#00B9FFFF", "#002EFFFF", "#5D00FFFF", "#E800FFFF"];
+    var RscaletoJS = Rscale.map(function(c) {return c.split("").slice(0,7).join("")});
 
-    var lookuptable = {
-        // Maps variable names in file to svg ids
-        "Liver": "liver",
-        "Spleen": "spleen",
-        "Kidneys": "kidney"
-    };
+    var rainbowColorScale = d3.scale.ordinal()
+            .domain([0,1])
+            .range(RscaletoJS);
 
-    function average_data(fakedata) {
-        var hash_array_index_tracker = {};
-        Object.keys(fakedata).forEach(function (n) {
-            var denom = 1;
-            var sum = fakedata[n].reduce(function (previousValue, currentValue, currentIndex, array) {
-                var prevvalue = +previousValue;
-                var curvalue = +currentValue;
-                if (!isNaN(curvalue) & !isNaN(prevvalue)) {
-                    denom = denom + 1;
-                    return prevvalue + curvalue;
-                }
-                else {
-                    return prevvalue;
-                }
-            });
-            hash_array_index_tracker[ lookuptable[n] ] = sum / denom;
-        });
-        return hash_array_index_tracker;
-    }
-
-    var averagedfakedata = average_data(faked_data);
 
     var svgs = d3.selectAll("svg").attr("width", "100%").attr("height", "100%");
 
@@ -384,25 +359,7 @@
     var middleMuscleGroup = d3.select("#middle_muscle_group").style("opacity", 0.7);
     var superficialMuscleGroup = d3.select("#superficial_muscle_group").style("opacity", 0.7);
 
-    var paths = d3
-            .selectAll("path")
-            .attr("fill", function(d,i) {
-                if (Object.keys(averagedfakedata).indexOf(this.id) !== -1) {
-                    console.log([this.id, averagedfakedata[this.id]]);
-                    return ordinalRedColorScale(averagedfakedata[this.id]);
-                }
-                else {
-                    return ordinalRedColorScale(0);
-                    //return color(Math.floor(Math.random() * 20));
-                }
-            });
-
-    /*paths.on("click", function(d) {
-        console.log(this.id);
-    });*/
-
     // Let's read in some data
-
     var wbdata = [];
     d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(error, data) {
         if (error !== null) {
@@ -411,41 +368,40 @@
         else {
             //all code would need to be nested in here
              wbdata = data;
+             wbdata = wbdata.filter(function(n) {
+                 return n.GENETHON !== "";
+             });
 
             var anatomyToSVGPart = {
-                "undefined" : [
-                    "TRI bra",
-                    "BI bra",
-                    "VL",
-                    "BI fem",
-                    "TA",
-                    "GA",
-                    "Paravert",
-                    "Interc",
-                    "Dia",
-                    "Heart RV",
-                    "Heart RA",
-                    "Heart LA",
-                    "Heart Papillary",
-                    "Bladder",
-                    "stomach"
-                ],
                 "heart" : "Heart LV",
                 "liver" : "Liver",
-                "lung" : "Lung",
+                "lungs" : "Lung",
                 "spleen" : "Spleen",
                 "kidney" : "Kidneys",
                 "brain" : "Brain"};
 
             var paths = d3
                     .selectAll("path")
-                    .attr("fill", function(d, i) {
-                        if (anatomyToSVGPart[this.id] !== undefined) {
-                            console.log([this.id, anatomyToSVGPart[this.id]])
-                        };
+                    .attr("fill", function() {
+                        var svgPart = this.id;
+                        if (anatomyToSVGPart[svgPart] !== undefined) {
+                            //console.log([svgPart, anatomyToSVGPart[svgPart]]);
+                            var data_to_use = wbdata.filter(function(n) {
+                                //console.log(["FILTER", n.GENETHON, anatomyToSVGPart[svgPart]]);
+                                return n.GENETHON === anatomyToSVGPart[svgPart];
+                            });
+                            var value_to_use_for_color = +data_to_use[0].High_Dose_SSAN_104;
+                            if (value_to_use_for_color > 1) {
+                                value_to_use_for_color = 1;
+                            }
+                            console.log([value_to_use_for_color, rainbowColorScale(value_to_use_for_color)]);
+                            return rainbowColorScale(value_to_use_for_color);
+                            //return rainbowColorScale(0.9)
+                        }
+                        else {
+                            return ordinalRedColorScale(0);
+                        }
                     });
-
-
         }
     });
 
