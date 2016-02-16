@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="canine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,15 +23,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.51140064">
-              <caret line="482" column="35" selection-start-line="482" selection-start-column="35" selection-end-line="482" selection-end-column="35" />
+            <state vertical-scroll-proportion="-13.0">
+              <caret line="485" column="6" selection-start-line="485" selection-start-column="6" selection-end-line="485" selection-end-column="6" />
               <folding>
-                <marker date="1455650941000" expanded="true" signature="39392:39398" placeholder="..." />
-                <marker date="1455650941000" expanded="true" signature="39392:39408" placeholder="..." />
+                <marker date="1455653329000" expanded="true" signature="39392:39398" placeholder="..." />
+                <marker date="1455653329000" expanded="true" signature="39392:39408" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vector.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vector.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="3.2608695">
+              <caret line="345" column="24" selection-start-line="345" selection-start-column="24" selection-end-line="345" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wb.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wb.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5358306">
+              <caret line="502" column="40" selection-start-line="502" selection-start-column="40" selection-end-line="502" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,6 +78,8 @@
         <option value="$PROJECT_DIR$/svgs/VECTORS_ORGANS.svg" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/vector.html" />
+        <option value="$PROJECT_DIR$/wb.html" />
       </list>
     </option>
   </component>
@@ -69,8 +91,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2" />
-    <option name="y" value="54" />
+    <option name="x" value="15" />
+    <option name="y" value="43" />
     <option name="width" value="1260" />
     <option name="height" value="734" />
   </component>
@@ -255,7 +277,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="54" width="1260" height="734" extended-state="0" />
+    <frame x="15" y="43" width="1260" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -372,12 +394,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51140064">
-          <caret line="482" column="35" selection-start-line="482" selection-start-column="35" selection-end-line="482" selection-end-column="35" />
+        <state vertical-scroll-proportion="-13.0">
+          <caret line="485" column="6" selection-start-line="485" selection-start-column="6" selection-end-line="485" selection-end-column="6" />
           <folding>
-            <marker date="1455650941000" expanded="true" signature="39392:39398" placeholder="..." />
-            <marker date="1455650941000" expanded="true" signature="39392:39408" placeholder="..." />
+            <marker date="1455653329000" expanded="true" signature="39392:39398" placeholder="..." />
+            <marker date="1455653329000" expanded="true" signature="39392:39408" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vector.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.2608695">
+          <caret line="345" column="24" selection-start-line="345" selection-start-column="24" selection-end-line="345" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wb.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5358306">
+          <caret line="502" column="40" selection-start-line="502" selection-start-column="40" selection-end-line="502" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>

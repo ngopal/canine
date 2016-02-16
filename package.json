@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ngopal/canine#readme",
   "dependencies": {
     "colorbrewer": "^1.0.0",
-    "d3": "^3.5.15"
+    "d3": "^3.5.15",
+    "d3-svg-legend": "^1.8.0"
   }
 }
