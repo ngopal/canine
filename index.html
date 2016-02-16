@@ -338,6 +338,108 @@
 <link href="node_modules/jquery.tipsy/src/jquery.tipsy.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
+    var vectorBioDistToSVGPart = {
+//        "zygomaticus" : "none",
+//        "orbicularis_orbis" : "none",
+//        "orbicularis_orbis_1_" : "none",
+//        "sternohyoideus" : "none",
+//        "sternomastoideus" : "none",
+//        "bracheocephalis" : "none",
+//        "lower_trapezius" : "none",
+//        "upper_trapezius" : "none",
+        "biceps_brachii" : "Biceps brachii M",
+//        "Rectus_Abdominus" : "none",
+        "deltoid" : "Deltoideus M",
+        "flexor_carpi_ulnaris" : "flexor carpi ulnaris",
+        "ulnaris_lateralis" : "Ulnaris lateralis M",
+        "extensor_digitorum_communis" : "Ext digit communis M",
+//        "Tensor_fascia_latae" : "none",
+        "Biceps_femoris" : "Biceps femoris M",
+        "gastrocnemius" : "Gastrocnemius M",
+        "extensor_digitorum_longus" : "Ext digito longus M",
+        "Rhomboid_cervicus" : "Rhomboideus cerv M",
+//        "levator_anguli_scapulae_inferior" : "none",
+        "triceps" : "Triceps brachii M",
+        "pronator_teres" : "Pronator teres M",
+        "extensor_digiti_lateralis" : "Ext digit lateralis M",
+        "extensor_carpi_radialis" : "Ext carpi radialis M",
+//        "latissimus_dorsi" : "none",
+//        "iliocostalis" : "none",
+//        "gluteus_medius" : "none",
+//        "gluteus_superficialis" : "none",
+//        "rectus_femoris" : "none",
+//        "quadriceps_femoris" : "none",
+//        "semitendonous" : "none",
+        "Tibialis_cranialis" : "Tibialis cranialis M",
+        "flexor_digitorum_superficialis" : "Flexor digit superf M",
+        "soleus" : "Soleus M",
+        "supraspinatus" : "Supraspinatus M",
+        "infraspinatus" : "Infraspinatus M",
+        "paravertebrals" : "Paravertebral lumb M",
+        "anconeus" : "Anconeus M",
+        "flex_carpi_radialis" : "Flexor carpi radialis M",
+        "abductor_pollicus_longus" : "Abduct pollicis long M",
+        "sartorius" : "none",
+        "flexor_digitorum_profundus" : "Flexor digit profundus M",
+        "heart" : "Heart left ventricle",
+        "liver" : "none",
+        "lungs" : "Lung",
+        "spleen" : "Spleen",
+        "kidney" : "Kidneys",
+        "brain" : "none"
+        // Axillary LN
+        // Brachial plexus
+        // Subscapular LN
+        // Pectoralis M
+        // Supinator M
+        // Pronat quadrates M
+        // Inguinal LN
+        // Skin
+        // Vastus lateralis M
+        // L thyroid
+        // Submandibular LN
+        // L parotid salivary gld
+        // Tongue
+        // Larynx
+        // Trachea
+        // Esophagus
+        // Thymus
+        // Diaphragm
+        // L sciatic nerve
+        // Bladder
+        // Pancreas
+        // Mesenteric LN
+        // Aorta
+        // Liver left lobe     # ASK DAVID ABOUT LIVER
+        // Liver central lobe
+        // Liver right lobe
+        // Gall bladder
+        // Stomach (pyloris)
+        // Jejunum
+        // Colon
+        // Intercostal M 6
+        // Heart right ventricle
+        // Heart left ventricle   # MAPPED TO HEART
+        // Heart right atrium
+        // Heart left atrium
+        // Heart papillary
+        // Spinal cord lumbar
+        // B L hem cerebellum    # ASK DAVID ABOUT BRAIN
+        // B L hem frontal lobe
+        // B L hem temporal lobe
+        // B L hem brainstem
+        // Right adrenal gland
+    };
+
+    var anatomyToSVGPart = {
+        "heart" : "Heart LV",
+        "liver" : "Liver",
+        "lungs" : "Lung",
+        "spleen" : "Spleen",
+        "kidney" : "Kidneys",
+        "brain" : "Brain"
+    };
+
     var color = d3.scale.category20();
 
     var ordinalRedColorScale = d3.scale.ordinal()
@@ -361,9 +463,10 @@
 
     // Let's read in some data
     var wbdata = [];
-    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(error, data) {
-        if (error !== null) {
-            alert(error);
+    var vdata = [];
+    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(wberror, data) {
+        if (wberror !== null) {
+            alert(wberror);
         }
         else {
             //all code would need to be nested in here
@@ -372,13 +475,15 @@
                  return n.GENETHON !== "";
              });
 
-            var anatomyToSVGPart = {
-                "heart" : "Heart LV",
-                "liver" : "Liver",
-                "lungs" : "Lung",
-                "spleen" : "Spleen",
-                "kidney" : "Kidneys",
-                "brain" : "Brain"};
+            d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
+                if (verror !== null) {
+                    alert(verror);
+                }
+                else {
+                    vdata = vector;
+                    console.log(vector);
+                }
+            });
 
             var paths = d3
                     .selectAll("path")

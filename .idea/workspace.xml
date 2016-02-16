@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="" />
+    <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+    </list>
     <ignored path="canine.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +26,11 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46254072">
-              <caret line="374" column="36" selection-start-line="374" selection-start-column="36" selection-end-line="374" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.51140064">
+              <caret line="482" column="35" selection-start-line="482" selection-start-column="35" selection-end-line="482" selection-end-column="35" />
               <folding>
-                <marker date="1455645429000" expanded="true" signature="35798:35804" placeholder="..." />
-                <marker date="1455645429000" expanded="true" signature="35798:35814" placeholder="..." />
+                <marker date="1455650941000" expanded="true" signature="39392:39398" placeholder="..." />
+                <marker date="1455650941000" expanded="true" signature="39392:39408" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -67,8 +69,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1395" />
-    <option name="y" value="519" />
+    <option name="x" value="2" />
+    <option name="y" value="54" />
     <option name="width" value="1260" />
     <option name="height" value="734" />
   </component>
@@ -253,7 +255,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1395" y="519" width="1260" height="734" extended-state="0" />
+    <frame x="2" y="54" width="1260" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -370,11 +372,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46254072">
-          <caret line="374" column="36" selection-start-line="374" selection-start-column="36" selection-end-line="374" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.51140064">
+          <caret line="482" column="35" selection-start-line="482" selection-start-column="35" selection-end-line="482" selection-end-column="35" />
           <folding>
-            <marker date="1455645429000" expanded="true" signature="35798:35804" placeholder="..." />
-            <marker date="1455645429000" expanded="true" signature="35798:35814" placeholder="..." />
+            <marker date="1455650941000" expanded="true" signature="39392:39398" placeholder="..." />
+            <marker date="1455650941000" expanded="true" signature="39392:39408" placeholder="..." />
           </folding>
         </state>
       </provider>
