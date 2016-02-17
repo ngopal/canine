@@ -379,18 +379,28 @@
         "brain" : "Brain"
     };
 
-    var color = d3.scale.category20();
+//    var color = d3.scale.category20();
+//
+//    var ordinalRedColorScale = d3.scale.ordinal()
+//            .domain([0,1])
+//            .range(colorbrewer.Reds[9].reverse());
+//
+//    var Rscale = ["#FF0000FF", "#FF8B00FF", "#E8FF00FF", "#5DFF00FF", "#00FF2EFF", "#00FFB9FF", "#00B9FFFF", "#002EFFFF", "#5D00FFFF", "#E800FFFF"];
+//    var RscaletoJS = Rscale.map(function(c) {return c.split("").slice(0,7).join("")});
 
-    var ordinalRedColorScale = d3.scale.ordinal()
-            .domain([0,1])
+//    var rainbowColorScale = d3.scale.ordinal()
+//            .domain([0,1])
+//            .range(RscaletoJS);
+
+    var rainbowColorScale = d3.scale.linear()
+            .domain([(1/6)*0,(1/6)*1,(1/6)*2,(1/6)*3,(1/6)*4,(1/6)*5,(1/6)*6])
+            .range(["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8F00FF"]);
+
+    var RedColorScale = d3.scale.linear()
+            .domain([(1/8)*0,(1/8)*1,(1/8)*2,(1/8)*3,(1/8)*4,(1/8)*5,(1/8)*6,(1/8)*7,(1/8)*8])
             .range(colorbrewer.Reds[9].reverse());
 
-    var Rscale = ["#FF0000FF", "#FF8B00FF", "#E8FF00FF", "#5DFF00FF", "#00FF2EFF", "#00FFB9FF", "#00B9FFFF", "#002EFFFF", "#5D00FFFF", "#E800FFFF"];
-    var RscaletoJS = Rscale.map(function(c) {return c.split("").slice(0,7).join("")});
-
-    var rainbowColorScale = d3.scale.ordinal()
-            .domain([0,1])
-            .range(RscaletoJS);
+    var scaleChoice = rainbowColorScale;
 
 
     var svgs = d3.selectAll("svg").attr("width", "100%").attr("height", "100%");
@@ -428,13 +438,13 @@
                             if (value_to_use_for_color > 1) {
                                 value_to_use_for_color = 1;
                             }
-                            console.log([value_to_use_for_color, rainbowColorScale(value_to_use_for_color)]);
-                            return rainbowColorScale(value_to_use_for_color);
+                            console.log([value_to_use_for_color, scaleChoice(value_to_use_for_color)]);
+                            return scaleChoice(value_to_use_for_color);
                             // There is an error being thrown because "Right_SSAN_11" doesn't exist
                             // as a data mapping for
                         }
                         else {
-                            return "none";
+                            return "white";
                         }
                     });
         }

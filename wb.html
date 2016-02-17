@@ -332,6 +332,7 @@
 
 
 <script src="node_modules/d3/d3.min.js"></script>
+<script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
 <script src="node_modules/colorbrewer/colorbrewer.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/jquery.tipsy/src/jquery.tipsy.js"></script>
@@ -339,37 +340,19 @@
 <script type="text/javascript">
 
     var vectorBioDistToSVGPart = {
-//        "zygomaticus" : "none",
-//        "orbicularis_orbis" : "none",
-//        "orbicularis_orbis_1_" : "none",
-//        "sternohyoideus" : "none",
-//        "sternomastoideus" : "none",
-//        "bracheocephalis" : "none",
-//        "lower_trapezius" : "none",
-//        "upper_trapezius" : "none",
         "biceps_brachii" : "Biceps brachii M",
-//        "Rectus_Abdominus" : "none",
         "deltoid" : "Deltoideus M",
         "flexor_carpi_ulnaris" : "flexor carpi ulnaris",
         "ulnaris_lateralis" : "Ulnaris lateralis M",
         "extensor_digitorum_communis" : "Ext digit communis M",
-//        "Tensor_fascia_latae" : "none",
         "Biceps_femoris" : "Biceps femoris M",
         "gastrocnemius" : "Gastrocnemius M",
         "extensor_digitorum_longus" : "Ext digito longus M",
         "Rhomboid_cervicus" : "Rhomboideus cerv M",
-//        "levator_anguli_scapulae_inferior" : "none",
         "triceps" : "Triceps brachii M",
         "pronator_teres" : "Pronator teres M",
         "extensor_digiti_lateralis" : "Ext digit lateralis M",
         "extensor_carpi_radialis" : "Ext carpi radialis M",
-//        "latissimus_dorsi" : "none",
-//        "iliocostalis" : "none",
-//        "gluteus_medius" : "none",
-//        "gluteus_superficialis" : "none",
-//        "rectus_femoris" : "none",
-//        "quadriceps_femoris" : "none",
-//        "semitendonous" : "none",
         "Tibialis_cranialis" : "Tibialis cranialis M",
         "flexor_digitorum_superficialis" : "Flexor digit superf M",
         "soleus" : "Soleus M",
@@ -379,56 +362,13 @@
         "anconeus" : "Anconeus M",
         "flex_carpi_radialis" : "Flexor carpi radialis M",
         "abductor_pollicus_longus" : "Abduct pollicis long M",
-        "sartorius" : "none",
         "flexor_digitorum_profundus" : "Flexor digit profundus M",
         "heart" : "Heart left ventricle",
-        "liver" : "none",
+        "liver" : "Liver left lobe",
         "lungs" : "Lung",
         "spleen" : "Spleen",
         "kidney" : "Kidneys",
-        "brain" : "none"
-        // Axillary LN
-        // Brachial plexus
-        // Subscapular LN
-        // Pectoralis M
-        // Supinator M
-        // Pronat quadrates M
-        // Inguinal LN
-        // Skin
-        // Vastus lateralis M
-        // L thyroid
-        // Submandibular LN
-        // L parotid salivary gld
-        // Tongue
-        // Larynx
-        // Trachea
-        // Esophagus
-        // Thymus
-        // Diaphragm
-        // L sciatic nerve
-        // Bladder
-        // Pancreas
-        // Mesenteric LN
-        // Aorta
-        // Liver left lobe     # ASK DAVID ABOUT LIVER
-        // Liver central lobe
-        // Liver right lobe
-        // Gall bladder
-        // Stomach (pyloris)
-        // Jejunum
-        // Colon
-        // Intercostal M 6
-        // Heart right ventricle
-        // Heart left ventricle   # MAPPED TO HEART
-        // Heart right atrium
-        // Heart left atrium
-        // Heart papillary
-        // Spinal cord lumbar
-        // B L hem cerebellum    # ASK DAVID ABOUT BRAIN
-        // B L hem frontal lobe
-        // B L hem temporal lobe
-        // B L hem brainstem
-        // Right adrenal gland
+        "brain" : "B L hem cerebellum"
     };
 
     var anatomyToSVGPart = {
@@ -449,10 +389,19 @@
     var Rscale = ["#FF0000FF", "#FF8B00FF", "#E8FF00FF", "#5DFF00FF", "#00FF2EFF", "#00FFB9FF", "#00B9FFFF", "#002EFFFF", "#5D00FFFF", "#E800FFFF"];
     var RscaletoJS = Rscale.map(function(c) {return c.split("").slice(0,7).join("")});
 
-    var rainbowColorScale = d3.scale.ordinal()
-            .domain([0,1])
-            .range(RscaletoJS);
+//    var rainbowColorScale = d3.scale.ordinal()
+//            .domain([0,1])
+//            .range(RscaletoJS);
 
+    var rainbowColorScale = d3.scale.linear()
+            .domain([(1/6)*0,(1/6)*1,(1/6)*2,(1/6)*3,(1/6)*4,(1/6)*5,(1/6)*6])
+            .range(["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8F00FF"]);
+
+    var RedColorScale = d3.scale.linear()
+            .domain([(1/8)*0,(1/8)*1,(1/8)*2,(1/8)*3,(1/8)*4,(1/8)*5,(1/8)*6,(1/8)*7,(1/8)*8])
+            .range(colorbrewer.Reds[9].reverse());
+
+    var scaleChoice = rainbowColorScale;
 
     var svgs = d3.selectAll("svg").attr("width", "100%").attr("height", "100%");
 
@@ -489,8 +438,8 @@
                             if (value_to_use_for_color > 1) {
                                 value_to_use_for_color = 1;
                             }
-                            console.log([value_to_use_for_color, rainbowColorScale(value_to_use_for_color)]);
-                            return rainbowColorScale(value_to_use_for_color);
+                            console.log([value_to_use_for_color, scaleChoice(value_to_use_for_color)]);
+                            return scaleChoice(value_to_use_for_color);
                             //return rainbowColorScale(0.9)
                         }
                         else {
@@ -500,11 +449,7 @@
         }
     });
 
-    var legend = d3.selectAll("#legend")
-            .append("svg")
-            .attr("width", "50px")
-            .attr("height", "50px")
-            .attr("fill", "black");
+
 
     // Adding tooltips
 /*    $('svg path').tipsy({
