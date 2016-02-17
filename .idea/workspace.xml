@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/all_dogs_vector_rightside.html" afterPath="$PROJECT_DIR$/all_dogs_vector_rightside.html" />
     </list>
     <ignored path="canine.iws" />
@@ -46,11 +48,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="all_dogs_vector_rightside.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="all_dogs_vector_rightside.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78013027">
-              <caret line="332" column="114" selection-start-line="332" selection-start-column="114" selection-end-line="332" selection-end-column="114" />
+            <state vertical-scroll-proportion="-20.217392">
+              <caret line="126" column="37" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="all_dogs_vector_leftside.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/all_dogs_vector_leftside.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34201956">
+              <caret line="121" column="51" selection-start-line="121" selection-start-column="51" selection-end-line="121" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -109,6 +121,7 @@
         <option value="$PROJECT_DIR$/all_dogs_wb.html" />
         <option value="$PROJECT_DIR$/scratch" />
         <option value="$PROJECT_DIR$/all_dogs_vector_rightside.html" />
+        <option value="$PROJECT_DIR$/all_dogs_vector_leftside.html" />
       </list>
     </option>
   </component>
@@ -504,8 +517,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78013027">
-          <caret line="332" column="114" selection-start-line="332" selection-start-column="114" selection-end-line="332" selection-end-column="114" />
+        <state vertical-scroll-proportion="-20.217392">
+          <caret line="126" column="37" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all_dogs_vector_leftside.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34201956">
+          <caret line="121" column="51" selection-start-line="121" selection-start-column="51" selection-end-line="121" selection-end-column="51" />
           <folding />
         </state>
       </provider>
