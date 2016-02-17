@@ -489,16 +489,21 @@
                 .attr("fill", function() {
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
-                        //console.log([svgPart,])
                         var data_to_use = wbdata.filter(function(n) {
                             return n.GENETHON === anatomyToSVGPart[svgPart];
                         });
-                        var value_to_use_for_color = +data_to_use[0][dogFileName];
-                        if (value_to_use_for_color > 1) {
-                            value_to_use_for_color = 1;
+                        var value_to_use_for_color;
+                        if (isFinite(data_to_use[0][dogFileName])) {
+                            value_to_use_for_color = +data_to_use[0][dogFileName];
+                            if (value_to_use_for_color > 1) {
+                                value_to_use_for_color = 1;
+                            }
+                            return scaleChoice(value_to_use_for_color);
                         }
-                        //console.log([value_to_use_for_color, scaleChoice(value_to_use_for_color)]);
-                        return scaleChoice(value_to_use_for_color);
+                        else {
+                            // In the case of an "ND" value
+                            return "none"
+                        }
                     }
                     else {
                         return "none";
