@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/all_dogs_vector_rightside.html" afterPath="$PROJECT_DIR$/all_dogs_vector_rightside.html" />
     </list>
     <ignored path="canine.iws" />
@@ -26,7 +27,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.0">
+            <state vertical-scroll-proportion="-89.304344">
               <caret line="485" column="6" selection-start-line="485" selection-start-column="6" selection-end-line="485" selection-end-column="6" />
               <folding>
                 <marker date="1455653329000" expanded="true" signature="39392:39398" placeholder="..." />
@@ -46,21 +47,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vector.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vector.html">
+      <file leaf-file-name="all_dogs_vector_rightside.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.2608696">
-              <caret line="415" column="59" selection-start-line="415" selection-start-column="12" selection-end-line="415" selection-end-column="59" />
+            <state vertical-scroll-proportion="3.7605863">
+              <caret line="3154" column="26" selection-start-line="3154" selection-start-column="26" selection-end-line="3154" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="all_dogs_vector_rightside.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
+      <file leaf-file-name="vector.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vector.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14495113">
-              <caret line="3006" column="22" selection-start-line="3006" selection-start-column="22" selection-end-line="3006" selection-end-column="22" />
+            <state vertical-scroll-proportion="-9.173913">
+              <caret line="230" column="112" selection-start-line="230" selection-start-column="76" selection-end-line="230" selection-end-column="112" />
               <folding />
             </state>
           </provider>
@@ -107,6 +108,7 @@
         <option value="$PROJECT_DIR$/wb.html" />
         <option value="$PROJECT_DIR$/vector.html" />
         <option value="$PROJECT_DIR$/all_dogs_wb.html" />
+        <option value="$PROJECT_DIR$/scratch" />
         <option value="$PROJECT_DIR$/all_dogs_vector_rightside.html" />
       </list>
     </option>
@@ -452,17 +454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.0">
-          <caret line="485" column="6" selection-start-line="485" selection-start-column="6" selection-end-line="485" selection-end-column="6" />
-          <folding>
-            <marker date="1455653329000" expanded="true" signature="39392:39398" placeholder="..." />
-            <marker date="1455653329000" expanded="true" signature="39392:39408" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/d3-svg-legend/README.md">
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
         <state />
@@ -493,18 +484,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-89.304344">
+          <caret line="485" column="6" selection-start-line="485" selection-start-column="6" selection-end-line="485" selection-end-column="6" />
+          <folding>
+            <marker date="1455653329000" expanded="true" signature="39392:39398" placeholder="..." />
+            <marker date="1455653329000" expanded="true" signature="39392:39408" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/vector.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2608696">
-          <caret line="415" column="59" selection-start-line="415" selection-start-column="12" selection-end-line="415" selection-end-column="59" />
+        <state vertical-scroll-proportion="-9.173913">
+          <caret line="230" column="112" selection-start-line="230" selection-start-column="76" selection-end-line="230" selection-end-column="112" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14495113">
-          <caret line="3006" column="22" selection-start-line="3006" selection-start-column="22" selection-end-line="3006" selection-end-column="22" />
+        <state vertical-scroll-proportion="3.7605863">
+          <caret line="3154" column="26" selection-start-line="3154" selection-start-column="26" selection-end-line="3154" selection-end-column="26" />
           <folding />
         </state>
       </provider>
