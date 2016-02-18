@@ -95,14 +95,16 @@
             var deep_dogs = [];
             var middle_dogs = [];
             var organ_dogs = []
-            for (var i = 0; i < 16; i++) {
+            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
+                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+            for (var i = 0; i < dog_names.length; i++) {
                 superficial_dogs.push(renderDog("superficial","dog_"+i,"window_"+i));
-                middle_dogs.push(renderDog("middle","dog_"+(i+32),"window_"+(i+32)));
-                deep_dogs.push(renderDog("deep","dog_"+(i+16),"window_"+(i+16)));
-                organ_dogs.push(renderDog("organ","dog_"+(i+48),"window_"+(i+48)));
+                middle_dogs.push(renderDog("middle","dog_"+(i+(dog_names.length*1)),"window_"+(i+(dog_names.length*1))));
+                deep_dogs.push(renderDog("deep","dog_"+(i+(dog_names.length*2)),"window_"+(i+(dog_names.length*2))));
+                organ_dogs.push(renderDog("organ","dog_"+(i+(dog_names.length*3)),"window_"+(i+(dog_names.length*3))));
             }
 
-            var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
+            var svgs = d3.selectAll("svg").attr("width", "12%").attr("height", "100%");
 
             var deepMuscleGroup = d3.selectAll("#deep_muscle_group").style("opacity", 0.7);
             var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
@@ -114,16 +116,18 @@
             var middle_dogs_fill = [];
             var organ_dogs_fill = [];
             var dog_labels = [];
-            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132"];
-            for (var i = 0; i < 16; i++) {
-                superficial_dogs_fill.push(makeDog(".dog_"+i, dog_names[i]));
-                middle_dogs_fill.push(makeDog(".dog_"+(i+32), dog_names[i]));
-                deep_dogs_fill.push(makeDog(".dog_"+(i+16), dog_names[i]));
-                organ_dogs_fill.push(makeDog(".dog_"+(i+48), dog_names[i]));
-                dog_labels.push(addLabel(".window_"+i, dog_names[i]));
-                dog_labels.push(addLabel(".window_"+(i+32), dog_names[i]));
-                dog_labels.push(addLabel(".window_"+(i+16), dog_names[i]));
-                dog_labels.push(addLabel(".window_"+(i+48), dog_names[i]));
+
+            var printOrderedDogNames = ["Right_SSAN_2", "Left_SSAN_2", "Right_SSAN_4", "Left_SSAN_4", "Right_SSAN_7", "Left_SSAN_7", "Right_SSAN_8", "Left_SSAN_8", "Right_SSAN_9", "Left_SSAN_9", "Right_SSAN_10", "Left_SSAN_10", "Right_SSAN_11", "Left_SSAN_11", "Right_SSAN_12", "Left_SSAN_12", "Right_SSAN_13", "Left_SSAN_13", "Right_SSAN_14", "Left_SSAN_14", "Right_SSAN_16", "Left_SSAN_16", "Right_SSAN_18", "Left_SSAN_18", "Right_SSAN_103", "Left_SSAN_103", "Right_SSAN_104", "Left_SSAN_104", "Right_SSAN_106", "Left_SSAN_106", "Right_SSAN_123", "Left_SSAN_123", "Right_SSAN_132", "Left_SSAN_132"];
+
+            for (var i = 0; i < dog_names.length; i++) {
+                superficial_dogs_fill.push(makeDog(".dog_"+i, printOrderedDogNames[i]));
+                middle_dogs_fill.push(makeDog(".dog_"+(i+(dog_names.length*1)), printOrderedDogNames[i]));
+                deep_dogs_fill.push(makeDog(".dog_"+(i+(dog_names.length*2)), printOrderedDogNames[i]));
+                organ_dogs_fill.push(makeDog(".dog_"+(i+(dog_names.length*3)), printOrderedDogNames[i]));
+                dog_labels.push(addLabel(".window_"+i, printOrderedDogNames[i]));
+                dog_labels.push(addLabel(".window_"+(i+(dog_names.length*1)), printOrderedDogNames[i]));
+                dog_labels.push(addLabel(".window_"+(i+(dog_names.length*2)), printOrderedDogNames[i]));
+                dog_labels.push(addLabel(".window_"+(i+(dog_names.length*3)), printOrderedDogNames[i]));
             }
 
 
@@ -169,6 +173,7 @@
                         var value_to_use_for_color;
                         if (isFinite(data_to_use[0][dogFileName])) {
                             value_to_use_for_color = +data_to_use[0][dogFileName];
+                            console.log([dogClassName, dogFileName, svgPart, value_to_use_for_color, scaleChoice(value_to_use_for_color)]);
                             if (value_to_use_for_color > 1) {
                                 value_to_use_for_color = 1;
                             }
