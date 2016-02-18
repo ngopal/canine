@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Canine Visualization</title>
+    <style>
+        .leftcontainer {
+            float: left;
+            clear: left;
+        }
+        .rightcontainer {
+            float: right;
+            clear: right;
+        }
+    </style>
+</head>
+<body>
+
+<script src="node_modules/d3/d3.min.js"></script>
+<script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
+<script src="node_modules/colorbrewer/colorbrewer.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery.tipsy/src/jquery.tipsy.js"></script>
+<link href="node_modules/jquery.tipsy/src/jquery.tipsy.css" rel="stylesheet" type="text/css" />
+<script src="js/color.js"></script>
+<script src="js/render.js"></script>
+<script type="text/javascript">
+
+    var vectorBioDistToSVGPart = {
+        "biceps_brachii" : "Biceps brachii M",
+        "deltoid" : "Deltoideus M",
+        "flexor_carpi_ulnaris" : "flexor carpi ulnaris",
+        "ulnaris_lateralis" : "Ulnaris lateralis M",
+        "extensor_digitorum_communis" : "Ext digit communis M",
+        "Biceps_femoris" : "Biceps femoris M",
+        "gastrocnemius" : "Gastrocnemius M",
+        "extensor_digitorum_longus" : "Ext digito longus M",
+        "Rhomboid_cervicus" : "Rhomboideus cerv M",
+        "triceps" : "Triceps brachii M",
+        "pronator_teres" : "Pronator teres M",
+        "extensor_digiti_lateralis" : "Ext digit lateralis M",
+        "extensor_carpi_radialis" : "Ext carpi radialis M",
+        "Tibialis_cranialis" : "Tibialis cranialis M",
+        "flexor_digitorum_superficialis" : "Flexor digit superf M",
+        "soleus" : "Soleus M",
+        "supraspinatus" : "Supraspinatus M",
+        "infraspinatus" : "Infraspinatus M",
+        "paravertebrals" : "Paravertebral lumb M",
+        "anconeus" : "Anconeus M",
+        "flex_carpi_radialis" : "Flexor carpi radialis M",
+        "abductor_pollicus_longus" : "Abduct pollicis long M",
+        "flexor_digitorum_profundus" : "Flexor digit profundus M",
+        "heart" : "Heart left ventricle",
+        "liver" : "Liver left lobe",
+        "lungs" : "Lung",
+        "spleen" : "Spleen",
+        "kidney" : "Kidneys",
+        "brain" : "B L hem cerebellum"
+    };
+
+    var anatomyToSVGPart = {
+        "heart" : "Heart LV",
+        "liver" : "Liver",
+        "lungs" : "Lung",
+        "spleen" : "Spleen",
+        "kidney" : "Kidneys",
+        "brain" : "Brain"
+    };
+
+    var rainbowColorScale = getRainbowScale();
+    var RedColorScale = getRedScale();
+    var scaleChoice = RedColorScale;
+
+    // Let's read in some data
+    var wbdata = [];
+    var vdata = [];
+    d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
+        if (verror !== null) {
+            alert(verror);
+        }
+        else {
+            d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function (wberror, data) {
+                if (wberror !== null) {
+                    alert(wberror);
+                }
+                else {
+
+                    // Clean vector data
+                    vdata = vector;
+                    vdata = vdata.filter(function (n) {
+                        return n.Part !== "";
+                    });
+
+                    // Clean WB data
+                    wbdata = data;
+                    wbdata = wbdata.filter(function (n) {
+                        return n.GENETHON !== "";
+                    });
+
+                    var dogRows = ["Right_SSAN_14","Left_SSAN_14","Mid_Dose_SSAN_14"];
+                    makeIndividualDog(dogRows);
+
+                    function makeIndividualDog(dog_names) {
+                        var dog_superficial_1 = renderDog("superficial", "dog_" + 1, "window_" + 1)
+                        var dog_middle_1 = renderDog("middle", "dog_" + 2, "window_" + 2)
+                        var dog_deep_3 = renderDog("deep", "dog_" + 3, "window_" + 3);
+                        var dog_organ_4 = renderDog("organ", "dog_" + 4, "window_" + 4);
+                        var dog_superficial_5 = renderDog("superficial", "dog_" + 5, "window_" + 5)
+                        var dog_middle_6 = renderDog("middle", "dog_" + 6, "window_" + 6)
+                        var dog_deep_7 = renderDog("deep", "dog_" + 7, "window_" + 7);
+                        var dog_organ_8 = renderDog("organ", "dog_" + 8, "window_" + 8);
+                        var dog_superficial_9 = renderDog("superficial", "dog_" + 9, "window_" + 9)
+                        var dog_middle_10 = renderDog("middle", "dog_" + 10, "window_" + 10)
+                        var dog_deep_11 = renderDog("deep", "dog_" + 11, "window_" + 11);
+                        var dog_organ_12 = renderDog("organ", "dog_" + 12, "window_" + 12);
+
+
+                        var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
+
+                        var deepMuscleGroup = d3.selectAll("#deep_muscle_group").style("opacity", 0.7);
+                        var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
+                        var middleMuscleGroup = d3.selectAll("#middle_muscle_group").style("opacity", 0.7);
+                        var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
+
+
+
+                        var dog_superficial_1_fill = makeVectorDog(".dog_" + 1, dog_names[0]);
+                        var dog_middle_2_fill = makeVectorDog(".dog_" + 2, dog_names[0]);
+                        var dog_deep_3_fill = makeVectorDog(".dog_" + 3, dog_names[0]);
+                        var dog_organ_4_fill = makeVectorDog(".dog_" + 4, dog_names[0]);
+                        var dog_superficial_5_fill = makeVectorDog(".dog_" + 5, dog_names[1]);
+                        var dog_middle_6_fill = makeVectorDog(".dog_" + 6, dog_names[1]);
+                        var dog_deep_7_fill = makeVectorDog(".dog_" + 7, dog_names[1]);
+                        var dog_organ_8_fill = makeVectorDog(".dog_" + 8, dog_names[1]);
+                        var dog_superficial_9_fill = makeWBDog(".dog_" + 9, dog_names[2]);
+                        var dog_middle_10_fill = makeWBDog(".dog_" + 10, dog_names[2]);
+                        var dog_deep_11_fill = makeWBDog(".dog_" + 11, dog_names[2]);
+                        var dog_organ_12_fill = makeWBDog(".dog_" + 12, dog_names[2]);
+
+                        var dog_1_label = addLabel(".window_" + 1, "Right Vector/Superficial");
+                        var dog_2_label = addLabel(".window_" + 2, "Right Vector/Middle");
+                        var dog_3_label = addLabel(".window_" + 3, "Right Vector/Deep");
+                        var dog_4_label = addLabel(".window_" + 4, "Right Vector/Organs");
+                        var dog_5_label = addLabel(".window_" + 5, "Left Vector/Superficial");
+                        var dog_6_label = addLabel(".window_" + 6, "Left Vector/Middle");
+                        var dog_7_label = addLabel(".window_" + 7, "Left Vector/Deep");
+                        var dog_8_label = addLabel(".window_" + 8, "Left Vector/Organs");
+                        var dog_9_label = addLabel(".window_" + 9, "WB/Superficial");
+                        var dog_10_label = addLabel(".window_" + 10, "WB/Middle");
+                        var dog_11_label = addLabel(".window_" + 11, "WB/Deep");
+                        var dog_12_label = addLabel(".window_" + 12, "WB/Organs");
+                    }
+
+                }
+            })
+        }
+    });
+
+
+    function makeVectorDog(dogClassName,dogFileName) {
+        return d3.selectAll(dogClassName)
+                .attr("fill", function() {
+                    var svgPart = this.id;
+                    if (vectorBioDistToSVGPart[svgPart] !== undefined) {
+                        var data_to_use = vdata.filter(function(n) {
+                            return n.Part === vectorBioDistToSVGPart[svgPart];
+                        });
+                        var value_to_use_for_color;
+                        if (isFinite(data_to_use[0][dogFileName])) {
+                            value_to_use_for_color = +data_to_use[0][dogFileName];
+                            if (value_to_use_for_color > 1) {
+                                value_to_use_for_color = 1;
+                            }
+                            else if (value_to_use_for_color === "") {
+                                // checking for blank values in excel sheet
+                                return "none";
+                            }
+                            return scaleChoice(value_to_use_for_color);
+                        }
+                        else {
+                            // In the case of an "ND" value
+                            return "none"
+                        }
+                    }
+                    else {
+                        return "none";
+                    }
+                });
+    }
+
+    function makeWBDog(dogClassName,dogFileName) {
+        return d3.selectAll(dogClassName)
+                .attr("fill", function() {
+                    var svgPart = this.id;
+                    if (anatomyToSVGPart[svgPart] !== undefined) {
+                        var data_to_use = wbdata.filter(function(n) {
+                            return n.GENETHON === anatomyToSVGPart[svgPart];
+                        });
+                        var value_to_use_for_color;
+                        if (isFinite(data_to_use[0][dogFileName])) {
+                            value_to_use_for_color = +data_to_use[0][dogFileName];
+                            if (value_to_use_for_color > 1) {
+                                value_to_use_for_color = 1;
+                            }
+                            return scaleChoice(value_to_use_for_color);
+                        }
+                        else {
+                            // In the case of an "ND" value
+                            return "none"
+                        }
+                    }
+                    else {
+                        return "none";
+                    }
+                });
+    }
+
+    function addLabel(window, label) {
+        return d3.selectAll(window)
+                .append("text")
+                .attr("x", "35%")
+                .attr("y", "10%")
+                .attr("font-size", 100)
+                .text(label);
+    }
+
+
+</script>
+
+</body>
+</html>
