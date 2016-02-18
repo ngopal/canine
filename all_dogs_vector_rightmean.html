@@ -109,10 +109,17 @@
 //            var dog_7 = renderDog("superficial","dog_7","window_7");
 
 
-            var superficial_dog = renderDog("superficial","dog_1","window_1");
-            var middle_dog = renderDog("middle","dog_2","window_2");
-            var deep_dog = renderDog("deep","dog_3","window_3");
-            var organ_dog = renderDog("organ","dog_4","window_4");
+            var superficial_dogs = [];
+            var deep_dogs = [];
+            var middle_dogs = [];
+            var organ_dogs = [];
+            var numDogs = 4
+            for (var i = 0; i < numDogs; i++) {
+                superficial_dogs.push(renderDog("superficial","dog_"+i,"window_"+i));
+                middle_dogs.push(renderDog("middle","dog_"+(i+numDogs),"window_"+(i+numDogs)));
+                deep_dogs.push(renderDog("deep","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
+                organ_dogs.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+            }
 
 
             var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
@@ -122,10 +129,10 @@
             var middleMuscleGroup = d3.selectAll("#middle_muscle_group").style("opacity", 0.7);
             var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
 
-            var superficial_dogs_fill = [];
-            var deep_dogs_fill = [];
-            var middle_dogs_fill = [];
-            var organ_dogs_fill = []
+            var min_dog_fill = [];
+            var average_dog_fill = [];
+            var median_dog_fill = [];
+            var max_dog_fill = [];
             var dog_labels = [];
             var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132"];
             var averages = {};
@@ -133,7 +140,7 @@
             var minimum = {};
             var maximum = {};
 
-            // Calculate average for each body part across all right side dogs
+            // Calculate summary stats for each body part across all right side dogs
             vdata.map(function(v) {
                 var sum_for_part = 0;
                 var denom = 0;
@@ -168,15 +175,43 @@
             console.log(medians);
 
 
+            min_dog_fill.push(makeAverageDog(".dog_"+0, minimum));
+            min_dog_fill.push(makeAverageDog(".dog_"+4, minimum));
+            min_dog_fill.push(makeAverageDog(".dog_"+8, minimum));
+            min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
+            average_dog_fill.push(makeAverageDog(".dog_"+1, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+5, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+9, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+13, averages));
+            median_dog_fill.push(makeAverageDog(".dog_"+2, medians));
+            median_dog_fill.push(makeAverageDog(".dog_"+6, medians));
+            median_dog_fill.push(makeAverageDog(".dog_"+10, medians));
+            median_dog_fill.push(makeAverageDog(".dog_"+14, medians));
+            max_dog_fill.push(makeAverageDog(".dog_"+3, maximum));
+            max_dog_fill.push(makeAverageDog(".dog_"+7, maximum));
+            max_dog_fill.push(makeAverageDog(".dog_"+11, maximum));
+            max_dog_fill.push(makeAverageDog(".dog_"+15, maximum));
 
-            var superficial_dogs_fill = makeAverageDog(".dog_1", averages);
-            var middle_dogs_fill = makeAverageDog(".dog_2", averages);
-            var deep_dogs_fill = makeAverageDog(".dog_3", averages);
-            var organ_dogs_fill = makeAverageDog(".dog_4", averages);
-            var dog_labels1 = addLabel(".window_1", "Superficial Muscles");
-            var dog_labels2 = addLabel(".window_2", "Middle Muscles");
-            var dog_labels3 = addLabel(".window_3", "Deep Muscles");
-            var dog_labels4 = addLabel(".window_4", "Organ Muscles");
+//            middle_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), averages));
+//            deep_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs), medians));
+//            organ_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs*3), maximum));
+//            dog_labels.push(addLabel(".window_"+i, "Min"));
+//            dog_labels.push(addLabel(".window_"+(i+numDogs*2), "Mean"));
+//            dog_labels.push(addLabel(".window_"+(i+numDogs), "Median"));
+//            dog_labels.push(addLabel(".window_"+(i+numDogs*3), "Max"));
+
+//            var superficial_dogs_fill = makeAverageDog(".dog_0", averages);
+//            var middle_dogs_fill = makeAverageDog(".dog_1", averages);
+//            var deep_dogs_fill = makeAverageDog(".dog_2", averages);
+//            var organ_dogs_fill = makeAverageDog(".dog_3", averages);
+//            var dog_labels1 = addLabel(".window_1", "Superficial Muscles");
+//            var dog_labels2 = addLabel(".window_2", "Middle Muscles");
+//            var dog_labels3 = addLabel(".window_3", "Deep Muscles");
+//            var dog_labels4 = addLabel(".window_4", "Organ Muscles");
+            dog_labels.push(addLabel(".window_"+0, "Min"));
+            dog_labels.push(addLabel(".window_"+1, "Mean"));
+            dog_labels.push(addLabel(".window_"+2, "Median"));
+            dog_labels.push(addLabel(".window_"+3, "Max"));
 
 
 
