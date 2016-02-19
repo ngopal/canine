@@ -98,17 +98,49 @@
                     });
 
 
-                    d3.select("body").append("h1").text("SSAN 104");
+                    d3.select("body").append("h1").text("SSAN 104 (High Dose)");
                     makeIndividualDog(["Right_SSAN_104","Left_SSAN_104","High_Dose_SSAN_104"],
-                            [0,1,2,3,4,5,6,7,8,9,10,11]);
-                    
-                    d3.select("body").append("h1").text("SSAN 106");
-                    makeIndividualDog(["Right_SSAN_106","Left_SSAN_106","High_Dose_SSAN_106"],
-                            [12,13,14,15,16,17,18,19,20,21,23,24]);
+                            d3.range(0,12));
 
-                    d3.select("body").append("h1").text("SSAN 132");
+                    d3.select("body").append("h1").text("SSAN 106 (High Dose)");
+                    makeIndividualDog(["Right_SSAN_106","Left_SSAN_106","High_Dose_SSAN_106"],
+                            d3.range(12,24));
+
+                    d3.select("body").append("h1").text("SSAN 132 (High Dose)");
                     makeIndividualDog(["Right_SSAN_132","Left_SSAN_132","High_Dose_SSAN_132"],
-                            [25,26,27,28, 29,30,31,32, 33,34,35,36]);
+                            d3.range(24,36));
+
+                    d3.select("body").append("h1").text("SSAN 4 (Mid Dose)");
+                    makeIndividualDog(["Right_SSAN_4","Left_SSAN_4","Mid_Dose_SSAN_4"],
+                            d3.range(36,48));
+
+                    d3.select("body").append("h1").text("SSAN 10 (Mid Dose)");
+                    makeIndividualDog(["Right_SSAN_10","Left_SSAN_10","Mid_Dose_SSAN_10"],
+                            d3.range(48,60));
+
+                    d3.select("body").append("h1").text("SSAN 14 (Mid Dose)");
+                    makeIndividualDog(["Right_SSAN_14","Left_SSAN_14","Mid_Dose_SSAN_14"],
+                            d3.range(60,72));
+
+                    d3.select("body").append("h1").text("SSAN 8 (Low Dose)");
+                    makeIndividualDog(["Right_SSAN_8","Left_SSAN_8","Low_Dose_SSAN_8"],
+                            d3.range(72,84));
+
+                    d3.select("body").append("h1").text("SSAN 11 (Low Dose)");
+                    makeIndividualDog(["Right_SSAN_11","Left_SSAN_11","Low_Dose_SSAN_11"],
+                            d3.range(84,96));
+
+                    d3.select("body").append("h1").text("SSAN 18 (Low Dose)");
+                    makeIndividualDog(["Right_SSAN_18","Left_SSAN_18","Low_Dose_SSAN_18"],
+                            d3.range(96,108));
+
+                    d3.select("body").append("h1").text("SSAN 7 (Control)");
+                    makeIndividualDog(["Right_SSAN_7","Left_SSAN_7","NT_SSAN_7"],
+                            d3.range(108,120));
+
+                    d3.select("body").append("h1").text("SSAN 16 (Control)");
+                    makeIndividualDog(["Right_SSAN_16","Left_SSAN_16","NT_SSAN_16"],
+                            d3.range(120,132));
 
                     function makeIndividualDog(dog_names, ids) {
                         renderDog("superficial", "dog_" + ids[0], "window_" + ids[0])
