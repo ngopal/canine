@@ -175,14 +175,14 @@
             min_dog_fill.push(makeAverageDog(".dog_"+4, minimum));
             min_dog_fill.push(makeAverageDog(".dog_"+8, minimum));
             min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
-            average_dog_fill.push(makeAverageDog(".dog_"+1, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+5, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+9, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+13, averages));
-            median_dog_fill.push(makeAverageDog(".dog_"+2, medians));
-            median_dog_fill.push(makeAverageDog(".dog_"+6, medians));
-            median_dog_fill.push(makeAverageDog(".dog_"+10, medians));
-            median_dog_fill.push(makeAverageDog(".dog_"+14, medians));
+            average_dog_fill.push(makeAverageDog(".dog_"+2, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+6, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+10, averages));
+            average_dog_fill.push(makeAverageDog(".dog_"+14, averages));
+            median_dog_fill.push(makeAverageDog(".dog_"+1, medians));  // 1
+            median_dog_fill.push(makeAverageDog(".dog_"+5, medians));  // 5
+            median_dog_fill.push(makeAverageDog(".dog_"+9, medians)); // 9
+            median_dog_fill.push(makeAverageDog(".dog_"+13, medians)); // 13
             max_dog_fill.push(makeAverageDog(".dog_"+3, maximum));
             max_dog_fill.push(makeAverageDog(".dog_"+7, maximum));
             max_dog_fill.push(makeAverageDog(".dog_"+11, maximum));
@@ -205,8 +205,8 @@
 //            var dog_labels3 = addLabel(".window_3", "Deep Muscles");
 //            var dog_labels4 = addLabel(".window_4", "Organ Muscles");
             dog_labels.push(addLabel(".window_"+0, "Min"));
-            dog_labels.push(addLabel(".window_"+1, "Mean"));
-            dog_labels.push(addLabel(".window_"+2, "Median"));
+            dog_labels.push(addLabel(".window_"+1, "Median"));
+            dog_labels.push(addLabel(".window_"+2, "Mean"));
             dog_labels.push(addLabel(".window_"+3, "Max"));
 
 
