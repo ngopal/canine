@@ -98,37 +98,31 @@
                     });
 
 
-                    makeIndividualDog(["Right_SSAN_104","Left_SSAN_104","High_Dose_SSAN_104"]);
-                    makeIndividualDog(["Right_SSAN_106","Left_SSAN_106","High_Dose_SSAN_106"]);
-                    makeIndividualDog(["Right_SSAN_132","Left_SSAN_132","High_Dose_SSAN_132"]);
+                    d3.select("body").append("h1").text("SSAN 104");
+                    makeIndividualDog(["Right_SSAN_104","Left_SSAN_104","High_Dose_SSAN_104"],
+                            [0,1,2,3,4,5,6,7,8,9,10,11]);
+                    
+                    d3.select("body").append("h1").text("SSAN 106");
+                    makeIndividualDog(["Right_SSAN_106","Left_SSAN_106","High_Dose_SSAN_106"],
+                            [12,13,14,15,16,17,18,19,20,21,23,24]);
 
+                    d3.select("body").append("h1").text("SSAN 132");
+                    makeIndividualDog(["Right_SSAN_132","Left_SSAN_132","High_Dose_SSAN_132"],
+                            [25,26,27,28, 29,30,31,32, 33,34,35,36]);
 
-                    function makeIndividualDog(dog_names) {
-                        // 1-4, 5-8, 9-12
-                        // 0-3, 4-7, 8-11
-                        var num = dog_names.length;
-                        var dog_sup = [];
-                        var dog_mid = [];
-                        var dog_deep = [];
-                        var dog_org = [];
-                        for (var i = 0; i < num; i++) {
-                            dog_sup.push(renderDog("superficial", "dog_" + i, "window_" + i));
-                            dog_mid.push(renderDog("middle", "dog_" + (i+(num)), "window_" + (i+(num))));
-                            dog_deep.push(renderDog("deep", "dog_" + (i+(num*2)), "window_" + (i+(num*2))));
-                            dog_org.push(renderDog("organ", "dog_" + (i+(num*3)), "window_" + (i+(num*3))));
-                        }
-//                        var dog_superficial_1 = renderDog("superficial", "dog_" + 1, "window_" + 1)
-//                        var dog_middle_1 = renderDog("middle", "dog_" + 2, "window_" + 2)
-//                        var dog_deep_3 = renderDog("deep", "dog_" + 3, "window_" + 3);
-//                        var dog_organ_4 = renderDog("organ", "dog_" + 4, "window_" + 4);
-//                        var dog_superficial_5 = renderDog("superficial", "dog_" + 5, "window_" + 5)
-//                        var dog_middle_6 = renderDog("middle", "dog_" + 6, "window_" + 6)
-//                        var dog_deep_7 = renderDog("deep", "dog_" + 7, "window_" + 7);
-//                        var dog_organ_8 = renderDog("organ", "dog_" + 8, "window_" + 8);
-//                        var dog_superficial_9 = renderDog("superficial", "dog_" + 9, "window_" + 9)
-//                        var dog_middle_10 = renderDog("middle", "dog_" + 10, "window_" + 10)
-//                        var dog_deep_11 = renderDog("deep", "dog_" + 11, "window_" + 11);
-//                        var dog_organ_12 = renderDog("organ", "dog_" + 12, "window_" + 12);
+                    function makeIndividualDog(dog_names, ids) {
+                        renderDog("superficial", "dog_" + ids[0], "window_" + ids[0])
+                        renderDog("middle", "dog_" + ids[1], "window_" + ids[1])
+                        renderDog("deep", "dog_" + ids[2], "window_" + ids[2]);
+                        renderDog("organ", "dog_" + ids[3], "window_" + ids[3]);
+                        renderDog("superficial", "dog_" + ids[4], "window_" + ids[4])
+                        renderDog("middle", "dog_" + ids[5], "window_" + ids[5])
+                        renderDog("deep", "dog_" + ids[6], "window_" + ids[6]);
+                        renderDog("organ", "dog_" + ids[7], "window_" + ids[7]);
+                        renderDog("superficial", "dog_" + ids[8], "window_" + ids[8])
+                        renderDog("middle", "dog_" + ids[9], "window_" + ids[9])
+                        renderDog("deep", "dog_" + ids[10], "window_" + ids[10]);
+                        renderDog("organ", "dog_" + ids[11], "window_" + ids[11]);
 
 
                         var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
@@ -139,64 +133,36 @@
                         var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
 
 
-                        // dog_names.length + 1,2,3,4
-                        var dog_sup_fill = [];
-                        var dog_mid_fill = [];
-                        var dog_deep_fill = [];
-                        var dog_org_fill = [];
-                        for (var i = 0; i < dog_names.length; i++) {
-                            if (i == 2) {
-                                dog_sup_fill.push(makeWBDog(".dog_" + i, dog_names[i]));
-                                dog_mid_fill.push(makeWBDog(".dog_" + (i+(4)), dog_names[i]));
-                                dog_deep_fill.push(makeWBDog(".dog_" + (i+(8)), dog_names[i]));
-                                dog_org_fill.push(makeWBDog(".dog_" + (i+(12)), dog_names[i]));
-                            }
-                            else {
-                                dog_sup_fill.push(makeVectorDog(".dog_" + i, dog_names[i]));
-                                dog_mid_fill.push(makeVectorDog(".dog_" + (i+(4)), dog_names[i]));
-                                dog_deep_fill.push(makeVectorDog(".dog_" + (i+(8)), dog_names[i]));
-                                dog_org_fill.push(makeVectorDog(".dog_" + (i+(12)), dog_names[i]));
-                            }
-                        }
-//                        var dog_superficial_1_fill = makeVectorDog(".dog_" + 1, dog_names[0]);
-//                        var dog_middle_2_fill = makeVectorDog(".dog_" + 2, dog_names[0]);
-//                        var dog_deep_3_fill = makeVectorDog(".dog_" + 3, dog_names[0]);
-//                        var dog_organ_4_fill = makeVectorDog(".dog_" + 4, dog_names[0]);
-//                        var dog_superficial_5_fill = makeVectorDog(".dog_" + 5, dog_names[1]);
-//                        var dog_middle_6_fill = makeVectorDog(".dog_" + 6, dog_names[1]);
-//                        var dog_deep_7_fill = makeVectorDog(".dog_" + 7, dog_names[1]);
-//                        var dog_organ_8_fill = makeVectorDog(".dog_" + 8, dog_names[1]);
-//                        var dog_superficial_9_fill = makeWBDog(".dog_" + 9, dog_names[2]);
-//                        var dog_middle_10_fill = makeWBDog(".dog_" + 10, dog_names[2]);
-//                        var dog_deep_11_fill = makeWBDog(".dog_" + 11, dog_names[2]);
-//                        var dog_organ_12_fill = makeWBDog(".dog_" + 12, dog_names[2]);
 
-                        // 1-12
-                        var text_labels = ["Right Vector/Superficial","Right Vector/Middle","Right Vector/Deep","Right Vector/Organs"];
-                        var text_labels2 = ["Left Vector/Superficial","Left Vector/Middle","Left Vector/Deep","Left Vector/Organs"]
-                        var text_labels3 = ["WB/Superficial","WB/Middle","WB/Deep","WB/Organ"];
-                        var text_to_use = [text_labels, text_labels2, text_labels3];
-                        var dog_labels = [];
-                        for (var i = 0; i < 3; i++) {
-                            var labels = text_to_use[i]
-                            dog_labels.push(addLabel(".window_" + i, labels[0]));
-                            dog_labels.push(addLabel(".window_" + (i+(4)), labels[1]));
-                            dog_labels.push(addLabel(".window_" + (i+(8)), labels[2]));
-                            dog_labels.push(addLabel(".window_" + (i+(12)), labels[3]));
-                        }
-//                        var dog_1_label = addLabel(".window_" + 1, "Right Vector/Superficial");
-//                        var dog_2_label = addLabel(".window_" + 2, "Right Vector/Middle");
-//                        var dog_3_label = addLabel(".window_" + 3, "Right Vector/Deep");
-//                        var dog_4_label = addLabel(".window_" + 4, "Right Vector/Organs");
-//                        var dog_5_label = addLabel(".window_" + 5, "Left Vector/Superficial");
-//                        var dog_6_label = addLabel(".window_" + 6, "Left Vector/Middle");
-//                        var dog_7_label = addLabel(".window_" + 7, "Left Vector/Deep");
-//                        var dog_8_label = addLabel(".window_" + 8, "Left Vector/Organs");
-//                        var dog_9_label = addLabel(".window_" + 9, "WB/Superficial");
-//                        var dog_10_label = addLabel(".window_" + 10, "WB/Middle");
-//                        var dog_11_label = addLabel(".window_" + 11, "WB/Deep");
-//                        var dog_12_label = addLabel(".window_" + 12, "WB/Organs");
+                        makeVectorDog(".dog_" + ids[0], dog_names[0]);
+                        makeVectorDog(".dog_" + ids[1], dog_names[0]);
+                         makeVectorDog(".dog_" + ids[2], dog_names[0]);
+                        makeVectorDog(".dog_" + ids[3], dog_names[0]);
+                        makeVectorDog(".dog_" + ids[4], dog_names[1]);
+                        makeVectorDog(".dog_" + ids[5], dog_names[1]);
+                        makeVectorDog(".dog_" + ids[6], dog_names[1]);
+                        makeVectorDog(".dog_" + ids[7], dog_names[1]);
+                        makeWBDog(".dog_" + ids[8], dog_names[2]);
+                        makeWBDog(".dog_" + ids[9], dog_names[2]);
+                        makeWBDog(".dog_" + ids[10], dog_names[2]);
+                        makeWBDog(".dog_" + ids[11], dog_names[2]);
+
+                        addLabel(".window_" + ids[0], "Right Vector/Superficial");
+                        addLabel(".window_" + ids[1], "Right Vector/Middle");
+                        addLabel(".window_" + ids[2], "Right Vector/Deep");
+                        addLabel(".window_" + ids[3], "Right Vector/Organs");
+                        addLabel(".window_" + ids[4], "Left Vector/Superficial");
+                        addLabel(".window_" + ids[5], "Left Vector/Middle");
+                        addLabel(".window_" + ids[6], "Left Vector/Deep");
+                        addLabel(".window_" + ids[7], "Left Vector/Organs");
+                        addLabel(".window_" + ids[8], "WB/Superficial");
+                        addLabel(".window_" + ids[9], "WB/Middle");
+                        addLabel(".window_" + ids[10], "WB/Deep");
+                        addLabel(".window_" + ids[11], "WB/Organs");
                     }
+
+
+
 
                 }
             })
@@ -269,6 +235,58 @@
                 .attr("y", "10%")
                 .attr("font-size", 100)
                 .text(label);
+    }
+
+    function makeIndividualDogUniversalized(dog_names) {
+        var num = dog_names.length;
+        var dog_sup = [];
+        var dog_mid = [];
+        var dog_deep = [];
+        var dog_org = [];
+        for (var i = 0; i < num; i++) {
+            dog_sup.push(renderDog("superficial", "dog_" + i, "window_" + i));
+            dog_mid.push(renderDog("middle", "dog_" + (i+(num)), "window_" + (i+(num))));
+            dog_deep.push(renderDog("deep", "dog_" + (i+(num*2)), "window_" + (i+(num*2))));
+            dog_org.push(renderDog("organ", "dog_" + (i+(num*3)), "window_" + (i+(num*3))));
+        }
+
+        var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
+
+        var deepMuscleGroup = d3.selectAll("#deep_muscle_group").style("opacity", 0.7);
+        var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
+        var middleMuscleGroup = d3.selectAll("#middle_muscle_group").style("opacity", 0.7);
+        var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
+
+        var dog_sup_fill = [];
+        var dog_mid_fill = [];
+        var dog_deep_fill = [];
+        var dog_org_fill = [];
+        for (var i = 0; i < dog_names.length; i++) {
+            if (i == 2) {
+                dog_sup_fill.push(makeWBDog(".dog_" + i, dog_names[i]));
+                dog_mid_fill.push(makeWBDog(".dog_" + (i+(4)), dog_names[i]));
+                dog_deep_fill.push(makeWBDog(".dog_" + (i+(8)), dog_names[i]));
+                dog_org_fill.push(makeWBDog(".dog_" + (i+(12)), dog_names[i]));
+            }
+            else {
+                dog_sup_fill.push(makeVectorDog(".dog_" + i, dog_names[i]));
+                dog_mid_fill.push(makeVectorDog(".dog_" + (i+(4)), dog_names[i]));
+                dog_deep_fill.push(makeVectorDog(".dog_" + (i+(8)), dog_names[i]));
+                dog_org_fill.push(makeVectorDog(".dog_" + (i+(12)), dog_names[i]));
+            }
+        }
+        var text_labels = ["Right Vector/Superficial","Right Vector/Middle","Right Vector/Deep","Right Vector/Organs"];
+        var text_labels2 = ["Left Vector/Superficial","Left Vector/Middle","Left Vector/Deep","Left Vector/Organs"]
+        var text_labels3 = ["WB/Superficial","WB/Middle","WB/Deep","WB/Organ"];
+        var text_to_use = [text_labels, text_labels2, text_labels3];
+        var dog_labels = [];
+        for (var i = 0; i < 3; i++) {
+            var labels = text_to_use[i]
+            dog_labels.push(addLabel(".window_" + i, labels[0]));
+            dog_labels.push(addLabel(".window_" + (i+(4)), labels[1]));
+            dog_labels.push(addLabel(".window_" + (i+(8)), labels[2]));
+            dog_labels.push(addLabel(".window_" + (i+(12)), labels[3]));
+        }
     }
 
 
