@@ -1,0 +1,3 @@
+d3.selectAll("path").html(function(d, i) { document.write("{\"name\":\""+this.id+"\", \"d\":"+"\""+d3.select(this).attr("d")+"\"},"+"<BR>") } )
+
+# Assumes SVG loaded into browser
