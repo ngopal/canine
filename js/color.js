@@ -24,3 +24,11 @@ function getRedScaleCustomStep(s){
         console.log("Color Scale Error");
     }
 }
+
+function getRedFiveStepScale(){
+    red1 = ["#F8F7F7","#F9C0C0","#FA8A89","#FB5452","#FD1E1C"];
+    red2 = ["#F8F7F7","#EBB9B9","#DF7C7B","#D33F3D","#C70200"];
+    return d3.scale.quantize()
+        .domain([0,1])
+        .range(red2);
+}
