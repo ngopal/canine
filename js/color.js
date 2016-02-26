@@ -12,9 +12,13 @@ function getRedScale(){
 
 function getRedScaleCustomStep(s){
     if(isFinite(s) & s >= 3 & s <= 9 ){
+        cSteps = colorbrewer.Reds[s];
+        cSteps = cSteps.reverse();
+        cSteps.push("#FFFFFF");
+        cSteps = cSteps.reverse();
         return d3.scale.quantize()
             .domain([0,1])
-            .range(colorbrewer.Reds[s]);
+            .range(cSteps);
     }
     else {
         console.log("Color Scale Error");

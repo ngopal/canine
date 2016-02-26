@@ -82,7 +82,8 @@
 
     var rainbowColorScale = getRainbowScale();
     var RedColorScale = getRedScale();
-    var RedCustomStep = getRedScaleCustomStep(5);
+    var colorSteps = 4;
+    var RedCustomStep = getRedScaleCustomStep(colorSteps);
     var scaleChoice = RedCustomStep;
 
     function median(values) {
@@ -115,15 +116,18 @@
             var vec1_dogs = [];
             var vec2_dogs = [];
             var organ_dogs2 = [];
+            var legendDogs = [];
             var numDogs = 4
             for (var i = 0; i < numDogs; i++) {
+                legendDogs.push(makeLegend(colorSteps));
                 vec1_dogs.push(renderDog("vec1","dog_"+(i),"window_"+(i)));
                 vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs),"window_"+(i+numDogs)));
                 organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
             }
 
 
-            var svgs = d3.selectAll("svg").attr("width", "30%").attr("height", "100%");
+            var svgs = d3.selectAll("svg").attr("width", "29%").attr("height", "100%");
+            var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var vec1Group = d3.selectAll("#vec1_group").style("opacity", 0.7);
             var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
@@ -168,46 +172,57 @@
                 dog_labels.push(addLabel(".window_"+(i+numDogs*2), label_order[i]));
             }
 
-
-//            min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
-//            average_dog_fill.push(makeAverageDog(".dog_"+2, averages));
-//            average_dog_fill.push(makeAverageDog(".dog_"+6, averages));
-//            average_dog_fill.push(makeAverageDog(".dog_"+10, averages));
-//            average_dog_fill.push(makeAverageDog(".dog_"+14, averages));
-//            median_dog_fill.push(makeAverageDog(".dog_"+1, medians));  // 1
-//            median_dog_fill.push(makeAverageDog(".dog_"+5, medians));  // 5
-//            median_dog_fill.push(makeAverageDog(".dog_"+9, medians)); // 9
-//            median_dog_fill.push(makeAverageDog(".dog_"+13, medians)); // 13
-//            max_dog_fill.push(makeAverageDog(".dog_"+3, maximum));
-//            max_dog_fill.push(makeAverageDog(".dog_"+7, maximum));
-//            max_dog_fill.push(makeAverageDog(".dog_"+11, maximum));
-//            max_dog_fill.push(makeAverageDog(".dog_"+15, maximum));
-
-//            middle_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), averages));
-//            deep_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs), medians));
-//            organ_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs*3), maximum));
-//            dog_labels.push(addLabel(".window_"+i, "Min"));
-//            dog_labels.push(addLabel(".window_"+(i+numDogs*2), "Mean"));
-//            dog_labels.push(addLabel(".window_"+(i+numDogs), "Median"));
-//            dog_labels.push(addLabel(".window_"+(i+numDogs*3), "Max"));
-
-//            var superficial_dogs_fill = makeAverageDog(".dog_0", averages);
-//            var middle_dogs_fill = makeAverageDog(".dog_1", averages);
-//            var deep_dogs_fill = makeAverageDog(".dog_2", averages);
-//            var organ_dogs_fill = makeAverageDog(".dog_3", averages);
-//            var dog_labels1 = addLabel(".window_1", "Superficial Muscles");
-//            var dog_labels2 = addLabel(".window_2", "Middle Muscles");
-//            var dog_labels3 = addLabel(".window_3", "Deep Muscles");
-//            var dog_labels4 = addLabel(".window_4", "Organ Muscles");
-//            dog_labels.push(addLabel(".window_"+0, "Min"));
-//            dog_labels.push(addLabel(".window_"+1, "Median"));
-//            dog_labels.push(addLabel(".window_"+2, "Mean"));
-//            dog_labels.push(addLabel(".window_"+3, "Max"));
+            // Making the legend
+//            makeLegend(colorSteps);
 
 
 
         }
     });
+
+    function makeLegend(colStep) {
+        stepNumber = colStep+1;
+        var steps = d3.range(0,stepNumber).map(function(n) { return n/stepNumber });
+        //steps.push(1);
+        var legend = d3.selectAll("body")
+                .append("svg")
+                .attr("class", "legend")
+                .attr("width", "12%")
+                .attr("height", "20%");
+
+        var pieceList = [];
+        var rectList = [];
+        var textList = [];
+
+        for (var i = 0; i < steps.length; i++) {
+            pieceList.push(
+                    legend.append("g")
+                    .attr("class", "legendGroup "+steps[i])
+                    .attr("transform", "translate(3,"+(3+(i*23))+")")
+            );
+            rectList.push(
+                    pieceList[i].append("rect")
+                            .attr("height", "18px")
+                            .attr("width", "18px")
+                            .style("stroke", "black")
+                            .style("fill", function() { return scaleChoice(steps[i]); })
+            )
+            textList.push(
+                    pieceList[i].append("text")
+                            .attr("x", "22px")
+                            .attr("y", "14px")
+                            .text(function() {
+                                if (i === (steps.length-1)) {
+                                    return steps[i]+"-1";
+                                }
+                                else {
+                                    return steps[i]+"-"+(steps[i+1]-0.01);
+                                }
+                            })
+            );
+        }
+
+    }
 
 //    function makeDog(dogClassName,dogFileName) {
 //        return d3.selectAll(dogClassName)
@@ -235,6 +250,8 @@
 //                    }
 //                });
 //    }
+
+
 
     function calculateSummaryStatsByPart(vector_data, dog_names) {
         var averages = {};
