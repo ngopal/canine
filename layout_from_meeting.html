@@ -139,39 +139,12 @@
             var dog_labels = [];
             var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
                 "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
-            var averages = {};
-            var medians = {};
-            var minimum = {};
-            var maximum = {};
-
-            // Calculate summary stats for each body part across all right side dogs
-            vdata.map(function(v) {
-                var sum_for_part = 0;
-                var denom = 0;
-                var min = 1;
-                var max = 0;
-                var med = [];
-                for (var k = 0; k < dog_names.length; k++) {
-                    if (v[dog_names[k]] !== "") {
-                        //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
-                        var value = +v[dog_names[k]]
-                        sum_for_part = sum_for_part + value;
-                        denom = denom + 1;
-                        // should clarify with David how I should count the mean. Should blanks be counted?
-                        if (value < min) {
-                            min = value;
-                        }
-                        if (value > max) {
-                            max = value;
-                        }
-                        med.push(value);
-                    }
-                }
-                averages[v.Part] = sum_for_part/denom;
-                minimum[v.Part] = min;
-                maximum[v.Part] = max;
-                medians[v.Part] = median(med);
-            });
+            var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
+            console.log(summarystats);
+            var averages = summarystats.averages;
+            var medians = summarystats.medians;
+            var minimum = summarystats.minimum;
+            var maximum = summarystats.maximum;
 
             console.log(averages);
             console.log(minimum);
@@ -252,6 +225,43 @@
 //                    }
 //                });
 //    }
+
+    function calculateSummaryStatsByPart(vector_data, dog_names) {
+        var averages = {};
+        var medians = {};
+        var minimum = {};
+        var maximum = {};
+
+        // Calculate summary stats for each body part across all right side dogs
+        vector_data.map(function(v) {
+            var sum_for_part = 0;
+            var denom = 0;
+            var min = 1;
+            var max = 0;
+            var med = [];
+            for (var k = 0; k < dog_names.length; k++) {
+                if (v[dog_names[k]] !== "") {
+                    //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+                    var value = +v[dog_names[k]]
+                    sum_for_part = sum_for_part + value;
+                    denom = denom + 1;
+                    // should clarify with David how I should count the mean. Should blanks be counted?
+                    if (value < min) {
+                        min = value;
+                    }
+                    if (value > max) {
+                        max = value;
+                    }
+                    med.push(value);
+                }
+            }
+            averages[v.Part] = sum_for_part/denom;
+            minimum[v.Part] = min;
+            maximum[v.Part] = max;
+            medians[v.Part] = median(med);
+        });
+        return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
+    }
 
     function makeAverageDog(dogClassName, avgObj) {
         return d3.selectAll(dogClassName)
