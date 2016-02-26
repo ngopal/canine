@@ -111,18 +111,14 @@
             });
 
 
-//            var tg_dogs = [];
-//            var organ_dogs1 = [];
             var vec1_dogs = [];
             var vec2_dogs = [];
             var organ_dogs2 = [];
-            var numDogs = 3
+            var numDogs = 4
             for (var i = 0; i < numDogs; i++) {
-//                tg_dogs.push(renderDog("tg","dog_"+i,"window_"+i));
-                vec1_dogs.push(renderDog("vec1","dog_"+(i+numDogs),"window_"+(i+numDogs)));
-                vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
-//                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
-                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                vec1_dogs.push(renderDog("vec1","dog_"+(i),"window_"+(i)));
+                vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs),"window_"+(i+numDogs)));
+                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
             }
 
 
@@ -131,7 +127,6 @@
             var vec1Group = d3.selectAll("#vec1_group").style("opacity", 0.7);
             var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
             var vec2Group = d3.selectAll("#vec2_group").style("opacity", 0.7);
-            var tgGroup = d3.selectAll("#tg_group").style("opacity", 0.7);
 
             var vec1_dog_fill = [];
             var vec2_dog_fill = [];
@@ -139,23 +134,47 @@
             var dog_labels = [];
             var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
                 "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+            var lowdose_dog_names = [
+                "Right_SSAN_8","Left_SSAN_8",
+                "Right_SSAN_11", "Left_SSAN_11",
+                "Right_SSAN_18", "Left_SSAN_18"];
+            var middose_dog_names = [
+                "Right_SSAN_4","Left_SSAN_4",
+                "Right_SSAN_10", "Left_SSAN_10",
+                "Right_SSAN_14", "Left_SSAN_14"];
+            var highdose_dog_names = [
+                "Right_SSAN_104","Left_SSAN_104",
+                "Right_SSAN_106", "Left_SSAN_106",
+                "Right_SSAN_132", "Left_SSAN_132"];
+            var nodose_dog_names = [
+                "Right_SSAN_7","Left_SSAN_7",
+                "Right_SSAN_16", "Left_SSAN_16"];
+            var lowdosestats = calculateSummaryStatsByPart(vdata, lowdose_dog_names);
+            var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
+            var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
+            var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
-            console.log(summarystats);
+            var fill_order = [nodosestats, lowdosestats, middosestats, highdosestats];
+//            console.log(summarystats);
+            console.log(lowdosestats);
+            console.log(middosestats);
+            console.log(highdosestats);
+            console.log(nodosestats);
             var averages = summarystats.averages;
             var medians = summarystats.medians;
             var minimum = summarystats.minimum;
             var maximum = summarystats.maximum;
 
-            console.log(averages);
-            console.log(minimum);
-            console.log(maximum);
-            console.log(medians);
+//            console.log(averages);
+//            console.log(minimum);
+//            console.log(maximum);
+//            console.log(medians);
 
 
             for (var i = 0; i < numDogs; i++) {
-                vec1_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs), averages));
-                vec2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), averages));
-                organ2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*3), averages));
+                vec1_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
+                vec2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs), fill_order[i].averages));
+                organ2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), fill_order[i].averages));
             }
 
 
