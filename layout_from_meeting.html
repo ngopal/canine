@@ -64,28 +64,30 @@
         "spleen" : "Spleen",
         "kidney" : "Kidneys",
         "brain" : "Brain",
-        "?": ["TRI bra",
-            "BI bra",
-            "VL",
-            "BI fem",
-            "TA",
-            "GA",
-            "Paravert",
-            "Interc",
-            "Dia",
+        "biceps_bra" : "BI bra",
+        "triceps" : "TRI bra",
+        "_Vastus_lateralis" : "VL",
+        "Biceps_femoris" : "BI fem",
+        "Tibialis_cranialis" : "TA",
+        "gastrocnemius" : "GA",
+        "paravertebrals" : "Paravert",
+        "Intracostal_mm" : "Interc",
+        "Diaphragm" : "Dia",
+        "?": [
             "Heart RV",
             "Heart RA",
             "Heart LA",
-            "Heart Papillary"
+            "Heart Papillary",
+            "stomach"
         ]
     };
 
     var rainbowColorScale = getRainbowScale();
     var RedColorScale = getRedScale();
-    var colorSteps = 4;
+    var colorSteps = 9;
     var RedCustomStep = getRedScaleCustomStep(colorSteps);
     var PureRed = getRedFiveStepScale();
-    var scaleChoice = PureRed;
+    var scaleChoice = RedCustomStep;
 
     function median(values) {
 
@@ -118,7 +120,7 @@
             var vec2_dogs = [];
             var organ_dogs2 = [];
             var legendDogs = [];
-            var numDogs = 4
+            var numDogs = 3;
             for (var i = 0; i < numDogs; i++) {
                 legendDogs.push(makeLegend(colorSteps));
                 vec1_dogs.push(renderDog("vec1","dog_"+(i),"window_"+(i)));
@@ -160,8 +162,8 @@
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
-            var fill_order = [nodosestats, lowdosestats, middosestats, highdosestats];
-            var label_order = ["No Treatment", "Low Dose", "Mid Dose", "High Dose"]
+            var fill_order = [lowdosestats, middosestats, highdosestats];
+            var label_order = ["Low Dose", "Mid Dose", "High Dose"]
 
 
             for (var i = 0; i < numDogs; i++) {
@@ -177,6 +179,74 @@
 //            makeLegend(colorSteps);
 
 
+
+
+        }
+    });
+
+    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(wberror, data) {
+        if (wberror !== null) {
+            alert(wberror);
+        }
+        else {
+            var hr = d3.select("body").append("hr");
+            var tgtitle = d3.select("body").append("h1").text("Transgene Expression");
+            wbdata = data;
+            wbdata = wbdata.filter(function (n) {
+                return n.GENETHON !== "";
+            });
+
+            var tg_dogs = [];
+            var organ_dogs1 = [];
+            var legendDogs2 = [];
+            var numDogs = 3;
+            for (var i = 0; i < numDogs; i++) {
+                legendDogs2.push(makeLegend(colorSteps));
+                tg_dogs.push(renderDog("tg","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
+            }
+
+
+            var svgs = d3.selectAll("svg").attr("width", "29%").attr("height", "100%");
+            var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
+
+            var tgGroup = d3.selectAll("#tg_group").style("opacity", 0.7);
+            var organ1Group = d3.selectAll("#organ_group").style("opacity", 0.7);
+
+            var tg_dog_fill = [];
+            var organ1_dog_fill = [];
+            var dog_labels = [];
+            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
+                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+            var lowdose_dog_names = [
+                "Low_Dose_SSAN_8",
+                "Low_Dose_SSAN_11",
+                "Low_Dose_SSAN_18"];
+            var middose_dog_names = [
+                "Mid_Dose_SSAN_4",
+                "Mid_Dose_SSAN_10",
+                "Mid_Dose_SSAN_14"];
+            var highdose_dog_names = [
+                "High_Dose_SSAN_104",
+                "High_Dose_SSAN_106",
+                "High_Dose_SSAN_132"];
+            var nodose_dog_names = [
+                "NT_SSAN_7",
+                "NT_SSAN_16"];
+            var lowdosestats = calculateSummaryStatsByPartTransGene(wbdata, lowdose_dog_names);
+            var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
+            var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
+//            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
+            var fill_order = [lowdosestats, middosestats, highdosestats];
+            var label_order = ["Low Dose", "Mid Dose", "High Dose"]
+
+
+            for (var i = 0; i < numDogs; i++) {
+                tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i+numDogs*3), fill_order[i].averages));
+                organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i+numDogs*4), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+(i+numDogs*3), label_order[i]));
+                dog_labels.push(addLabel(".window_"+(i+numDogs*4), label_order[i]));
+            }
 
         }
     });
@@ -199,58 +269,35 @@
             pieceList.push(
                     legend.append("g")
                     .attr("class", "legendGroup "+steps[i])
-                    .attr("transform", "translate(3,"+(3+(i*23))+")")
+                    .attr("transform", "translate(3,"+(3+(i*13))+")")
             );
             rectList.push(
                     pieceList[i].append("rect")
-                            .attr("height", "18px")
-                            .attr("width", "18px")
+                            .attr("height", "10px")
+                            .attr("width", "10px")
                             .style("stroke", "black")
                             .style("fill", function() { return scaleChoice(steps[i]); })
             )
             textList.push(
                     pieceList[i].append("text")
                             .attr("x", "22px")
-                            .attr("y", "14px")
+                            .attr("y", "10px")
                             .text(function() {
                                 if (i === (steps.length-1)) {
                                     return steps[i]+"-1";
                                 }
                                 else {
-                                    return steps[i]+"-"+(steps[i+1]-0.01);
+                                    return steps[i]+"-"+(steps[i+1]-0.01).toFixed(2);
                                 }
                             })
             );
         }
-
     }
 
-//    function makeDog(dogClassName,dogFileName) {
-//        return d3.selectAll(dogClassName)
-//                .attr("fill", function() {
-//                    var svgPart = this.id;
-//                    if (anatomyToSVGPart[svgPart] !== undefined) {
-//                        var data_to_use = wbdata.filter(function(n) {
-//                            return n.GENETHON === anatomyToSVGPart[svgPart];
-//                        });
-//                        var value_to_use_for_color;
-//                        if (isFinite(data_to_use[0][dogFileName])) {
-//                            value_to_use_for_color = +data_to_use[0][dogFileName];
-//                            if (value_to_use_for_color > 1) {
-//                                value_to_use_for_color = 1;
-//                            }
-//                            return scaleChoice(value_to_use_for_color);
-//                        }
-//                        else {
-//                            // In the case of an "ND" value
-//                            return "none"
-//                        }
-//                    }
-//                    else {
-//                        return "none";
-//                    }
-//                });
-//    }
+
+
+
+
 
 
 
@@ -291,6 +338,48 @@
         return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
     }
 
+    function calculateSummaryStatsByPartTransGene(tg_data, dog_names) {
+        var averages = {};
+        var medians = {};
+        var minimum = {};
+        var maximum = {};
+
+        // Calculate summary stats for each body part across all right side dogs
+        tg_data.map(function(v) {
+            var sum_for_part_list = [];
+            var denom = 0; // should use this if I want to calculate for all dogs in experiment
+            var min = 1;
+            var max = 0;
+            var med = [];
+            for (var k = 0; k < dog_names.length; k++) {
+                if (v[dog_names[k]] !== "") {
+                    //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+                    var value = +v[dog_names[k]];
+                    sum_for_part_list.push(value);
+                    denom = denom + 1;
+                    // should clarify with David how I should count the mean. Should blanks be counted?
+                    if (value < min) {
+                        min = value;
+                    }
+                    if (value > max) {
+                        max = value;
+                    }
+                    med.push(value);
+                }
+            }
+
+            sum_for_part_list = sum_for_part_list.filter(function(n){return(!isNaN(n));});
+            med = med.filter(function(n){return(!isNaN(n));});
+
+            averages[v.GENETHON] = sum_for_part_list.reduce(function(a,b){return a+b}) / sum_for_part_list.length;
+            minimum[v.GENETHON] = min;
+            maximum[v.GENETHON] = max;
+            medians[v.GENETHON] = median(med);
+        });
+
+        return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
+    }
+
     function makeAverageDog(dogClassName, avgObj) {
         return d3.selectAll(dogClassName)
                 .attr("fill", function() {
@@ -304,6 +393,23 @@
                     }
                     else {
                         return "none";
+                    }
+                });
+    }
+
+    function makeAverageDogTransGene(dogClassName, avgObj) {
+        return d3.selectAll(dogClassName)
+                .attr("fill", function() {
+                    var svgPart = this.id;
+                    if (anatomyToSVGPart[svgPart] !== undefined) {
+                        var value = avgObj[anatomyToSVGPart[svgPart]];
+                        if (value > 1) {
+                            value = 1;
+                        }
+                        return scaleChoice(value);
+                    }
+                    else {
+                        return "green";
                     }
                 });
     }
