@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extract_delete.html" afterPath="$PROJECT_DIR$/extract_delete.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layout_from_meeting.html" afterPath="$PROJECT_DIR$/layout_from_meeting.html" />
     </list>
     <ignored path="canine.iws" />
@@ -40,8 +39,8 @@
       <file leaf-file-name="layout_from_meeting.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7312704">
-              <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.95114005">
+              <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -362,14 +361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extract_delete.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="107" selection-start-line="9" selection-start-column="107" selection-end-line="9" selection-end-column="107" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -392,6 +383,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="116" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="399" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -513,6 +505,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="4.521193">
           <caret line="192" column="1" selection-start-line="192" selection-start-column="1" selection-end-line="192" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -598,6 +591,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.024429968">
           <caret line="116" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="399" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -612,6 +606,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5586319">
           <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -619,6 +614,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.252443">
           <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -662,18 +658,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extract_delete.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.09771987">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7312704">
-          <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.95114005">
+          <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
           <folding />
         </state>
       </provider>

@@ -63,7 +63,21 @@
         "lungs" : "Lung",
         "spleen" : "Spleen",
         "kidney" : "Kidneys",
-        "brain" : "Brain"
+        "brain" : "Brain",
+        "?": ["TRI bra",
+            "BI bra",
+            "VL",
+            "BI fem",
+            "TA",
+            "GA",
+            "Paravert",
+            "Interc",
+            "Dia",
+            "Heart RV",
+            "Heart RA",
+            "Heart LA",
+            "Heart Papillary"
+        ]
     };
 
     var rainbowColorScale = getRainbowScale();
@@ -104,89 +118,91 @@
 //            var dog_7 = renderDog("superficial","dog_7","window_7");
 
 
-            var superficial_dogs = [];
-            var deep_dogs = [];
-            var middle_dogs = [];
-            var organ_dogs = [];
-            var numDogs = 4
+            var tg_dogs = [];
+            var organ_dogs1 = [];
+            var vec1_dogs = [];
+            var vec2_dogs = [];
+            var organ_dogs2 = [];
+            var numDogs = 5
             for (var i = 0; i < numDogs; i++) {
-                superficial_dogs.push(renderDog("superficial","dog_"+i,"window_"+i));
-                middle_dogs.push(renderDog("middle","dog_"+(i+numDogs),"window_"+(i+numDogs)));
-                deep_dogs.push(renderDog("deep","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
-                organ_dogs.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                tg_dogs.push(renderDog("tg","dog_"+i,"window_"+i));
+                vec1_dogs.push(renderDog("vec1","dog_"+(i+numDogs),"window_"+(i+numDogs)));
+                vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
+                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
             }
 
 
             var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
 
-            var deepMuscleGroup = d3.selectAll("#deep_muscle_group").style("opacity", 0.7);
-            var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
-            var middleMuscleGroup = d3.selectAll("#middle_muscle_group").style("opacity", 0.7);
-            var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
-
-            var min_dog_fill = [];
-            var average_dog_fill = [];
-            var median_dog_fill = [];
-            var max_dog_fill = [];
-            var dog_labels = [];
-            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
-                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
-            var averages = {};
-            var medians = {};
-            var minimum = {};
-            var maximum = {};
-
-            // Calculate summary stats for each body part across all right side dogs
-            vdata.map(function(v) {
-                var sum_for_part = 0;
-                var denom = 0;
-                var min = 1;
-                var max = 0;
-                var med = [];
-                for (var k = 0; k < dog_names.length; k++) {
-                    if (v[dog_names[k]] !== "") {
-                        //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
-                        var value = +v[dog_names[k]]
-                        sum_for_part = sum_for_part + value;
-                        denom = denom + 1;
-                        // should clarify with David how I should count the mean. Should blanks be counted?
-                        if (value < min) {
-                            min = value;
-                        }
-                        if (value > max) {
-                            max = value;
-                        }
-                        med.push(value);
-                    }
-                }
-                averages[v.Part] = sum_for_part/denom;
-                minimum[v.Part] = min;
-                maximum[v.Part] = max;
-                medians[v.Part] = median(med);
-            });
-
-            console.log(averages);
-            console.log(minimum);
-            console.log(maximum);
-            console.log(medians);
-
-
-            min_dog_fill.push(makeAverageDog(".dog_"+0, minimum));
-            min_dog_fill.push(makeAverageDog(".dog_"+4, minimum));
-            min_dog_fill.push(makeAverageDog(".dog_"+8, minimum));
-            min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
-            average_dog_fill.push(makeAverageDog(".dog_"+2, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+6, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+10, averages));
-            average_dog_fill.push(makeAverageDog(".dog_"+14, averages));
-            median_dog_fill.push(makeAverageDog(".dog_"+1, medians));  // 1
-            median_dog_fill.push(makeAverageDog(".dog_"+5, medians));  // 5
-            median_dog_fill.push(makeAverageDog(".dog_"+9, medians)); // 9
-            median_dog_fill.push(makeAverageDog(".dog_"+13, medians)); // 13
-            max_dog_fill.push(makeAverageDog(".dog_"+3, maximum));
-            max_dog_fill.push(makeAverageDog(".dog_"+7, maximum));
-            max_dog_fill.push(makeAverageDog(".dog_"+11, maximum));
-            max_dog_fill.push(makeAverageDog(".dog_"+15, maximum));
+//            var deepMuscleGroup = d3.selectAll("#deep_muscle_group").style("opacity", 0.7);
+//            var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
+//            var middleMuscleGroup = d3.selectAll("#middle_muscle_group").style("opacity", 0.7);
+//            var superficialMuscleGroup = d3.selectAll("#superficial_muscle_group").style("opacity", 0.7);
+//
+//            var min_dog_fill = [];
+//            var average_dog_fill = [];
+//            var median_dog_fill = [];
+//            var max_dog_fill = [];
+//            var dog_labels = [];
+//            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
+//                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+//            var averages = {};
+//            var medians = {};
+//            var minimum = {};
+//            var maximum = {};
+//
+//            // Calculate summary stats for each body part across all right side dogs
+//            vdata.map(function(v) {
+//                var sum_for_part = 0;
+//                var denom = 0;
+//                var min = 1;
+//                var max = 0;
+//                var med = [];
+//                for (var k = 0; k < dog_names.length; k++) {
+//                    if (v[dog_names[k]] !== "") {
+//                        //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+//                        var value = +v[dog_names[k]]
+//                        sum_for_part = sum_for_part + value;
+//                        denom = denom + 1;
+//                        // should clarify with David how I should count the mean. Should blanks be counted?
+//                        if (value < min) {
+//                            min = value;
+//                        }
+//                        if (value > max) {
+//                            max = value;
+//                        }
+//                        med.push(value);
+//                    }
+//                }
+//                averages[v.Part] = sum_for_part/denom;
+//                minimum[v.Part] = min;
+//                maximum[v.Part] = max;
+//                medians[v.Part] = median(med);
+//            });
+//
+//            console.log(averages);
+//            console.log(minimum);
+//            console.log(maximum);
+//            console.log(medians);
+//
+//
+//            min_dog_fill.push(makeAverageDog(".dog_"+0, minimum));
+//            min_dog_fill.push(makeAverageDog(".dog_"+4, minimum));
+//            min_dog_fill.push(makeAverageDog(".dog_"+8, minimum));
+//            min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
+//            average_dog_fill.push(makeAverageDog(".dog_"+2, averages));
+//            average_dog_fill.push(makeAverageDog(".dog_"+6, averages));
+//            average_dog_fill.push(makeAverageDog(".dog_"+10, averages));
+//            average_dog_fill.push(makeAverageDog(".dog_"+14, averages));
+//            median_dog_fill.push(makeAverageDog(".dog_"+1, medians));  // 1
+//            median_dog_fill.push(makeAverageDog(".dog_"+5, medians));  // 5
+//            median_dog_fill.push(makeAverageDog(".dog_"+9, medians)); // 9
+//            median_dog_fill.push(makeAverageDog(".dog_"+13, medians)); // 13
+//            max_dog_fill.push(makeAverageDog(".dog_"+3, maximum));
+//            max_dog_fill.push(makeAverageDog(".dog_"+7, maximum));
+//            max_dog_fill.push(makeAverageDog(".dog_"+11, maximum));
+//            max_dog_fill.push(makeAverageDog(".dog_"+15, maximum));
 
 //            middle_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), averages));
 //            deep_dogs_fill.push(makeAverageDog(".dog_"+(i+numDogs), medians));
@@ -204,10 +220,10 @@
 //            var dog_labels2 = addLabel(".window_2", "Middle Muscles");
 //            var dog_labels3 = addLabel(".window_3", "Deep Muscles");
 //            var dog_labels4 = addLabel(".window_4", "Organ Muscles");
-            dog_labels.push(addLabel(".window_"+0, "Min"));
-            dog_labels.push(addLabel(".window_"+1, "Median"));
-            dog_labels.push(addLabel(".window_"+2, "Mean"));
-            dog_labels.push(addLabel(".window_"+3, "Max"));
+//            dog_labels.push(addLabel(".window_"+0, "Min"));
+//            dog_labels.push(addLabel(".window_"+1, "Median"));
+//            dog_labels.push(addLabel(".window_"+2, "Mean"));
+//            dog_labels.push(addLabel(".window_"+3, "Max"));
 
 
 
@@ -273,8 +289,8 @@
 
 		var groupid = {
 			"organ":"organ_group",
-			"vec1":"deep_muscle_group",
-			"vec2":"superficial_muscle_group",
+			"vec1":"vec1_group",
+			"vec2":"vec2_group",
             "tg": "tg_group"
 		};
 
@@ -292,7 +308,7 @@
             {"name":"brain",
                 "d":"M258.5,73.9c6.1,2.3,10.1,9.8,7.2,17 c5.1,1.8,3.9,14.8,0.2,17.5c-2.5,0.9-5,1.8-7.4,2.6c-0.8-0.9,7.2,5.6,9.1,9.8c-1.9,0.6-5.3,3.5-6.7,2.6c-3.1-1.9-7-6.6-7.9-10.6 c-5.7-1-8.7-5-12.5-7.9c-8.4,3.9-22,1.6-29.5-1.7c-1.4-1-2.9-1.9-4.3-2.9c-6.4-1.2-31.2-1.8-29-16.1c4.2-6.2,29.3-6.7,47-9.8 C235,74,254.2,72.3,258.5,73.9z"}];
 
-        var vec1 = [
+        var vec1_coordinates = [
             {"name":"Rhomboid_cervicus", "d":"M337.6,80.8c0.8,0.3,14.1,13.3,43.4,41.8 c25.2,25.2,52.2,49.8,74.2,78c17.1,22,34.1,42.2,56.6,58.8c19.5,14.3,32.7,18.6,59.9,25.4c5,1.3,3.4,14.4,1.8,19.2 c-3.5,10.6-15.6,33.1-27.4,33.8c-5.5-2.3-8.6-7.6-12-12c-5.3-6.8-11.3-14.3-18.2-19.4c-11.8-8.6-22.8-6.5-23-6.5 c-3.5-1-6.5-3.7-9.1-5.8c-10.5-8.4-18.2-22.3-25.4-33.8c-15.1-24.2-28.4-50-43.2-74.9c-8.2-13.9-16.1-28.4-25.7-41 c3.5,3.8-32.2-35.4-54-58.1C336.2,84.4,336.9,82.6,337.6,80.8z"},
             {"name":"levator_anguli_scapulae_inferior", "d":"M429,272.2 c0.6,17.7,1.1,35.4,1.7,53c0.6,6.6,1.3,13.1,1.9,19.7c1.3,6.1,3.4,11.7,5,18.2c1.1,5.4,2.2,10.7,3.4,16.1 c-8.4,19.8-16.8,39.7-25.2,59.5c-0.2-0.1-0.3-0.2-0.5-0.2c-1.7-12.3-3.4-24.6-5-37C416.6,358.4,422.8,315.3,429,272.2z"},
             {"name":"supraspinatus", "d":"M488.4,300.1c1.9,3.2-1,14-16.1,38.6 c-18.5,30.3-39.8,58.8-54.7,92.6c-5.8,13.1-14.3,26.9-17,42.5c-1.9-0.3-5.6-1.3-6.5-2.6c-2.9-9.2-2.7-18.8,0.2-39.6 c5.6-39.7,26.2-100,67.2-131.3C468.5,295.1,487.2,298.1,488.4,300.1z"},
@@ -315,7 +331,7 @@
         ];
 
 
-        var vec2 = [
+        var vec2_coordinates = [
             {"name":"zygomaticus", "d":"M297.4,110.2c0.6,0.1,1.1,0.2,1.7,0.2 c-0.2,0.2-0.3,0.5-0.5,0.7c-4.8,1.9-8.6,6.1-12.5,9.1c-19.3,15.3-31.5,37.5-46.6,57.1c-5.6,7.3-13,12-19.9,18 c-6.6,5.7-12.1,14.5-16.8,22.1c-3.9-1.7-7.4-3.6-10.6-6c0-0.4,0-0.8,0-1.2c2.1-4.1,7.8-6.8,11.3-9.6c2.7-3.2,5.4-6.4,8.2-9.6 c5.4-5.4,10.7-10.7,16.1-16.1c8.1-10,15.3-21.2,23.3-31.4c3.5-4.5,8.3-7.9,11.8-12.2c4.1-5.3,8.2-10.6,12.2-15.8 C282.5,113.7,290,111.9,297.4,110.2z"},
             {"name":"orbicularis_orbis", "d":"M226.6,85.2c5.6,0.2,7.9,3.8,10.3,7.2 c3.3,4.5,7.2,9.9,8.4,16.3c2.7,13.8-9,33.9-23.3,31.4c-6.3-1.1-14.5-2-17.3-6.7c-1.2-2-1.4-5.8-1-8.6c0.2-3.4,0.3-6.9,0.5-10.3 c1.3-5.6,4.7-9.4,6.7-14.2c1.8-4.2,2.2-8.8,5.5-11.3C219.4,86.9,223.1,86.8,226.6,85.2z M229.2,102.2c1.2,2.6,4.1,5.6,4.7,9.2 c1.1,7.7-7.2,18.8-10.9,17.4c-2.6-0.9-5.3-1.2-8.3-2.3c-1.1-0.4,0.1-4.2,0.2-5.8c0.1-1.9,1.1-3.1,1.2-5c0.5-3.1,3.5-4.1,4.3-6.7 c0.8-2.3,1.5-8.2,2.9-9.6C225.9,96.8,227.3,98.2,229.2,102.2z"},
             {"name":"sternohyoideus", "d":"M316.1,215.8c7.6,0.5,10.7,9.9,13.2,15.6 c7.6,17.3,19,58.1,19.4,59.8c4.9,13.9,9.8,27.8,14.6,41.8c9.7,25.1,18.6,51.5,25.4,79.2c1.8,7.1,0.2,16.3,1.4,24.2 c2.5,15.7,2.7,30.9,6.7,44.6c8.8,29.9,23.2,68,31.2,82.6c-0.2-0.1-0.3-0.2-0.5-0.2c-8.6-12.4-29.3-46.4-39.8-79.7 c-3.4-10.8-4.6-22.3-6.7-35c-2.4-14.1-1.2-28.4-4.3-40.8c-3.4-13.4-9.3-25.6-14.4-37.7c-7.5-17.9-15-35.8-22.6-53.8 c-8.4-19.4-24.6-63.2-25.2-64.3c-3-5.7-13.3-19.5-12-26.9C303.3,224.4,311.6,218.8,316.1,215.8z"},
@@ -340,7 +356,7 @@
             {"name":"iliocostalis", "d":"M1043,274.1c-15.1,2.3-34.3,11.8-39.4,24.2 c-7.5,18.3-0.6,51.1,2.2,69.1c-0.3-0.1-58.5-12.6-85.7-22.1c-6.4-2.3-21.8-9.1-23.8-9.6c3.5,0.9-54.1-3.3-93.1-4.1 c-8.3-10.6-29.6-27.7-53.8-35.8c-0.6-0.2-1.3-0.1-1-0.7c69-15.8,123.2-18.9,193-22.3C997.8,271.2,1018,272.9,1043,274.1z"}
         ];
 
-        var tg = [
+        var tg_coordinates = [
             {"name":"biceps_bra", "d":"M418.1,445.7c0,0-3.8,8.5-4.3,24 c-0.5,14.9,1.2,21.6,1.2,21.6s11.1,29.5,34.1,66c19.9,31.6,48.7,64.4,52.1,77.8c2.4,7.9,30.5,32.5,36.5,37 c6.3,4.7-2.4,10.6-2.4,10.6l-24.5-30.2c0,0,8.2,14.8,10.3,22.8c2.1,8-5.5,4.3-5.5,4.3s3-13-18-39.8c-4-5.1-19.8-17.7-33.2-31.4 c-16.2-16.6-23.6-25.6-35-42.1c-10.1-14.5-25.6-41.9-18.5-73.9c-3.9-25.4,1-45.4,1-45.4L418.1,445.7z"},
             {"name":"triceps", "d":"M515.2,378.9c13.8,0.2,17.1,20,21.4,30.5 c1,2.5,11.8,28.3,14.2,40.3c0.6,6.2,1.3,12.3,1.9,18.5c2.1,8.5,13.4,44,14.4,61c0.5,14.8-1.7,50-1.4,46.8 c5.1,13.7,10,38.2,10.8,43c0.1,2-7.2,13.3-7.2,22.6c-2.3-4.9-15.7-16.3-21.6-17.3c-6.3-1-21.1,4.8-44.6-9.6 c-18.6-11.4-33.9-29.9-47-46.8c-7.1-9.1-15.6-18-20.2-29.5c-1.3-3.3-7.8-39.5-10.3-53.5c0.1,0,0.2,0,0.2,0 c22.3,8.2,43.3,16.2,63.1,26.4c-7.1-9.5-16-17.2-22.3-27.8c-5-8.4-11-25.8-12.5-32.6c-2.1-9.7,7.4-21.1,9.4-24 C477,406.2,494.5,392.2,515.2,378.9z"},
             {"name":"_Vastus_lateralis", "d":"M1125.7,404c0,0-5.4,147.5-44.2,217.4 c-8,14.4,20.9,69.4,20.9,69.4l-3.6,5.5c0,0-26.8-52-26.9-62.9c-0.1-10.9-35-140.3-5.5-185.3c29.5-45,37.2-54,37.2-54l9.4,13.7 L1125.7,404z"},
@@ -403,14 +419,14 @@
                     if (dogType === "organ") {
                         return organ_coordinates;
                     }
-                    else if (dogType === "deep") {
-                        return deep_muscle_coordinates;
+                    else if (dogType === "vec1") {
+                        return vec1_coordinates;
                     }
-                    else if (dogType === "middle") {
-                        return middle_muscle_coordintes;
+                    else if (dogType === "vec2") {
+                        return vec2_coordinates;
                     }
-                    else if (dogType === "superficial") {
-                        return superficial_coordinates;
+                    else if (dogType === "tg") {
+                        return tg_coordinates;
                     }
                     else {
                         alert("NO DATA");
