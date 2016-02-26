@@ -96,9 +96,10 @@
             return (values[half-1] + values[half]) / 2.0;
     }
 
-    // Let's read in some data
+    // Let's read in some vector data. This step is repeated for TG data below in another d3.csv function
     var wbdata = [];
     var vdata = [];
+    d3.select("body").append("h1").text("Vector Distribution")
     d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
         if (verror !== null) {
             alert(verror);
@@ -108,88 +109,83 @@
             vdata = vdata.filter(function(n) {
                 return n.Part !== "";
             });
-//
-//            var dog_1 = renderDog("organ","dog_1","window_1");
-//            var dog_2 = renderDog("deep","dog_2","window_2");
-//            var dog_3 = renderDog("middle","dog_3","window_3");
-//            var dog_4 = renderDog("superficial","dog_4","window_4");
-//            var dog_5 = renderDog("superficial","dog_5","window_5");
-//            var dog_6 = renderDog("superficial","dog_6","window_6");
-//            var dog_7 = renderDog("superficial","dog_7","window_7");
 
 
-            var tg_dogs = [];
-            var organ_dogs1 = [];
+//            var tg_dogs = [];
+//            var organ_dogs1 = [];
             var vec1_dogs = [];
             var vec2_dogs = [];
             var organ_dogs2 = [];
-            var numDogs = 5
+            var numDogs = 3
             for (var i = 0; i < numDogs; i++) {
-                tg_dogs.push(renderDog("tg","dog_"+i,"window_"+i));
+//                tg_dogs.push(renderDog("tg","dog_"+i,"window_"+i));
                 vec1_dogs.push(renderDog("vec1","dog_"+(i+numDogs),"window_"+(i+numDogs)));
                 vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
-                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
-                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
+//                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
             }
 
 
-            var svgs = d3.selectAll("svg").attr("width", "25%").attr("height", "100%");
+            var svgs = d3.selectAll("svg").attr("width", "30%").attr("height", "100%");
 
             var vec1Group = d3.selectAll("#vec1_group").style("opacity", 0.7);
             var organGroup = d3.selectAll("#organ_group").style("opacity", 0.7);
             var vec2Group = d3.selectAll("#vec2_group").style("opacity", 0.7);
             var tgGroup = d3.selectAll("#tg_group").style("opacity", 0.7);
-//
-//            var min_dog_fill = [];
-//            var average_dog_fill = [];
-//            var median_dog_fill = [];
-//            var max_dog_fill = [];
-//            var dog_labels = [];
-//            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
-//                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
-//            var averages = {};
-//            var medians = {};
-//            var minimum = {};
-//            var maximum = {};
-//
-//            // Calculate summary stats for each body part across all right side dogs
-//            vdata.map(function(v) {
-//                var sum_for_part = 0;
-//                var denom = 0;
-//                var min = 1;
-//                var max = 0;
-//                var med = [];
-//                for (var k = 0; k < dog_names.length; k++) {
-//                    if (v[dog_names[k]] !== "") {
-//                        //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
-//                        var value = +v[dog_names[k]]
-//                        sum_for_part = sum_for_part + value;
-//                        denom = denom + 1;
-//                        // should clarify with David how I should count the mean. Should blanks be counted?
-//                        if (value < min) {
-//                            min = value;
-//                        }
-//                        if (value > max) {
-//                            max = value;
-//                        }
-//                        med.push(value);
-//                    }
-//                }
-//                averages[v.Part] = sum_for_part/denom;
-//                minimum[v.Part] = min;
-//                maximum[v.Part] = max;
-//                medians[v.Part] = median(med);
-//            });
-//
-//            console.log(averages);
-//            console.log(minimum);
-//            console.log(maximum);
-//            console.log(medians);
-//
-//
-//            min_dog_fill.push(makeAverageDog(".dog_"+0, minimum));
-//            min_dog_fill.push(makeAverageDog(".dog_"+4, minimum));
-//            min_dog_fill.push(makeAverageDog(".dog_"+8, minimum));
+
+            var vec1_dog_fill = [];
+            var vec2_dog_fill = [];
+            var organ2_dog_fill = [];
+            var dog_labels = [];
+            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
+                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+            var averages = {};
+            var medians = {};
+            var minimum = {};
+            var maximum = {};
+
+            // Calculate summary stats for each body part across all right side dogs
+            vdata.map(function(v) {
+                var sum_for_part = 0;
+                var denom = 0;
+                var min = 1;
+                var max = 0;
+                var med = [];
+                for (var k = 0; k < dog_names.length; k++) {
+                    if (v[dog_names[k]] !== "") {
+                        //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+                        var value = +v[dog_names[k]]
+                        sum_for_part = sum_for_part + value;
+                        denom = denom + 1;
+                        // should clarify with David how I should count the mean. Should blanks be counted?
+                        if (value < min) {
+                            min = value;
+                        }
+                        if (value > max) {
+                            max = value;
+                        }
+                        med.push(value);
+                    }
+                }
+                averages[v.Part] = sum_for_part/denom;
+                minimum[v.Part] = min;
+                maximum[v.Part] = max;
+                medians[v.Part] = median(med);
+            });
+
+            console.log(averages);
+            console.log(minimum);
+            console.log(maximum);
+            console.log(medians);
+
+
+            for (var i = 0; i < numDogs; i++) {
+                vec1_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs), averages));
+                vec2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), averages));
+                organ2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*3), averages));
+            }
+
+
 //            min_dog_fill.push(makeAverageDog(".dog_"+12, minimum));
 //            average_dog_fill.push(makeAverageDog(".dog_"+2, averages));
 //            average_dog_fill.push(makeAverageDog(".dog_"+6, averages));
