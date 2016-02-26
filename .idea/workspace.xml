@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/color.js" afterPath="$PROJECT_DIR$/js/color.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layout_from_meeting.html" afterPath="$PROJECT_DIR$/layout_from_meeting.html" />
     </list>
     <ignored path="canine.iws" />
@@ -39,8 +40,18 @@
       <file leaf-file-name="layout_from_meeting.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8177172">
-              <caret line="176" column="97" selection-start-line="176" selection-start-column="97" selection-end-line="176" selection-end-column="97" />
+            <state vertical-scroll-proportion="0.35775128">
+              <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="color.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/color.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -86,13 +97,13 @@
         <option value="$PROJECT_DIR$/dog_md_SSAN_10.html" />
         <option value="$PROJECT_DIR$/dog_md_SSAN_14.html" />
         <option value="$PROJECT_DIR$/dog_hd_SSAN_104.html" />
-        <option value="$PROJECT_DIR$/js/color.js" />
         <option value="$PROJECT_DIR$/all_dogs.html" />
         <option value="$PROJECT_DIR$/all_dogs_wb.html" />
         <option value="$PROJECT_DIR$/all_dogs_vector_bothsides.html" />
         <option value="$PROJECT_DIR$/all_dogs_vector_bothmean.html" />
         <option value="$PROJECT_DIR$/extract_delete.html" />
         <option value="$PROJECT_DIR$/layout_from_meeting.html" />
+        <option value="$PROJECT_DIR$/js/color.js" />
       </list>
     </option>
   </component>
@@ -579,14 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/color.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07064364">
-          <caret line="3" column="96" selection-start-line="3" selection-start-column="96" selection-end-line="3" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightside.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.024429968">
@@ -658,10 +661,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/color.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8177172">
-          <caret line="176" column="97" selection-start-line="176" selection-start-column="97" selection-end-line="176" selection-end-column="97" />
+        <state vertical-scroll-proportion="0.35775128">
+          <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
           <folding />
         </state>
       </provider>

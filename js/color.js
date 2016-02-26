@@ -9,3 +9,14 @@ function getRedScale(){
         .domain([(1/8)*0,(1/8)*1,(1/8)*2,(1/8)*3,(1/8)*4,(1/8)*5,(1/8)*6,(1/8)*7,(1/8)*8])
         .range(colorbrewer.Reds[9]);
 }
+
+function getRedScaleCustomStep(s){
+    if(isFinite(s) & s >= 3 & s <= 9 ){
+        return d3.scale.quantize()
+            .domain([0,1])
+            .range(colorbrewer.Reds[s]);
+    }
+    else {
+        console.log("Color Scale Error");
+    }
+}

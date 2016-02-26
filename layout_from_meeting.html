@@ -82,7 +82,8 @@
 
     var rainbowColorScale = getRainbowScale();
     var RedColorScale = getRedScale();
-    var scaleChoice = RedColorScale;
+    var RedCustomStep = getRedScaleCustomStep(5);
+    var scaleChoice = RedCustomStep;
 
     function median(values) {
 
@@ -99,7 +100,7 @@
     // Let's read in some vector data. This step is repeated for TG data below in another d3.csv function
     var wbdata = [];
     var vdata = [];
-    d3.select("body").append("h1").text("Vector Distribution")
+    d3.select("body").append("h1").text("Vector Distribution");
     d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
         if (verror !== null) {
             alert(verror);
@@ -155,26 +156,16 @@
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [nodosestats, lowdosestats, middosestats, highdosestats];
-//            console.log(summarystats);
-            console.log(lowdosestats);
-            console.log(middosestats);
-            console.log(highdosestats);
-            console.log(nodosestats);
-            var averages = summarystats.averages;
-            var medians = summarystats.medians;
-            var minimum = summarystats.minimum;
-            var maximum = summarystats.maximum;
-
-//            console.log(averages);
-//            console.log(minimum);
-//            console.log(maximum);
-//            console.log(medians);
+            var label_order = ["No Treatment", "Low Dose", "Mid Dose", "High Dose"]
 
 
             for (var i = 0; i < numDogs; i++) {
                 vec1_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
                 vec2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs), fill_order[i].averages));
                 organ2_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+i, label_order[i]));
+                dog_labels.push(addLabel(".window_"+(i+numDogs), label_order[i]));
+                dog_labels.push(addLabel(".window_"+(i+numDogs*2), label_order[i]));
             }
 
 
