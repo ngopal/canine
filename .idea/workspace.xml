@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/color.js" afterPath="$PROJECT_DIR$/js/color.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layout_from_meeting.html" afterPath="$PROJECT_DIR$/layout_from_meeting.html" />
     </list>
     <ignored path="canine.iws" />
@@ -41,8 +40,8 @@
       <file leaf-file-name="layout_from_meeting.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5621806">
-              <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.4599659">
+              <caret line="209" column="64" selection-start-line="209" selection-start-column="64" selection-end-line="209" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -676,8 +675,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/layout_from_meeting.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5621806">
-          <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.4599659">
+          <caret line="209" column="64" selection-start-line="209" selection-start-column="64" selection-end-line="209" selection-end-column="64" />
           <folding />
         </state>
       </provider>

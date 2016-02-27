@@ -101,7 +101,7 @@
             return (values[half-1] + values[half]) / 2.0;
     }
 
-    // Let's read in some vector data. This step is repeated for TG data below in another d3.csv function
+    // Let's read in some vector data.
     var wbdata = [];
     var vdata = [];
     d3.select("body").append("h1").text("Vector Distribution");
@@ -123,13 +123,13 @@
             var numDogs = 3;
             for (var i = 0; i < numDogs; i++) {
                 legendDogs.push(makeLegend(colorSteps));
-                vec1_dogs.push(renderDog("vec1","dog_"+(i),"window_"+(i)));
-                vec2_dogs.push(renderDog("vec2","dog_"+(i+numDogs),"window_"+(i+numDogs)));
-                organ_dogs2.push(renderDog("organ","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
+                vec1_dogs.push(renderDog("vectorPort","vec1","dog_"+(i),"window_"+(i)));
+                vec2_dogs.push(renderDog("vectorPort","vec2","dog_"+(i+numDogs),"window_"+(i+numDogs)));
+                organ_dogs2.push(renderDog("vectorPort","organ","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
             }
 
 
-            var svgs = d3.selectAll("svg").attr("width", "29%").attr("height", "100%");
+            var svgs = d3.selectAll(".vectorPort").attr("width", "29%").attr("height", "100%");
             var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var vec1Group = d3.selectAll("#vec1_group").style("opacity", 0.7);
@@ -202,12 +202,12 @@
             var numDogs = 3;
             for (var i = 0; i < numDogs; i++) {
                 legendDogs2.push(makeLegend(colorSteps));
-                tg_dogs.push(renderDog("tg","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
-                organ_dogs1.push(renderDog("organ","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
+                tg_dogs.push(renderDog("tgPort","tg","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
+                organ_dogs1.push(renderDog("tgPort","organ","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
             }
 
 
-            var svgs = d3.selectAll("svg").attr("width", "29%").attr("height", "100%");
+            var svgs = d3.selectAll(".tgPort").attr("width", "44%").attr("height", "100%");
             var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var tgGroup = d3.selectAll("#tg_group").style("opacity", 0.7);
@@ -424,7 +424,7 @@
     }
 
 
-    function renderDog(dogType,dogNumber,windowNumber) {
+    function renderDog(svgPortClass,dogType,dogNumber,windowNumber) {
 
 
 		var groupid = {
@@ -534,7 +534,7 @@
                 })
                 .attr("xml:space", "preserve")
                 .attr("class", function() {
-                    return windowNumber;
+                    return windowNumber+' '+svgPortClass;
                 });
         var image = svg.append("image")
                 .attr("overflow","visible")
