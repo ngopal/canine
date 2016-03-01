@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/render.js" afterPath="$PROJECT_DIR$/js/render.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layout_from_meeting_linearColorScale.html" afterPath="$PROJECT_DIR$/layout_from_meeting_linearColorScale.html" />
     </list>
     <ignored path="canine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="layout_from_meeting_linearColorScale.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout_from_meeting_linearColorScale.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8289902">
-              <caret line="69" column="21" selection-start-line="69" selection-start-column="9" selection-end-line="69" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.46254072">
+              <caret line="545" column="120" selection-start-line="545" selection-start-column="120" selection-end-line="545" selection-end-column="120" />
               <folding />
             </state>
           </provider>
@@ -72,7 +73,6 @@
         <option value="$PROJECT_DIR$/all_dogs_vector_rightside.html" />
         <option value="$PROJECT_DIR$/all_dogs_vector_leftmean.html" />
         <option value="$PROJECT_DIR$/all_dogs_vector_rightmean.html" />
-        <option value="$PROJECT_DIR$/js/render.js" />
         <option value="$PROJECT_DIR$/dog_ld_SSAN_11.html" />
         <option value="$PROJECT_DIR$/dog_ld_SSAN_8.html" />
         <option value="$PROJECT_DIR$/dog_nt_SSAN_7.html" />
@@ -90,6 +90,7 @@
         <option value="$PROJECT_DIR$/extract_delete.html" />
         <option value="$PROJECT_DIR$/js/color.js" />
         <option value="$PROJECT_DIR$/layout_from_meeting.html" />
+        <option value="$PROJECT_DIR$/js/render.js" />
         <option value="$PROJECT_DIR$/layout_from_meeting_linearColorScale.html" />
       </list>
     </option>
@@ -501,14 +502,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/render.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.521193">
-          <caret line="192" column="1" selection-start-line="192" selection-start-column="1" selection-end-line="192" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dog_ld_SSAN_11.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.117263846">
@@ -669,10 +662,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/render.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50549453">
+          <caret line="131" column="5" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/layout_from_meeting_linearColorScale.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8289902">
-          <caret line="69" column="21" selection-start-line="69" selection-start-column="9" selection-end-line="69" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.46254072">
+          <caret line="545" column="120" selection-start-line="545" selection-start-column="120" selection-end-line="545" selection-end-column="120" />
           <folding />
         </state>
       </provider>

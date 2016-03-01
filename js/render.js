@@ -123,6 +123,7 @@ function renderDog(dogType,dogNumber,windowNumber) {
         "superficial": {"viewBox": "0 0 1447 1179.1", "enablebackground": "new 0 0 1447 1179.1"}
     };
 
+
     var imageData = {
         "organ": {"overflow":"visible", "width":"5865", "height":"5007", "source":"svgs/VECTORS_ORGANS.png",  "transform":"matrix(0.24 0 0 0.24 0 -1)"},
         "deep": {"overflow":"visible", "width":"6048", "height":"5108", "source":"svgs/VECTORS_DEEP_MUSCLES_base.png",  "transform":"matrix(0.24 0 0 0.24 -1.0029 -2.0013)"},
