@@ -180,6 +180,7 @@
             var lowdosestats = calculateSummaryStatsByPart(vdata, lowdose_dog_names);
             var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
+            console.log(highdosestats)
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [lowdosestats, middosestats, highdosestats];
@@ -256,6 +257,7 @@
             var lowdosestats = calculateSummaryStatsByPartTransGene(wbdata, lowdose_dog_names);
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
+            console.log(highdosestats)
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats];
             var label_order = ["Low Dose", "Mid Dose", "High Dose"]
