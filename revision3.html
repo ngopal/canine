@@ -221,7 +221,7 @@
                               lowdosestats, middosestats, highdosestats];
             var label_order = ["Low Dose", "Mid Dose", "High Dose",
                                "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose"]
+                               "Low Dose", "Mid Dose", "High Dose"];
 
 
             for (var i = 0; i < numDogs; i++) {
@@ -264,14 +264,16 @@
             var organ_dogs1 = [];
             var legendDogs2 = [];
             var numDogs = 3;
-            for (var i = 0; i < numDogs; i++) {
-                //legendDogs2.push(makeLegend(colorSteps));
-                tg_dogs.push(renderDog("tgPort","tg_muscles","dog_"+(i+numDogs*3),"window_"+(i+numDogs*3)));
-                organ_dogs1.push(renderDog("tgPort","tg_organs","dog_"+(i+numDogs*4),"window_"+(i+numDogs*4)));
+            for (var i = numDogs*3; i < numDogs*4; i++) {
+                tg_dogs.push(renderDog("tgPort","tg_muscles","dog_"+(i),"window_"+(i)));
+            }
+
+            for (var i = numDogs*4; i < numDogs*5; i++) {
+                organ_dogs1.push(renderDog("tgPort","tg_organs","dog_"+(i),"window_"+(i)));
             }
 
 
-            var svgs = d3.selectAll(".tgPort").attr("width", "50%").attr("height", "100%");
+            var svgs = d3.selectAll(".tgPort").attr("width", "33%").attr("height", "100%");
             //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var tgGroup = d3.selectAll("#tgmuscles_group").style("opacity", 0.7);
@@ -300,17 +302,32 @@
             var lowdosestats = calculateSummaryStatsByPartTransGene(wbdata, lowdose_dog_names);
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
-            console.log(highdosestats)
+            console.log(highdosestats);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
-            var fill_order = [lowdosestats, middosestats, highdosestats];
-            var label_order = ["Low Dose", "Mid Dose", "High Dose"]
+            var fill_order = [lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats];
+            var label_order = ["Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose"];
 
 
-            for (var i = 0; i < numDogs; i++) {
-                tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i+numDogs*3), fill_order[i].averages));
-                organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i+numDogs*4), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+(i+numDogs*3), label_order[i]));
-                dog_labels.push(addLabel(".window_"+(i+numDogs*4), label_order[i]));
+            for (var i = numDogs*3; i < numDogs*4; i++) {
+                tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
+            }
+
+            for (var i = numDogs*4; i < numDogs*5; i++) {
+                organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
 
         }
@@ -592,7 +609,7 @@
 
         var svgViewData = {
             //"vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
-            "vcn_superficial": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
+            "vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
             "vcn_deep": {"viewBox": "0 0 1408.4 1160.9", "enablebackground": "new 0 0 1408.4 1160.9"},
             "vcn_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
             "tg_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
