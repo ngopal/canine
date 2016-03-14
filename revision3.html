@@ -170,10 +170,15 @@
             var legendDogs = [];
             var numDogs = 3;
             for (var i = 0; i < numDogs; i++) {
-                //legendDogs.push(makeLegend(colorSteps));
                 vcn_sfc_dogs.push(renderDog("vectorPort","vcn_superficial","dog_"+(i),"window_"+(i)));
-                vcn_deep_dogs.push(renderDog("vectorPort","vcn_deep","dog_"+(i+numDogs),"window_"+(i+numDogs)));
-                vcn_organ_dogs.push(renderDog("vectorPort","vcn_organs","dog_"+(i+numDogs*2),"window_"+(i+numDogs*2)));
+            }
+
+            for (var i = numDogs; i < numDogs*2; i++) {
+                vcn_deep_dogs.push(renderDog("vectorPort","vcn_deep","dog_"+(i),"window_"+(i)));
+            }
+
+            for (var i = numDogs*2; i < numDogs*3; i++) {
+                vcn_organ_dogs.push(renderDog("vectorPort","vcn_organs","dog_"+(i),"window_"+(i)));
             }
 
 
@@ -211,17 +216,27 @@
             console.log(highdosestats)
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
-            var fill_order = [lowdosestats, middosestats, highdosestats];
-            var label_order = ["Low Dose", "Mid Dose", "High Dose"]
+            var fill_order = [lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats];
+            var label_order = ["Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose",
+                               "Low Dose", "Mid Dose", "High Dose"]
 
 
             for (var i = 0; i < numDogs; i++) {
                 vcn_sfc_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-                vcn_deep_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs), fill_order[i].averages));
-                vcn_organ_dog_fill.push(makeAverageDog(".dog_"+(i+numDogs*2), fill_order[i].averages));
                 dog_labels.push(addLabel(".window_"+i, label_order[i]));
-                dog_labels.push(addLabel(".window_"+(i+numDogs), label_order[i]));
-                dog_labels.push(addLabel(".window_"+(i+numDogs*2), label_order[i]));
+            }
+
+            for (var i = numDogs; i < numDogs*2; i++) {
+                vcn_deep_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
+            }
+
+            for (var i = numDogs*2; i < numDogs*3; i++) {
+                vcn_organ_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
+                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
 
             // Making the legend
@@ -459,7 +474,7 @@
                         return scaleChoice(value);
                     }
                     else {
-                        return "green";
+                        return "#333333";
                     }
                 });
     }
@@ -576,7 +591,8 @@
         ];
 
         var svgViewData = {
-            "vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
+            //"vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
+            "vcn_superficial": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
             "vcn_deep": {"viewBox": "0 0 1408.4 1160.9", "enablebackground": "new 0 0 1408.4 1160.9"},
             "vcn_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
             "tg_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
