@@ -12,9 +12,69 @@
             float: right;
             clear: right;
         }
+        .tableHeader {
+            text-align: center;
+            font-family: "Helvetica Neue";
+        }
+        .tableDogLabels {
+            font-family: "Helvetica Neue";
+        }
     </style>
 </head>
 <body>
+
+<h1>Vector Distribution</h1>
+<table width="100%" height="100%" cellspacing="0" cellpadding="0">
+    <tr class="tableVector">
+        <td class="tableDogLabels"></td>
+        <td class="tableHeader tableLowDose">Low Dose</td>
+        <td class="tableHeader tableMidDose">Mid Dose</td>
+        <td class="tableHeader tableHighDose">High Dose</td>
+    </tr>
+    <tr class="tableRowSuperficial">
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Superficial Muscles</td>
+        <td class="tableLowDose LD1 SuperficialCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD1 SuperficialCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD1 SuperficialCanine3" width="30%"></td>
+    </tr>
+    <tr class="tableRowDeep">
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Deep Muscles</td>
+        <td class="tableLowDose LD2 DeepCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD2 DeepCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD2 DeepCanine3" width="30%"></td>
+    </tr>
+    <tr class="tableRowOrgans">
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Organs</td>
+        <td class="tableLowDose LD3 OrganCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD3 OrganCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD3 OrganCanine2" width="30%"></td>
+    </tr>
+</table>
+
+<hr>
+
+<h1>Transgene Expression</h1>
+<table>
+    <tr class="tableTransGene" width="100%" height="100%" cellspacing="0" cellpadding="0">
+        <td class="tableDogLabels"></td>
+        <td class="tableHeader tableLowDose">Low Dose</td>
+        <td class="tableHeader tableMidDose">Mid Dose</td>
+        <td class="tableHeader tableHighDose">High Dose</td>
+    </tr>
+    <tr class="tableRowMuscles">
+        <td class="tableDogLabels">Muscles</td>
+        <td class="tableLowDose TGLD1 SuperficialCanine1"></td>
+        <td class="tableMidDose TGMD1 SuperficialCanine2"></td>
+        <td class="tableHighDose TGHD1 SuperficialCanine3"></td>
+    </tr>
+    <tr class="tableRowOrgans">
+        <td class="tableDogLabels">Organs</td>
+        <td class="tableLowDose TGLD2 OrganCanine1"></td>
+        <td class="tableMidDose TGMD2 OrganCanine2"></td>
+        <td class="tableHighDose TGHD2 OrganCanine2"></td>
+    </tr>
+</table>
+
 <script src="node_modules/d3/d3.min.js"></script>
 <script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
 <script src="node_modules/colorbrewer/colorbrewer.js"></script>
@@ -152,7 +212,6 @@
     // Let's read in some vector data.
     var wbdata = [];
     var vdata = [];
-    d3.select("body").append("h1").text("Vector Distribution");
     d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
         if (verror !== null) {
             alert(verror);
@@ -182,7 +241,7 @@
             }
 
 
-            var svgs = d3.selectAll(".vectorPort").attr("width", "33%").attr("height", "100%");
+            var svgs = d3.selectAll(".vectorPort").attr("width", "100%").attr("height", "100%");
             //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var vcnSuperfGroup = d3.selectAll("#vcnsuperficial_group").style("opacity", 0.7);
@@ -192,7 +251,7 @@
             var vcn_sfc_dog_fill = [];
             var vcn_deep_dog_fill = [];
             var vcn_organ_dog_fill = [];
-            var dog_labels = [];
+            //var dog_labels = [];
             var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
                 "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
             var lowdose_dog_names = [
@@ -219,30 +278,22 @@
             var fill_order = [lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats];
-            var label_order = ["Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose"];
 
 
             for (var i = 0; i < numDogs; i++) {
                 vcn_sfc_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+i, label_order[i]));
             }
 
             for (var i = numDogs; i < numDogs*2; i++) {
                 vcn_deep_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
 
             for (var i = numDogs*2; i < numDogs*3; i++) {
                 vcn_organ_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
 
-            // Making the legend
-//            makeLegend(colorSteps);
 
-
+            organizeIntoTable();
 
 
         }
@@ -253,8 +304,6 @@
             alert(wberror);
         }
         else {
-            var hr = d3.select("body").append("hr");
-            var tgtitle = d3.select("body").append("h1").text("Transgene Expression");
             wbdata = data;
             wbdata = wbdata.filter(function (n) {
                 return n.GENETHON !== "";
@@ -273,7 +322,7 @@
             }
 
 
-            var svgs = d3.selectAll(".tgPort").attr("width", "33%").attr("height", "100%");
+            var svgs = d3.selectAll(".tgPort").attr("width", "110%").attr("height", "110%");
             //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
 
             var tgGroup = d3.selectAll("#tgmuscles_group").style("opacity", 0.7);
@@ -281,7 +330,6 @@
 
             var tg_dog_fill = [];
             var organ1_dog_fill = [];
-            var dog_labels = [];
             var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
                 "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
             var lowdose_dog_names = [
@@ -311,24 +359,17 @@
                               lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats];
-            var label_order = ["Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose",
-                               "Low Dose", "Mid Dose", "High Dose"];
 
 
             for (var i = numDogs*3; i < numDogs*4; i++) {
                 tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
 
             for (var i = numDogs*4; i < numDogs*5; i++) {
                 organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
-                dog_labels.push(addLabel(".window_"+(i), label_order[i]));
             }
+
+            organizeIntoTableTransGene();
 
         }
     });
@@ -691,7 +732,31 @@
     }
 
 
+
+    function organizeIntoTable() {
+        $(".window_0").detach().appendTo('.LD1');
+        $(".window_1").detach().appendTo('.MD1');
+        $(".window_2").detach().appendTo('.HD1');
+        $(".window_3").detach().appendTo('.LD2');
+        $(".window_4").detach().appendTo('.MD2');
+        $(".window_5").detach().appendTo('.HD2');
+        $(".window_6").detach().appendTo('.LD3');
+        $(".window_7").detach().appendTo('.MD3');
+        $(".window_8").detach().appendTo('.HD3');
+    }
+
+    function organizeIntoTableTransGene() {
+        $(".window_9").detach().appendTo('.TGLD1');
+        $(".window_10").detach().appendTo('.TGMD1');
+        $(".window_11").detach().appendTo('.TGHD1');
+        $(".window_12").detach().appendTo('.TGLD2');
+        $(".window_13").detach().appendTo('.TGMD2');
+        $(".window_14").detach().appendTo('.TGHD2');
+    }
+
+
 </script>
+
 
 </body>
 </html>
