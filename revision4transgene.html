@@ -186,98 +186,6 @@
             return (values[half-1] + values[half]) / 2.0;
     }
 
-    // Let's read in some vector data.
-    var wbdata = [];
-    var vdata = [];
-    d3.csv("data/SNBL08901_cMTM1-vector_biodistribution.csv", function(verror, vector) {
-        if (verror !== null) {
-            alert(verror);
-        }
-        else {
-            vdata = vector;
-            vdata = vdata.filter(function(n) {
-                return n.Part !== "";
-            });
-
-
-            var vcn_sfc_dogs = [];
-            var vcn_deep_dogs = [];
-            var vcn_organ_dogs = [];
-            var legendDogs = [];
-            var numDogs = 3;
-            for (var i = 0; i < numDogs; i++) {
-                vcn_sfc_dogs.push(renderDog("vectorPort","vcn_superficial","dog_"+(i),"window_"+(i)));
-            }
-
-            for (var i = numDogs; i < numDogs*2; i++) {
-                vcn_deep_dogs.push(renderDog("vectorPort","vcn_deep","dog_"+(i),"window_"+(i)));
-            }
-
-            for (var i = numDogs*2; i < numDogs*3; i++) {
-                vcn_organ_dogs.push(renderDog("vectorPort","vcn_organs","dog_"+(i),"window_"+(i)));
-            }
-
-
-            var svgs = d3.selectAll(".vectorPort").attr("width", "100%").attr("height", "100%");
-            //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
-
-            var vcnSuperfGroup = d3.selectAll("#vcnsuperficial_group").style("opacity", 0.7);
-            var vcnDeepGroup = d3.selectAll("#vcndeep_group").style("opacity", 0.7);
-            var vcnOrganGroup = d3.selectAll("#vcnorgans_group").style("opacity", 0.7);
-
-            var vcn_sfc_dog_fill = [];
-            var vcn_deep_dog_fill = [];
-            var vcn_organ_dog_fill = [];
-            //var dog_labels = [];
-            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
-                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
-            var lowdose_dog_names = [
-                "Right_SSAN_8","Left_SSAN_8",
-                "Right_SSAN_11", "Left_SSAN_11",
-                "Right_SSAN_18", "Left_SSAN_18"];
-            var middose_dog_names = [
-                "Right_SSAN_4","Left_SSAN_4",
-                "Right_SSAN_10", "Left_SSAN_10",
-                "Right_SSAN_14", "Left_SSAN_14"];
-            var highdose_dog_names = [
-                "Right_SSAN_104","Left_SSAN_104",
-                "Right_SSAN_106", "Left_SSAN_106",
-                "Right_SSAN_132", "Left_SSAN_132"];
-            var nodose_dog_names = [
-                "Right_SSAN_7","Left_SSAN_7",
-                "Right_SSAN_16", "Left_SSAN_16"];
-            var lowdosestats = calculateSummaryStatsByPart(vdata, lowdose_dog_names);
-            var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
-            var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
-            console.log(highdosestats);
-            var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
-                    .map(function(d) { return highdosestats.averages[d];}));
-            scaleChoice = getVectorScale(topendofcolorscale);
-            var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
-            var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
-            var fill_order = [lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats];
-
-
-            for (var i = 0; i < numDogs; i++) {
-                vcn_sfc_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-            }
-
-            for (var i = numDogs; i < numDogs*2; i++) {
-                vcn_deep_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-            }
-
-            for (var i = numDogs*2; i < numDogs*3; i++) {
-                vcn_organ_dog_fill.push(makeAverageDog(".dog_"+(i), fill_order[i].averages));
-            }
-
-
-            organizeIntoTable();
-
-
-        }
-    });
 
     d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(wberror, data) {
         if (wberror !== null) {
@@ -333,7 +241,11 @@
             console.log(highdosestats);
             var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
                     .map(function(d) { return highdosestats.averages[d];}));
+            var numstoplay = Object.keys(highdosestats.medians)
+                    .map(function(d) { return highdosestats.medians[d];});
             scaleChoice = getTransgeneScale(topendofcolorscale);
+            console.log(["Scale Range", [0, topendofcolorscale]]);
+            console.log(numstoplay);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,
@@ -492,9 +404,9 @@
                     var svgPart = this.id;
                     if (vectorBioDistToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[vectorBioDistToSVGPart[svgPart]];
-                        if (value > 1) {
-                            value = 1;
-                        }
+//                        if (value > 1) {
+//                            value = 1;
+//                        }
                         return scaleChoice(value);
                     }
                     else {
@@ -509,9 +421,9 @@
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[anatomyToSVGPart[svgPart]];
-                        if (value > 1) {
-                            value = 1;
-                        }
+//                        if (value > 1) {
+//                            value = 1;
+//                        }
                         return scaleChoice(value);
                     }
                     else {

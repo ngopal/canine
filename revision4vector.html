@@ -261,6 +261,7 @@
             var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
                     .map(function(d) { return highdosestats.averages[d];}));
             scaleChoice = getVectorScale(topendofcolorscale);
+            console.log(["Scale Range", [0, topendofcolorscale]]);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [lowdosestats, middosestats, highdosestats,
@@ -379,9 +380,9 @@
                     var svgPart = this.id;
                     if (vectorBioDistToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[vectorBioDistToSVGPart[svgPart]];
-                        if (value > 1) {
-                            value = 1;
-                        }
+//                        if (value > 1) {
+//                            value = 1;
+//                        }
                         return scaleChoice(value);
                     }
                     else {
@@ -396,9 +397,9 @@
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[anatomyToSVGPart[svgPart]];
-                        if (value > 1) {
-                            value = 1;
-                        }
+//                        if (value > 1) {
+//                            value = 1;
+//                        }
                         return scaleChoice(value);
                     }
                     else {
