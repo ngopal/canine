@@ -249,7 +249,10 @@
             var lowdosestats = calculateSummaryStatsByPart(vdata, lowdose_dog_names);
             var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
-            console.log(highdosestats)
+            console.log(highdosestats);
+            var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            scaleChoice = getVectorScale(topendofcolorscale);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [lowdosestats, middosestats, highdosestats,
@@ -328,6 +331,9 @@
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
             console.log(highdosestats);
+            var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            scaleChoice = getTransgeneScale(topendofcolorscale);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,

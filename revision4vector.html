@@ -19,7 +19,7 @@
         .tableDogLabels {
             font-family: "Helvetica Neue";
         }
-        #transGeneTable {
+        #vectorTable {
             /*position: absolute;*/
             /*top: 0;*/
             /*bottom: 0;*/
@@ -30,27 +30,35 @@
 </head>
 <body>
 
-<h1>Transgene Expression</h1>
-<table id="transGeneTable" width="100%" height="100%" cellspacing="0" cellpadding="0">
-    <tr class="tableTransGene">
+<h1>Vector Distribution</h1>
+<table id="vectorTable" width="100%" height="100%">
+    <tr class="tableVector">
         <td class="tableDogLabels"></td>
         <td class="tableHeader tableLowDose">Low Dose</td>
         <td class="tableHeader tableMidDose">Mid Dose</td>
         <td class="tableHeader tableHighDose">High Dose</td>
     </tr>
-    <tr class="tableRowMuscles">
-        <td class="tableDogLabels" style="border-right:solid 2px gray">Muscles</td>
-        <td class="tableLowDose TGLD1 SuperficialCanine1" style="border-right:solid 2px gray"></td>
-        <td class="tableMidDose TGMD1 SuperficialCanine2" style="border-right:solid 2px gray"></td>
-        <td class="tableHighDose TGHD1 SuperficialCanine3"></td>
+    <tr class="tableRowSuperficial">
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Superficial Muscles</td>
+        <td class="tableLowDose LD1 SuperficialCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD1 SuperficialCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD1 SuperficialCanine3" width="30%"></td>
+    </tr>
+    <tr class="tableRowDeep">
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Deep Muscles</td>
+        <td class="tableLowDose LD2 DeepCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD2 DeepCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD2 DeepCanine3" width="30%"></td>
     </tr>
     <tr class="tableRowOrgans">
-        <td class="tableDogLabels" style="border-right:solid 2px gray">Organs</td>
-        <td class="tableLowDose TGLD2 OrganCanine1" style="border-right:solid 2px gray"></td>
-        <td class="tableMidDose TGMD2 OrganCanine2" style="border-right:solid 2px gray"></td>
-        <td class="tableHighDose TGHD2 OrganCanine2"></td>
+        <td class="tableDogLabels" width="10%" style="border-right:solid 2px gray">Organs</td>
+        <td class="tableLowDose LD3 OrganCanine1" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose MD3 OrganCanine2" width="30%" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose HD3 OrganCanine2" width="30%"></td>
     </tr>
 </table>
+
+
 
 <script src="node_modules/d3/d3.min.js"></script>
 <script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
@@ -249,7 +257,10 @@
             var lowdosestats = calculateSummaryStatsByPart(vdata, lowdose_dog_names);
             var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
-            console.log(highdosestats)
+            console.log(highdosestats);
+            var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            scaleChoice = getVectorScale(topendofcolorscale);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [lowdosestats, middosestats, highdosestats,
@@ -275,124 +286,6 @@
 
         }
     });
-
-    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(wberror, data) {
-        if (wberror !== null) {
-            alert(wberror);
-        }
-        else {
-            wbdata = data;
-            wbdata = wbdata.filter(function (n) {
-                return n.GENETHON !== "";
-            });
-
-            var tg_dogs = [];
-            var organ_dogs1 = [];
-            var legendDogs2 = [];
-            var numDogs = 3;
-            for (var i = numDogs*3; i < numDogs*4; i++) {
-                tg_dogs.push(renderDog("tgPort","tg_muscles","dog_"+(i),"window_"+(i)));
-            }
-
-            for (var i = numDogs*4; i < numDogs*5; i++) {
-                organ_dogs1.push(renderDog("tgPort","tg_organs","dog_"+(i),"window_"+(i)));
-            }
-
-
-            var svgs = d3.selectAll(".tgPort").attr("width", "100%").attr("height", "100%");
-            //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
-
-            var tgGroup = d3.selectAll("#tgmuscles_group").style("opacity", 0.7);
-            var organ1Group = d3.selectAll("#tgorgans_group").style("opacity", 0.7);
-
-            var tg_dog_fill = [];
-            var organ1_dog_fill = [];
-            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
-                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
-            var lowdose_dog_names = [
-                "Low_Dose_SSAN_8",
-                "Low_Dose_SSAN_11",
-                "Low_Dose_SSAN_18"];
-            var middose_dog_names = [
-                "Mid_Dose_SSAN_4",
-                "Mid_Dose_SSAN_10",
-                "Mid_Dose_SSAN_14"];
-            var highdose_dog_names = [
-                "High_Dose_SSAN_104",
-                "High_Dose_SSAN_106",
-                "High_Dose_SSAN_132"];
-            var nodose_dog_names = [
-                "NT_SSAN_7",
-                "NT_SSAN_16"];
-            var lowdosestats = calculateSummaryStatsByPartTransGene(wbdata, lowdose_dog_names);
-            var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
-            var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
-            console.log(highdosestats);
-//            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
-            var fill_order = [lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats,
-                              lowdosestats, middosestats, highdosestats];
-
-
-            for (var i = numDogs*3; i < numDogs*4; i++) {
-                tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
-            }
-
-            for (var i = numDogs*4; i < numDogs*5; i++) {
-                organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
-            }
-
-            organizeIntoTableTransGene();
-
-        }
-    });
-
-    function makeLegend(colStep) {
-        stepNumber = colStep+1;
-        var steps = d3.range(0,stepNumber).map(function(n) { return n/stepNumber });
-        //steps.push(1);
-        var legend = d3.selectAll("body")
-                .append("svg")
-                .attr("class", "legend")
-                .attr("width", "12%")
-                .attr("height", "20%");
-
-        var pieceList = [];
-        var rectList = [];
-        var textList = [];
-
-        for (var i = 0; i < steps.length; i++) {
-            pieceList.push(
-                    legend.append("g")
-                    .attr("class", "legendGroup "+steps[i])
-                    .attr("transform", "translate(3,"+(3+(i*13))+")")
-            );
-            rectList.push(
-                    pieceList[i].append("rect")
-                            .attr("height", "10px")
-                            .attr("width", "10px")
-                            .style("stroke", "black")
-                            .style("fill", function() { return scaleChoice(steps[i]); })
-            )
-            textList.push(
-                    pieceList[i].append("text")
-                            .attr("x", "22px")
-                            .attr("y", "10px")
-                            .text(function() {
-                                if (i === (steps.length-1)) {
-                                    return steps[i]+"-1";
-                                }
-                                else {
-                                    return steps[i]+"-"+(steps[i+1]-0.01).toFixed(2);
-                                }
-                            })
-            );
-        }
-    }
 
 
 
@@ -509,8 +402,7 @@
                         return scaleChoice(value);
                     }
                     else {
-//                        return "#333333";
-                        return "none";
+                        return "#333333";
                     }
                 });
     }
@@ -627,8 +519,8 @@
         ];
 
         var svgViewData = {
+            "vcn_superficial": {"viewBox": "150 130 1408 1160", "enablebackground": "new 150 130 1408 1160"},
             //"vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
-            "vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
             "vcn_deep": {"viewBox": "0 0 1408.4 1160.9", "enablebackground": "new 0 0 1408.4 1160.9"},
             "vcn_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
             "tg_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
