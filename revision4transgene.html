@@ -26,6 +26,11 @@
             /*left: 0;*/
             /*right: 0;*/
         }
+        #colorbar { fill: url(#Gradient1); }
+        .stop1 { stop-color: #fee5d9; }
+        .stop2 { stop-color: #fcae91; }
+        .stop3 { stop-color: #fb6a4a; }
+        .stop4 { stop-color: #cb181d; }
     </style>
 </head>
 <body>
@@ -645,6 +650,22 @@
         $(".window_13").detach().appendTo('.TGMD2');
         $(".window_14").detach().appendTo('.TGHD2');
     }
+
+    /// Adding the color scale
+    var colorbarport = d3.select("body").append("svg")
+            .attr("id", "colorbarport")
+            .attr("width","100%");
+    var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+    var colorbar = colorbarport.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", "30")
+            .attr("width", "100%")
+            .attr("id", "colorbar");
 
 
 </script>

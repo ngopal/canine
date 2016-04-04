@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="node_modules/d3/d3.min.js"></script>
+    <script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
+    <script src="node_modules/colorbrewer/colorbrewer.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/jquery.tipsy/src/jquery.tipsy.js"></script>
+    <meta charset="utf-8">
+    <style>
+        #rect1 { fill: url(#Gradient1); }
+        /*.stop1 { stop-color: #eff3ff; }*/
+        /*.stop2 { stop-color: #bdd7e7; }*/
+        /*.stop3 { stop-color: #6baed6; }*/
+        /*.stop4 { stop-color: #3182bd; }*/
+        /*.stop5 { stop-color: #08519c; }*/
+        .stop1 { stop-color: #fee5d9; }
+        .stop2 { stop-color: #fcae91; }
+        .stop3 { stop-color: #fb6a4a; }
+        .stop4 { stop-color: #de2d26; }
+        .stop5 { stop-color: #a50f15; }
+    </style>
+</head>
+<body>
+
+<svg width="600" height="540" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <linearGradient id="Gradient1">
+        <stop class="stop1" offset="20%"/>
+        <stop class="stop2" offset="40%"/>
+        <stop class="stop3" offset="60%"/>
+        <stop class="stop4" offset="80%"/>
+        <stop class="stop5" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1"
+                    xlink:href="#gradient1"/>
+
+    <!--<rect id="rect1" x="0" y="0" width="100" height="50" transform="rotate(-90 100 100)"/>-->
+    <rect id="rect1" x="0" y="0" width="600" height="50"/>
+</svg>
+
+<script type="text/javascript">
+    var svg = d3.select("body").select("svg");
+
+    var colors = ["#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"]; //blues
+    var colors = ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"] // reds 5
+    var colors = ["#fee5d9", "#fcae91", "#fb6a4a", "#cb181d"]; // reds 4
+
+    var rect = svg.select("rect")
+//            .attr("id", "rect1")
+//            .attr("x", 100)
+//            .attr("y", 0)
+//            .attr("width", 100)
+//            .attr("height", 50)
+//            .attr("transform", "rotate(-90 100 100)");
+//
+//    var legendScale = d3.scale.linear()
+//            .domain([0,5])
+//            .range([0,100]);
+//
+//
+//    var legendAxis = d3.svg.axis()
+//            .scale(legendScale);
+//
+//    var axisGroup = svg.append("g")
+//            .attr("class", "axis")
+//            .call(legendAxis);
+</script>
+
+
+</body>
+</html>
