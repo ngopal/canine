@@ -243,7 +243,6 @@
             var numstoplay = Object.keys(highdosestats.averages)
                     .map(function(d) { return highdosestats.averages[d];});
             scaleChoice = getTransgeneScale(topendofcolorscale);
-            console.log(["Scale Range", [0, topendofcolorscale]]);
             console.log(numstoplay);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats,
@@ -420,7 +419,7 @@
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[anatomyToSVGPart[svgPart]];
-                        if (value > 0 & value < 3.33) {
+                        if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
                             return scaleChoice(value);
                         }
                     }
