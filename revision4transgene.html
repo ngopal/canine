@@ -239,10 +239,9 @@
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
             console.log(highdosestats);
-            var topendofcolorscale = d3.max(Object.keys(highdosestats.averages)
-                    .map(function(d) { return highdosestats.averages[d];}));
-            var numstoplay = Object.keys(highdosestats.medians)
-                    .map(function(d) { return highdosestats.medians[d];});
+            var topendofcolorscale = 4;
+            var numstoplay = Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];});
             scaleChoice = getTransgeneScale(topendofcolorscale);
             console.log(["Scale Range", [0, topendofcolorscale]]);
             console.log(numstoplay);
@@ -421,14 +420,12 @@
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[anatomyToSVGPart[svgPart]];
-//                        if (value > 1) {
-//                            value = 1;
-//                        }
-                        return scaleChoice(value);
+                        if (value > 0 & value < 3.33) {
+                            return scaleChoice(value);
+                        }
                     }
                     else {
-//                        return "#333333";
-                        return "none";
+                        return "#333333";
                     }
                 });
     }
