@@ -27,11 +27,11 @@
             /*right: 0;*/
         }
         #colorbar { fill: url(#Gradient1); }
-        .stop1 { stop-color: #fcbba1; }
-        .stop2 { stop-color: #fc9272; }
-        .stop3 { stop-color: #fb6a4a; }
-        .stop4 { stop-color: #ef3b2c; }
-        .stop5 { stop-color: #cb181d; }
+        /*.stop1 { stop-color: #fcbba1; }*/
+        .stop1 { stop-color: #fc9272; }
+        .stop2 { stop-color: #fb6a4a; }
+        .stop3 { stop-color: #ef3b2c; }
+        .stop4 { stop-color: #cb181d; }
     </style>
 </head>
 <body>
@@ -264,7 +264,13 @@
             var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
             console.log(highdosestats);
-            var topendofcolorscale = 5; //was happy with 7
+            console.log(Object.keys(lowdosestats.averages)
+                            .map(function(d) { return lowdosestats.averages[d];}));
+            console.log(Object.keys(middosestats.averages)
+                    .map(function(d) { return middosestats.averages[d];}));
+            console.log(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            var topendofcolorscale = 4; //was happy with 7
 //            console.log(Object.keys(highdosestats.averages).map(function(k) {return highdosestats.averages[k]}));
             scaleChoice = getVectorScale(topendofcolorscale);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
@@ -306,20 +312,21 @@
         var minimum = {};
         var maximum = {};
 
-        // Calculate summary stats for each body part across all right side dogs
+        // Calculate summary stats for each body part across all dogs both sides
         vector_data.map(function(v) {
             var sum_for_part = 0;
             var denom = 0;
             var min = 1;
             var max = 0;
             var med = [];
+            var means = [];
             for (var k = 0; k < dog_names.length; k++) {
+                // This if statement is where blanks values are skipped.
                 if (v[dog_names[k]] !== "") {
-                    //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
-                    var value = +v[dog_names[k]]
+//                    console.log([sum_for_part, v[dog_names[k]], dog_names[k]]);
+                    var value = +v[dog_names[k]];
                     sum_for_part = sum_for_part + value;
                     denom = denom + 1;
-                    // should clarify with David how I should count the mean. Should blanks be counted?
                     if (value < min) {
                         min = value;
                     }
@@ -329,6 +336,7 @@
                     med.push(value);
                 }
             }
+//            console.log(v);
             averages[v.Part] = sum_for_part/denom;
             minimum[v.Part] = min;
             maximum[v.Part] = max;
@@ -641,11 +649,11 @@
             .attr("height","5%")
             .attr("width","100%");
     var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
-    lineargrad.append("stop").attr("class", "stop1").attr("offset", "20%");
-    lineargrad.append("stop").attr("class", "stop2").attr("offset", "40%");
-    lineargrad.append("stop").attr("class", "stop3").attr("offset", "60%");
-    lineargrad.append("stop").attr("class", "stop4").attr("offset", "80%");
-    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+//    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
     var colorbar = colorbarport.append("rect")
             .attr("x", 0)
             .attr("y", 0)

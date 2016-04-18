@@ -27,11 +27,11 @@
             /*right: 0;*/
         }
         #colorbar { fill: url(#Gradient1); }
-        .stop1 { stop-color: #c7e9c0; }
-        .stop2 { stop-color: #a1d99b; }
-        .stop3 { stop-color: #74c476; }
-        .stop4 { stop-color: #41ab5d; }
-        .stop5 { stop-color: #238b45; }
+        /*.stop1 { stop-color: #c7e9c0; }*/
+        .stop1 { stop-color: #a1d99b; }
+        .stop2 { stop-color: #74c476; }
+        .stop3 { stop-color: #41ab5d; }
+        .stop4 { stop-color: #238b45; }
     </style>
 </head>
 <body>
@@ -245,18 +245,24 @@
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
             console.log(highdosestats);
-            var topendofcolorscale = 5;
+            console.log(Object.keys(lowdosestats.averages)
+                    .map(function(d) { return lowdosestats.averages[d];}));
+            console.log(Object.keys(middosestats.averages)
+                    .map(function(d) { return middosestats.averages[d];}));
+            console.log(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            var topendofcolorscale = 4;
             var numstoplay = Object.keys(highdosestats.averages)
                     .map(function(d) { return highdosestats.averages[d];});
             scaleChoice = getTransgeneScale(topendofcolorscale);
-            console.log(numstoplay);
-            console.log([
-                    d3.extent(numstoplay),
-                    d3.max(numstoplay),
-                    d3.mean(numstoplay),
-                    d3.median(numstoplay),
-                    d3.min(numstoplay)
-            ]);
+//            console.log(numstoplay);
+//            console.log([
+//                    d3.extent(numstoplay),
+//                    d3.max(numstoplay),
+//                    d3.mean(numstoplay),
+//                    d3.median(numstoplay),
+//                    d3.min(numstoplay)
+//            ]);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,
@@ -670,11 +676,11 @@
             .attr("id", "colorbarport")
             .attr("width","100%");
     var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
-    lineargrad.append("stop").attr("class", "stop1").attr("offset", "20%");
-    lineargrad.append("stop").attr("class", "stop2").attr("offset", "40%");
-    lineargrad.append("stop").attr("class", "stop3").attr("offset", "60%");
-    lineargrad.append("stop").attr("class", "stop4").attr("offset", "80%");
-    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+//    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
     var colorbar = colorbarport.append("rect")
             .attr("x", 0)
             .attr("y", 0)
