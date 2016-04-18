@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revision5transgene.html" afterPath="$PROJECT_DIR$/revision5transgene.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revision5vector.html" afterPath="$PROJECT_DIR$/revision5vector.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/methods.txt" afterPath="$PROJECT_DIR$/methods.txt" />
     </list>
     <ignored path="canine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,12 +44,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="revision5transgene.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="revision5transgene.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/revision5transgene.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35775128">
+            <state vertical-scroll-proportion="-4.2">
               <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
+            <state split_layout="FIRST">
+              <first_editor vertical-scroll-proportion="0.18041237">
+                <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -68,7 +84,6 @@
         <option value="$PROJECT_DIR$/js/mouseover.js" />
         <option value="$PROJECT_DIR$/node_modules/jquery.tipsy/src/jquery.tipsy.css" />
         <option value="$PROJECT_DIR$/svgs/VECTORS_ORGANS.svg" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/wb.html" />
         <option value="$PROJECT_DIR$/vector.html" />
@@ -109,10 +124,11 @@
         <option value="$PROJECT_DIR$/colorScale4.html" />
         <option value="$PROJECT_DIR$/revision4transgene.html" />
         <option value="$PROJECT_DIR$/revision4vector.html" />
-        <option value="$PROJECT_DIR$/methods.txt" />
         <option value="$PROJECT_DIR$/js/color.js" />
-        <option value="$PROJECT_DIR$/revision5transgene.html" />
         <option value="$PROJECT_DIR$/revision5vector.html" />
+        <option value="$PROJECT_DIR$/revision5transgene.html" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/methods.txt" />
       </list>
     </option>
   </component>
@@ -488,19 +504,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.20618556">
-            <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/singles/rev3/vcn_superficial.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12214984">
@@ -614,7 +617,7 @@
         <state vertical-scroll-proportion="0.024429968">
           <caret line="518" column="106" selection-start-line="518" selection-start-column="106" selection-end-line="518" selection-end-column="106" />
           <folding>
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -624,12 +627,12 @@
         <state vertical-scroll-proportion="0.514658">
           <caret line="512" column="36" selection-start-line="512" selection-start-column="36" selection-end-line="512" selection-end-column="36" />
           <folding>
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#td#2;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#td#0;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#td#1;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -646,14 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48859936">
           <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/methods.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -676,9 +671,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/revision5transgene.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35775128">
+        <state vertical-scroll-proportion="-4.2">
           <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/methods.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09419152">
+          <caret line="4" column="831" selection-start-line="4" selection-start-column="831" selection-end-line="4" selection-end-column="831" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor vertical-scroll-proportion="0.18041237">
+            <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
