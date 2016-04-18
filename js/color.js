@@ -27,15 +27,18 @@ function getRedScaleCustomStep(s){
 
 function getTransgeneScale(max){
     return d3.scale.linear()
-        .domain(d3.range(0,max+1))
-        //.domain([0,max+1])
-        .range(colorbrewer.Reds[Math.floor(max+1)]);
+        .domain(d3.range(0,max))
+        //.range(colorbrewer.Greens[9].slice(9-max,10));
+        //.range(colorbrewer.Greens[max]);
+        .range(["#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45"])
 }
 
 function getVectorScale(max){
     return d3.scale.linear()
         .domain(d3.range(0,max))
-        .range(colorbrewer.Reds[9].slice(10-max,10));
+        //.range(colorbrewer.Reds[9].slice(10-max,10));
+        //.range(colorbrewer.Reds[max]);
+        .range(["#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d"]);
 }
 
 function getRedFiveStepScale(){

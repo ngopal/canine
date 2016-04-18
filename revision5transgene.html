@@ -27,10 +27,11 @@
             /*right: 0;*/
         }
         #colorbar { fill: url(#Gradient1); }
-        .stop1 { stop-color: #fee5d9; }
-        .stop2 { stop-color: #fcae91; }
-        .stop3 { stop-color: #fb6a4a; }
-        .stop4 { stop-color: #cb181d; }
+        .stop1 { stop-color: #c7e9c0; }
+        .stop2 { stop-color: #a1d99b; }
+        .stop3 { stop-color: #74c476; }
+        .stop4 { stop-color: #41ab5d; }
+        .stop5 { stop-color: #238b45; }
     </style>
 </head>
 <body>
@@ -244,11 +245,18 @@
             var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
             console.log(highdosestats);
-            var topendofcolorscale = 4;
+            var topendofcolorscale = 5;
             var numstoplay = Object.keys(highdosestats.averages)
                     .map(function(d) { return highdosestats.averages[d];});
             scaleChoice = getTransgeneScale(topendofcolorscale);
             console.log(numstoplay);
+            console.log([
+                    d3.extent(numstoplay),
+                    d3.max(numstoplay),
+                    d3.mean(numstoplay),
+                    d3.median(numstoplay),
+                    d3.min(numstoplay)
+            ]);
 //            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
             var fill_order = [lowdosestats, middosestats, highdosestats,
                               lowdosestats, middosestats, highdosestats,
@@ -401,22 +409,22 @@
         return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
     }
 
-    function makeAverageDog(dogClassName, avgObj) {
-        return d3.selectAll(dogClassName)
-                .attr("fill", function() {
-                    var svgPart = this.id;
-                    if (vectorBioDistToSVGPart[svgPart] !== undefined) {
-                        var value = avgObj[vectorBioDistToSVGPart[svgPart]];
-//                        if (value > 1) {
-//                            value = 1;
-//                        }
-                        return scaleChoice(value);
-                    }
-                    else {
-                        return "none";
-                    }
-                });
-    }
+//    function makeAverageDog(dogClassName, avgObj) {
+//        return d3.selectAll(dogClassName)
+//                .attr("fill", function() {
+//                    var svgPart = this.id;
+//                    if (vectorBioDistToSVGPart[svgPart] !== undefined) {
+//                        var value = avgObj[vectorBioDistToSVGPart[svgPart]];
+////                        if (value > 1) {
+////                            value = 1;
+////                        }
+//                        return scaleChoice(value);
+//                    }
+//                    else {
+//                        return "none";
+//                    }
+//                });
+//    }
 
     function makeAverageDogTransGene(dogClassName, avgObj) {
         return d3.selectAll(dogClassName)
@@ -427,9 +435,15 @@
                         if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
                             return scaleChoice(value);
                         }
+                        else {
+//                            return "#333333";
+                            return "#00441b"
+//                            return scaleChoice.range()[scaleChoice.range().length-1];
+                        }
                     }
                     else {
-                        return "#333333";
+//                        return "#333333";
+                        return "none";
                     }
                 });
     }
@@ -656,10 +670,11 @@
             .attr("id", "colorbarport")
             .attr("width","100%");
     var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
-    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
-    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
-    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
-    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "20%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "40%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "60%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "80%");
+    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
     var colorbar = colorbarport.append("rect")
             .attr("x", 0)
             .attr("y", 0)

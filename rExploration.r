@@ -9,3 +9,5 @@ summary(highdosestats_averages_vector)
 boxplot(highdosestats_averages_vector)
 boxplot.stats(highdosestats_averages_vector)$stats
 plot(highdosestats_averages_vector[order(highdosestats_averages_vector)])
+
+#both seem linear until 4, then higher values.
