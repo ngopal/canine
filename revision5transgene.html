@@ -437,7 +437,7 @@
                         }
                         else {
 //                            return "#333333";
-                            return "#00441b"
+                            return "#00441b";
 //                            return scaleChoice.range()[scaleChoice.range().length-1];
                         }
                     }
@@ -681,6 +681,19 @@
             .attr("height", "30")
             .attr("width", "100%")
             .attr("id", "colorbar");
+
+    var outlierBar = d3.select("body").append("svg")
+            .attr("id", "outlierBar")
+            .attr("width","25%")
+            .attr("height","5%");
+
+    var outlierSquare = outlierBar.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", "30")
+            .attr("width", "100%")
+            .attr("id", "outlierBar")
+            .style("fill", "#00441b");
 
 
 </script>
