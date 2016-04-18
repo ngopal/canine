@@ -34,8 +34,8 @@ function getTransgeneScale(max){
 
 function getVectorScale(max){
     return d3.scale.linear()
-        .domain(d3.range(0,max+1))
-        .range(colorbrewer.Reds[max+1]);
+        .domain(d3.range(0,max))
+        .range(colorbrewer.Reds[9].slice(10-max,10));
 }
 
 function getRedFiveStepScale(){

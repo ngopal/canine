@@ -27,11 +27,13 @@
             /*right: 0;*/
         }
         #colorbar { fill: url(#Gradient1); }
-        .stop1 { stop-color: #fee5d9; }
-        .stop2 { stop-color: #fcae91; }
+        .stop1 { stop-color: #fcbba1; }
+        .stop2 { stop-color: #fc9272; }
         .stop3 { stop-color: #fb6a4a; }
-        .stop4 { stop-color: #de2d26; }
-        .stop5 { stop-color: #a50f15; }
+        .stop4 { stop-color: #ef3b2c; }
+        .stop5 { stop-color: #cb181d; }
+        .stop6 { stop-color: #a50f15; }
+        .stop7 { stop-color: #67000d; }
     </style>
 </head>
 <body>
@@ -264,7 +266,7 @@
             var middosestats = calculateSummaryStatsByPart(vdata, middose_dog_names);
             var highdosestats = calculateSummaryStatsByPart(vdata, highdose_dog_names);
             console.log(highdosestats);
-            var topendofcolorscale = 5;
+            var topendofcolorscale = 7;
 //            console.log(Object.keys(highdosestats.averages).map(function(k) {return highdosestats.averages[k]}));
             scaleChoice = getVectorScale(topendofcolorscale);
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
@@ -387,6 +389,9 @@
                         var value = avgObj[vectorBioDistToSVGPart[svgPart]];
                         if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
                             return scaleChoice(value);
+                        }
+                        else {
+                            return scaleChoice.range()[scaleChoice.range().length-1];
                         }
                     }
                     else {
@@ -635,11 +640,13 @@
             .attr("id", "colorbarport")
             .attr("width","100%");
     var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
-    lineargrad.append("stop").attr("class", "stop1").attr("offset", "20%");
-    lineargrad.append("stop").attr("class", "stop2").attr("offset", "40%");
-    lineargrad.append("stop").attr("class", "stop3").attr("offset", "60%");
-    lineargrad.append("stop").attr("class", "stop4").attr("offset", "80%");
-    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "14.25%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "28.5%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "42.75%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "57%");
+    lineargrad.append("stop").attr("class", "stop5").attr("offset", "71.25%");
+    lineargrad.append("stop").attr("class", "stop6").attr("offset", "85.5%");
+    lineargrad.append("stop").attr("class", "stop7").attr("offset", "99.75%");
     var colorbar = colorbarport.append("rect")
             .attr("x", 0)
             .attr("y", 0)
