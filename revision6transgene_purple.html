@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Canine Visualization</title>
+    <style>
+        .leftcontainer {
+            float: left;
+            clear: left;
+        }
+        .rightcontainer {
+            float: right;
+            clear: right;
+        }
+        .tableHeader {
+            text-align: center;
+            font-family: "Helvetica Neue";
+        }
+        .tableDogLabels {
+            font-family: "Helvetica Neue";
+        }
+        #transGeneTable {
+            /*position: absolute;*/
+            /*top: 0;*/
+            /*bottom: 0;*/
+            /*left: 0;*/
+            /*right: 0;*/
+        }
+        #colorbar { fill: url(#Gradient1); }
+        /*.stop1 { stop-color: #c7e9c0; }*/
+        .stop1 { stop-color: #bcbddc; }
+        .stop2 { stop-color: #9e9ac8; }
+        .stop3 { stop-color: #807dba; }
+        .stop4 { stop-color: #6a51a3; }
+    </style>
+</head>
+<body>
+
+<h1>Transgene Expression</h1>
+<table id="transGeneTable" width="100%" height="100%" cellspacing="0" cellpadding="0">
+    <tr class="tableTransGene">
+        <td class="tableDogLabels"></td>
+        <td class="tableHeader tableLowDose">Low Dose</td>
+        <td class="tableHeader tableMidDose">Mid Dose</td>
+        <td class="tableHeader tableHighDose">High Dose</td>
+    </tr>
+    <tr class="tableRowMuscles">
+        <td class="tableDogLabels" style="border-right:solid 2px gray">Muscles</td>
+        <td class="tableLowDose TGLD1 SuperficialCanine1" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose TGMD1 SuperficialCanine2" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose TGHD1 SuperficialCanine3"></td>
+    </tr>
+    <tr class="tableRowOrgans">
+        <td class="tableDogLabels" style="border-right:solid 2px gray">Organs</td>
+        <td class="tableLowDose TGLD2 OrganCanine1" style="border-right:solid 2px gray"></td>
+        <td class="tableMidDose TGMD2 OrganCanine2" style="border-right:solid 2px gray"></td>
+        <td class="tableHighDose TGHD2 OrganCanine2"></td>
+    </tr>
+</table>
+
+<script src="node_modules/d3/d3.min.js"></script>
+<script src="node_modules/d3-svg-legend/d3-legend.min.js"></script>
+<script src="node_modules/colorbrewer/colorbrewer.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery.tipsy/src/jquery.tipsy.js"></script>
+<link href="node_modules/jquery.tipsy/src/jquery.tipsy.css" rel="stylesheet" type="text/css" />
+<script src="js/color.js"></script>
+<script type="text/javascript">
+
+    var vectorBioDistToSVGPart = {
+        "abductor_pollicus_longus" : "Abduct pollicis long M",
+        "anconeus" : "Anconeus M",
+        "aorta" : "Aorta",
+        //"Axillary LN",
+        "brainstem" : "B L hem brainstem",
+        "cerebellum" : "B L hem cerebellum",
+        "brains" : "B L hem temporal lobe",
+        "frontal_lobe" : "B L hem frontal lobe",
+        "temporal_lobe" : "B L hem temporal lobe",
+        "biceps_bra" : "Biceps brachii M",
+        "Biceps_femoris" : "Biceps femoris M",
+        "bladder" : "Bladder",
+        //"Brachial plexus",
+        "colon" : "Colon",
+        "deltoid" : "Deltoideus M",
+        "diaphragm" : "Diaphragm",
+        "esophagus" : "Esophagus",
+        "extensor_carpi_radialis" : "Ext carpi radialis M",
+        "extensor_digitorum_communis" : "Ext digit communis M",
+        "extensor_digiti_lateralis" : "Ext digit lateralis M",
+        "extensor_digitorum_longus" : "Ext digito longus M",
+        "flex_carpi_radialis" : "Flexor carpi radialis M",
+        "flexor_carpi_ulnaris" : "flexor carpi ulnaris",
+        "flexor_digitorum_profundus" : "Flexor digit profundus M",
+        "flexor_digitorum_superficialis" : "Flexor digit superf M",
+        //"Gall bladder",
+        "gastrocnemius" : "Gastrocnemius M",
+        "LA" : "Heart left atrium",
+        "LV" : "Heart left ventricle",
+        "heart" : "Heart left ventricle",
+        "papillary_muscle" : "Heart papillary",
+        "RA" : "Heart right atrium",
+        "RV" : "Heart right ventricle",
+        "infraspinatus" : "Infraspinatus M",
+        //"Inguinal LN",
+        "intercostals" : "Intercostal M 6",
+        "jejunum" : "Jejunum",
+        "kidney" : "Kidneys",
+        //"L parotid salivary gld",
+        //"L sciatic nerve",
+        //"L thyroid",
+        //"Larynx",
+        //"Liver central lobe",
+        "liver" : "Liver left lobe",
+        //"Liver right lobe",
+        "lungs" : "Lung",
+        //"Mesenteric LN",
+        //"Pancreas",
+        "paravertebrals" : "Paravertebral lumb M",
+        "pectoralis" : "Pectoralis M",
+        "pronator_quadratus" : "Pronat quadrates M",
+        "pronator_teres" : "Pronator teres M",
+        "Rhomboid_cervicus" : "Rhomboideus cerv M",
+        //"Right adrenal gland",
+        //"skin" : "Skin",
+        "soleus" : "Soleus M",
+        //"Spinal cord lumbar",
+        "spleen" : "Spleen",
+        "stomach" : "Stomach (pyloris)",
+        //"Submandibular LN",
+        //"Subscapular LN",
+        "supinator" : "Supinator M",
+        "supraspinatus" : "Supraspinatus M",
+        //"Thymus",
+        "Tibialis_cranialis" : "Tibialis cranialis M",
+        //"Tongue",
+        "trachea" : "Trachea",
+        "triceps" : "Triceps brachii M",
+        "ulnaris_lateralis" : "Ulnaris lateralis M",
+        "quadriceps_femoris_vastus_lateralis" : "Vastus lateralis M"
+    };
+
+    var anatomyToSVGPart = {
+        "biceps_bra" : "BI bra",
+        "Biceps_femoris" : "BI fem",
+        "Bladder" : "Bladder",
+        "Brain" : "Brain",
+        "diaphragm" : "Dia",
+        "gastrocnemius" : "GA",
+        "LA" : "Heart LA",
+        "LV" : "Heart LV",
+        "papillary_muscle" : "Heart Papillary",
+        "RA" : "Heart RA",
+        "RV" : "Heart RV",
+        "intercostals" : "Interc",
+        "Kidney" : "Kidneys",
+        "Liver" : "Liver",
+        "Lings" : "Lung",
+        "paravertebrals" : "Paravert",
+        "Spleen" : "Spleen",
+        "Stomach" : "stomach",
+        "Tibialis_cranialis" : "TA",
+        "triceps" : "TRI bra",
+        "_Vastus_lateralis" : "VL"
+        //
+        // Below are items in SVG but no data in excel sheet for WB
+        //
+        //Tibialis_cranialis (muscles)
+        //outline (organs)
+        //cerebellum (organs)
+        //brainstem (organs)
+        //Temporal_lobe (organs)
+        //Frontal_lobe (organs)
+    };
+
+    var rainbowColorScale = getRainbowScale();
+    var RedColorScale = getRedScale();
+    var colorSteps = 9;
+    var RedCustomStep = getRedScaleCustomStep(colorSteps);
+    var PureRed = getRedFiveStepScale();
+    var scaleChoice = RedColorScale;
+
+    function median(values) {
+
+        values.sort( function(a,b) {return a - b;} );
+
+        var half = Math.floor(values.length/2);
+
+        if(values.length % 2)
+            return values[half];
+        else
+            return (values[half-1] + values[half]) / 2.0;
+    }
+
+
+    d3.csv("data/WB_Dogs_SNBL_089-01_Genethon.csv", function(wberror, data) {
+        if (wberror !== null) {
+            alert(wberror);
+        }
+        else {
+            wbdata = data;
+            wbdata = wbdata.filter(function (n) {
+                return n.GENETHON !== "";
+            });
+
+            var tg_dogs = [];
+            var organ_dogs1 = [];
+            var legendDogs2 = [];
+            var numDogs = 3;
+            for (var i = numDogs*3; i < numDogs*4; i++) {
+                tg_dogs.push(renderDog("tgPort","tg_muscles","dog_"+(i),"window_"+(i)));
+            }
+
+            for (var i = numDogs*4; i < numDogs*5; i++) {
+                organ_dogs1.push(renderDog("tgPort","tg_organs","dog_"+(i),"window_"+(i)));
+            }
+
+
+            var svgs = d3.selectAll(".tgPort").attr("width", "100%").attr("height", "100%");
+            //var legends = d3.selectAll(".legend").attr("width", "12%").attr("height", "100%");
+
+            var tgGroup = d3.selectAll("#tgmuscles_group").style("opacity", 0.7);
+            var organ1Group = d3.selectAll("#tgorgans_group").style("opacity", 0.7);
+
+            var tg_dog_fill = [];
+            var organ1_dog_fill = [];
+            var dog_names = ["Right_SSAN_2","Right_SSAN_4","Right_SSAN_7","Right_SSAN_8","Right_SSAN_9","Right_SSAN_10","Right_SSAN_11","Right_SSAN_12","Right_SSAN_13","Right_SSAN_14","Right_SSAN_16","Right_SSAN_18","Right_SSAN_103","Right_SSAN_104","Right_SSAN_106","Right_SSAN_123","Right_SSAN_132",
+                "Left_SSAN_2","Left_SSAN_4","Left_SSAN_7","Left_SSAN_8","Left_SSAN_9","Left_SSAN_10","Left_SSAN_11","Left_SSAN_12","Left_SSAN_13","Left_SSAN_14","Left_SSAN_16","Left_SSAN_18","Left_SSAN_103","Left_SSAN_104","Left_SSAN_106","Left_SSAN_123","Left_SSAN_132"];
+            var lowdose_dog_names = [
+                "Low_Dose_SSAN_8",
+                "Low_Dose_SSAN_11",
+                "Low_Dose_SSAN_18"];
+            var middose_dog_names = [
+                "Mid_Dose_SSAN_4",
+                "Mid_Dose_SSAN_10",
+                "Mid_Dose_SSAN_14"];
+            var highdose_dog_names = [
+                "High_Dose_SSAN_104",
+                "High_Dose_SSAN_106",
+                "High_Dose_SSAN_132"];
+            var nodose_dog_names = [
+                "NT_SSAN_7",
+                "NT_SSAN_16"];
+            var lowdosestats = calculateSummaryStatsByPartTransGene(wbdata, lowdose_dog_names);
+            var middosestats = calculateSummaryStatsByPartTransGene(wbdata, middose_dog_names);
+            var highdosestats = calculateSummaryStatsByPartTransGene(wbdata, highdose_dog_names);
+            console.log(highdosestats);
+            console.log(Object.keys(lowdosestats.averages)
+                    .map(function(d) { return lowdosestats.averages[d];}));
+            console.log(Object.keys(middosestats.averages)
+                    .map(function(d) { return middosestats.averages[d];}));
+            console.log(Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];}));
+            //var topendofcolorscale = 4;
+            var topendofcolorscale = 2;
+            var numstoplay = Object.keys(highdosestats.averages)
+                    .map(function(d) { return highdosestats.averages[d];});
+            scaleChoice = getTransgeneScalePurple(topendofcolorscale);
+//            console.log(numstoplay);
+//            console.log([
+//                    d3.extent(numstoplay),
+//                    d3.max(numstoplay),
+//                    d3.mean(numstoplay),
+//                    d3.median(numstoplay),
+//                    d3.min(numstoplay)
+//            ]);
+//            var summarystats = calculateSummaryStatsByPartTransGene(wbdata, dog_names); //won't work due to names
+            var fill_order = [lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats,
+                              lowdosestats, middosestats, highdosestats];
+
+
+            for (var i = numDogs*3; i < numDogs*4; i++) {
+                tg_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
+            }
+
+            for (var i = numDogs*4; i < numDogs*5; i++) {
+                organ1_dog_fill.push(makeAverageDogTransGene(".dog_"+(i), fill_order[i].averages));
+            }
+
+            organizeIntoTableTransGene();
+
+        }
+    });
+
+    function makeLegend(colStep) {
+        stepNumber = colStep+1;
+        var steps = d3.range(0,stepNumber).map(function(n) { return n/stepNumber });
+        //steps.push(1);
+        var legend = d3.selectAll("body")
+                .append("svg")
+                .attr("class", "legend")
+                .attr("width", "12%")
+                .attr("height", "20%");
+
+        var pieceList = [];
+        var rectList = [];
+        var textList = [];
+
+        for (var i = 0; i < steps.length; i++) {
+            pieceList.push(
+                    legend.append("g")
+                    .attr("class", "legendGroup "+steps[i])
+                    .attr("transform", "translate(3,"+(3+(i*13))+")")
+            );
+            rectList.push(
+                    pieceList[i].append("rect")
+                            .attr("height", "10px")
+                            .attr("width", "10px")
+                            .style("stroke", "black")
+                            .style("fill", function() { return scaleChoice(steps[i]); })
+            )
+            textList.push(
+                    pieceList[i].append("text")
+                            .attr("x", "22px")
+                            .attr("y", "10px")
+                            .text(function() {
+                                if (i === (steps.length-1)) {
+                                    return steps[i]+"-1";
+                                }
+                                else {
+                                    return steps[i]+"-"+(steps[i+1]-0.01).toFixed(2);
+                                }
+                            })
+            );
+        }
+    }
+
+
+
+
+
+
+
+
+    function calculateSummaryStatsByPart(vector_data, dog_names) {
+        var averages = {};
+        var medians = {};
+        var minimum = {};
+        var maximum = {};
+
+        // Calculate summary stats for each body part across all right side dogs
+        vector_data.map(function(v) {
+            var sum_for_part = 0;
+            var denom = 0;
+            var min = 1;
+            var max = 0;
+            var med = [];
+            for (var k = 0; k < dog_names.length; k++) {
+                if (v[dog_names[k]] !== "") {
+                    //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+                    var value = +v[dog_names[k]]
+                    sum_for_part = sum_for_part + value;
+                    denom = denom + 1;
+                    // should clarify with David how I should count the mean. Should blanks be counted?
+                    if (value < min) {
+                        min = value;
+                    }
+                    if (value > max) {
+                        max = value;
+                    }
+                    med.push(value);
+                }
+            }
+            averages[v.Part] = sum_for_part/denom;
+            minimum[v.Part] = min;
+            maximum[v.Part] = max;
+            medians[v.Part] = median(med);
+        });
+        return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
+    }
+
+    function calculateSummaryStatsByPartTransGene(tg_data, dog_names) {
+        var averages = {};
+        var medians = {};
+        var minimum = {};
+        var maximum = {};
+
+        // Calculate summary stats for each body part across all right side dogs
+        tg_data.map(function(v) {
+            var sum_for_part_list = [];
+            var denom = 0; // should use this if I want to calculate for all dogs in experiment
+            var min = 1;
+            var max = 0;
+            var med = [];
+            for (var k = 0; k < dog_names.length; k++) {
+                if (v[dog_names[k]] !== "") {
+                    //console.log([sum_for_part, v[dog_names[k]], dog_names[k]])
+                    var value = +v[dog_names[k]];
+                    sum_for_part_list.push(value);
+                    denom = denom + 1;
+                    // should clarify with David how I should count the mean. Should blanks be counted?
+                    if (value < min) {
+                        min = value;
+                    }
+                    if (value > max) {
+                        max = value;
+                    }
+                    med.push(value);
+                }
+            }
+
+            sum_for_part_list = sum_for_part_list.filter(function(n){return(!isNaN(n));});
+            med = med.filter(function(n){return(!isNaN(n));});
+
+            averages[v.GENETHON] = sum_for_part_list.reduce(function(a,b){return a+b}) / sum_for_part_list.length;
+            minimum[v.GENETHON] = min;
+            maximum[v.GENETHON] = max;
+            medians[v.GENETHON] = median(med);
+        });
+
+        return {"averages":averages, "maximum":maximum, "minimum":minimum, "medians":medians};
+    }
+
+//    function makeAverageDog(dogClassName, avgObj) {
+//        return d3.selectAll(dogClassName)
+//                .attr("fill", function() {
+//                    var svgPart = this.id;
+//                    if (vectorBioDistToSVGPart[svgPart] !== undefined) {
+//                        var value = avgObj[vectorBioDistToSVGPart[svgPart]];
+////                        if (value > 1) {
+////                            value = 1;
+////                        }
+//                        return scaleChoice(value);
+//                    }
+//                    else {
+//                        return "none";
+//                    }
+//                });
+//    }
+
+    function makeAverageDogTransGene(dogClassName, avgObj) {
+        return d3.selectAll(dogClassName)
+                .attr("fill", function() {
+                    var svgPart = this.id;
+                    if (anatomyToSVGPart[svgPart] !== undefined) {
+                        var value = avgObj[anatomyToSVGPart[svgPart]];
+                        //if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
+                        if (value > scaleChoice.domain()[0] & value < 1) {
+                            return scaleChoice(value);
+                        }
+                        else {
+//                            return "#333333";
+                            return "#3f007d";
+//                            return scaleChoice.range()[scaleChoice.range().length-1];
+                        }
+                    }
+                    else {
+//                        return "#333333";
+                        return "none";
+                    }
+                });
+    }
+
+    function addLabel(window, label) {
+        return d3.selectAll(window)
+                .append("text")
+                .attr("x", "65%")
+                .attr("y", "10%")
+                .attr("font-size", 100)
+                .text(label);
+    }
+
+
+    function renderDog(svgPortClass,dogType,dogNumber,windowNumber) {
+
+
+		var groupid = {
+            "vcn_superficial" : "vcnsuperficial_group",
+            "vcn_deep" : "vcndeep_group",
+            "vcn_organs" : "vcnorgans_group",
+            "tg_organs" : "tgorgans_group",
+            "tg_muscles" : "tgmuscles_group"
+		};
+
+        var vcn_superficial_coordinates = [
+            {"name":"biceps_bra", "d":"M560.7,570.6c0,0-3.8,8.5-4.3,24 c-0.5,14.9,1.2,21.6,1.2,21.6s11.1,29.5,34.1,66c19.9,31.6,48.7,64.4,52.1,77.8c2.4,7.9,30.5,32.5,36.5,37 c6.3,4.7-2.4,10.6-2.4,10.6l-24.5-30.2c0,0,8.2,14.8,10.3,22.8c2.1,8-5.5,4.3-5.5,4.3s3-13-18-39.8c-4-5.1-19.8-17.7-33.2-31.4 c-16.2-16.6-23.6-25.6-35-42.1c-10.1-14.5-25.6-41.9-18.5-73.9c-3.9-25.4,1-45.4,1-45.4L560.7,570.6z"},
+            {"name":"deltoid", "d":"M644.9,429.5c0.6,5.2,1.3,10.4,1.9,15.6 c-0.6-3.6,11.5,74.4,0,125.3c-18.6,82-47.9,99.8-54.5,105.1c-0.2-0.2-0.5-0.3-0.7-0.5c-1.6-4.1-5-7.1-6.5-11.5 c-0.1,0-0.2,0-0.2,0c-2.4,7.1-4.8,14.2-7.2,21.4c-17.1-19.4-15.2-32.3-15.4-33.8c-2.3-12.8-2.2-26-4.3-40.1 c-0.8-5.1-2-26.4-0.5-31c13.6-19.8,18.3-45.2,14.9-40.8c6.3-8,1.5-2.6,4.8-5.8c5.4-11.9,10.3-25.9,17.8-36.2c3.8-4,7.5-8,11.3-12 c8.5-10.9,16.2-22.3,24.2-33.8C635.3,444.1,640.1,436.8,644.9,429.5z"},
+            {"name":"triceps", "d":"M657.9,502.8c13.8,0.2,17.1,20,21.4,30.5 c1,2.5,11.8,28.3,14.2,40.3c0.6,6.2,1.3,12.3,1.9,18.5c2.1,8.5,13.4,44,14.4,61c0.5,14.8-1.7,50-1.4,46.8 c5.1,13.7,10,38.2,10.8,43c0.1,2-7.2,13.3-7.2,22.6c-2.3-4.9-15.7-16.3-21.6-17.3c-6.3-1-21.1,4.8-44.6-9.6 c-18.6-11.4-33.9-29.9-47-46.8c-7.1-9.1-15.6-18-20.2-29.5c-1.3-3.3-7.8-39.5-10.3-53.5c0.1,0,0.2,0,0.2,0 c22.3,8.2,43.3,16.2,63.1,26.4c-7.1-9.5-16-17.2-22.3-27.8c-5-8.4-11-25.8-12.5-32.6c-2.1-9.7,7.4-21.1,9.4-24 C619.6,530.2,637.1,516.1,657.9,502.8z"},
+            {"name":"supinator", "d":"M668.9,749c5.3,1.5,10.6,3,15.8,4.5 C668.7,795,667,855.4,666.9,864.6c-1.9,1.1-3.7,2.2-5.6,3.3c-0.1-0.1-0.3-0.2-0.4-0.3c-1.3-6.7-2.6-13.3-3.9-20 C652.4,819,649.9,773.7,668.9,749z"},
+            {"name":"flexor_carpi_ulnaris", "d":"M709,762.4c1.8,3.3,0.3,9.2,1,13.4 c0.6,11.7,2.4,63.1,2.4,76.8c0.4,26,0.8,52,1.2,78c0.4,10.6,0.8,21.3,1.2,31.9c0.4,7,1.7,29.6,4.7,45.6 c1.4,7.6-4.7,12.2-5.4,10.1c-1.1-3.4-2.2-6.7-3.4-10.1c-0.2-1.3-7.5-61.4-8.9-80.6c-1-11.9-1.9-23.8-2.9-35.8 c-0.3-3.2-4.8-67.1-10.6-97C690.8,785,703.9,770.4,709,762.4z"},
+            {"name":"ulnaris_lateralis", "d":"M680.7,763.8c2.7,1.8,3.5,7.5,4.8,10.8 c4.1,10.6,4.1,20.6,6.7,33.1c5.2,25,8.4,61.2,3.6,87.6c3,52.4,6.6,121.5,5.8,103.7c1.3,8,2.1,19.6,0.7,28.3 c-1,6.3,0.2,12.4-2.4,16.8c-0.2,0-0.5,0-0.7,0c-4.4-7.9-1.7-20.7-3.4-31.4c-1.3-17.1-2.6-34.2-3.8-51.4 c-2.4-27.9-5.6-73.2-5.3-67.9c-1.8-6.8-4.3-14.4-6-22.1c-3.9-24.8-6.4-92.1-5.5-95.5C676.1,772.4,679.8,768.9,680.7,763.8z"},
+            {"name":"extensor_digitorum_communis", "d":"M644,1144.9 c10.9-26.8,17.8-26.3,27.4-31.9c4.4-2.1,8.8-3.4,13.2-5.5c6.3-5.4,5.3-20.1,5-31.2c-0.6-5.1-1.1-20.3-1.7-25.4 c-1.4,11.8,1.9,38.1-2.9,46.1c-3.3,5.4-13.6,8.4-19.2,11.5c-3.6,2-11.8,11.9-14.4,15.1c-3.3,4.1-12.8,18.2-17.5,18.2 c-0.2-0.2-0.3-0.3-0.5-0.5c2.5-4.4,5.8-5.9,7.9-8.6c10.2-16.2,22.2-27.2,20.2-25.9c3.2-1.2,5.2-2.9,8.4-4.1 c8-3.4,11-4.2,12.5-8.9c0.8-2.6,4-32.6,2.9-35.8c-0.5,10.3-2.3,38.2-13.7,40.8c-4.8,1.1-9.9,1.4-13.7,4.1 c-4.5,5.5-9,12.5-13.4,18c-3,3.8-7.6,9-17,13.9c0.1-0.3,0.2-0.6,0.2-1c2.6-2.6,5.1-5.1,7.7-7.7c10.2-10.4,18.5-24.9,21.1-26.6 c4.5-2.9,12.4-2.2,17-4.8c7.4-4.1,9.9-35.6,9.4-44.4c-0.2,10.7-5,38.9-11.5,42.7c-2.4,1.4-6.5,1.7-10.1,1.9 c-4.5,0.3-6.8,1.9-8.6,3.4c-2.1,2.4-5.1,7.4-7.2,9.8c-5.3,6.6-6.6,8-16.6,15.8c-0.6-0.3-1.3-0.6-1.9-1c0-2.2,4-1,14.9-15.1 c3-3.8,4.7-9.9,8.6-12.7c5.3-3.7,13.5-3.1,18.2-4.1c4-0.9,8.8-19.9,10.3-28.1c2.4-13.1,0.3-32.8-1.7-44.6 c-1.3-12.6-2.6-25.3-3.8-37.9c-1.7-18.1-5.7-67.8-7-80.9c-4-24.1-4.8-42.8-8.4-64.3c0.3,4.2-4-36.5-0.7-56.9 c0.8-4.8,3.5-14.1,10.3-12.7c9.3,1.9,7.6,15.1,9.1,25c1.6,10.3,1.4,31.1-0.2,41.3c-1,15-1.9,29.9-2.9,44.9 c-3,18.3-2.6,38.4,0.5,57.6c0.8,11.5,6.1,69.7,11,89c5.2,20.1,7.9,34.7,8.4,64.1c-0.7,8.5-2.2,13.7-2.9,18 c-4.4,11-18.9,9.3-27.8,15.6c-8.1,5.7-10.5,12.6-17.8,23.8C644.8,1144.9,644.4,1144.9,644,1144.9z"},
+            {"name":"extensor_digiti_lateralis", "d":"M670.2,770.8 c0.9,1.9,1.8,3.8,2.6,5.8c1.5,2,3.7,2.5,4.8,5c3.5,8.3,3.1,18.8,4.8,28.8c2.1,12,4.3,27.4,2.2,40.8c-1.4,8.5-4.2,24-2.6,33.6 c3.3,44.7,14.1,118,13,109.4c4.9,25.7,6.7,56.5,1.4,83.8c-1.8,9.3-2.7,18.9-6,26.9c-4.9,11.9-22.3,9.8-30,18.7 c-3.2,3.7-5.9,9.2-8.9,13.9c-1.7,2.6-3.1,5.2-5.5,6.5c-0.2,0-0.5,0-0.7,0c1.9-3.9,5.3-9.6,8.6-15.1c2.6-4.4,5.1-8.9,7.7-10.8 c7.5-3.4,15-6.7,22.6-10.1c3.5-2.6,5.2-9.2,7-18.5c1.6-8.6,3.9-17.3,4.3-21.4c-2.1,11.4-7.3,28.7-13,33.1 c-3.8,3-8.7,4.2-13.4,6.2c-5.5,2.4-11,8.1-14.4,12.7c-3.6,5-12.8,21.2-19,22.1c-0.7-0.7-0.8-0.7-1-2.2c4.2-4.7,8.3-9.4,12.5-14.2 c4.4-5.8,9.8-14.4,15.6-18.7c5-3.8,11.5-4.8,16.1-7.7c5.5-3.6,11.7-21,12.2-30c-2.5,12.1-7.9,22-15.8,26.9 c-6.5,3.4-10.7,4.2-16.1,6.2c-2.5,2-6.3,9-8.9,13.2c-3.9,6.1-8.7,14.7-14.4,19c-1.7,1.3-4.1,2.3-5,1.9c0.3-1-0.5-1.3,0-1.9 c2.6-3.3,6.8-5.5,9.4-8.6c2.7-3.4,6.4-10.1,9.8-16.1c2.3-4,4.5-8.1,6.5-9.4c7.1-4.6,18.4-5.4,23.5-12 c9.9-12.8,10.3-33.6,13.4-53.3c1.3-7.9-0.2-16.5-1.4-23.3c-0.8-6.9-6.9-57.9-9.1-76.6c-3.5-18.9-6.1-37-9.4-55.2 c-2.4-13.8-0.9-28-3.1-42.5c-0.4-9.7-0.8-19.4-1.2-29C667.5,797.7,667.7,780.5,670.2,770.8z"},
+            {"name":"Biceps_femoris", "d":"M1311.9,482.5c4.3,0.6,14.6,5.6,21.1,28.1 c2.4,8.2,0.8,15.9,3.1,30.5c2.7,44.5-1.4,185.8-1.4,204.7c6,37.4,9.3,74,16.3,110.4c2.8,14.3-7.1,40.1-11.5,51.4 c-2.2,5.6-3.7,13.2-8.2,16.6c-0.1,0-0.2,0-0.2,0c-3.4-7.8-12.5-16-17.8-22.6c-13.7-17.2-30.1-31.9-43-49.9 c-29-40.6-56.9-81.1-75.4-132.5c-1-4-23.1-94.4-25-120.7c0.1,0.3-12.8-22.1-0.5-42.2c16.7-27.4,57.3-54.4,91.4-64.8 C1278.1,486.2,1313.1,482.4,1311.9,482.5z"},
+            {"name":"gastrocnemius", "d":"M1265.3,729.3c16.4-0.2,27.5,8.9,36.7,16.3 c25.5,20.4,36.8,58.6,46.1,95c4.4,17.1,5.3,35.8,13,49c14.6,25.1,32.5,46.6,49.4,69.1c3.5,4.7,8.1,12,4.8,19.9 c-0.7,1.6-1.1,3-2.9,2.6c-2.8-1.2-8.1-14.9-10.1-18.2c-9.3-15.6-18.5-31.4-28.8-46.1c-6-8.6-12.5-16.9-19-25 c-2.8-2.6-5.6-5.1-8.4-7.7c-5.7-5.7-11.1-12.1-15.8-18.7c-14.6-20.4-25.9-42.8-38.9-65c-6.5-12-13-24-19.4-36 C1269.8,752.8,1267.6,741,1265.3,729.3z"},
+            {"name":"flexor_digitorum_superficialis", "d":"M1276.9,788.6 c3.3,1.1,11.3,6.4,13.2,9.6c-12.8-20.8,23.4,32,47.3,83c19.4,31.3,36.3,61.6,45.1,76.8c5.7,9.8,10.7,20.3,15.4,31 c3.4,7.8,7.8,15.8,9.6,25.2c0.5-30.1-3,63.4-2.6,80.9c-1.8,11.2-1.7,21.9-4.1,31.4c-1.4,5.4-2,11.1-4.6,15.4 c-3.2,5.2-10.2,5.7-15.4,8.9c-4.2,3-8.5,6.1-12.7,9.1c-6.7,5.1-13.4,10.2-20.2,15.4c-1.9,1.4-5.1,5.8-8.2,4.8c0.2,0,0.3,0,0.5,0 c11.1-11.6,25-20.5,36-32.2c0-0.2,0-0.5,0-0.7c-0.2-0.1-0.3-0.2-0.5-0.2c-10.6,6.6-21.3,13.3-31.9,19.9c-3.7,2.3-7.8,6.8-13,7.2 c0-0.1,0-0.2,0-0.2c0.3-0.4,0.6-0.8,1-1.2c4.6-3.8,9.3-7.5,13.9-11.3c7.9-5.2,15.8-10.4,23.8-15.6c-11.8,4.4-22.6,10.3-33.6,15.8 c-2.8,1.4-8.6,6.6-12.7,5c0.2,0,0.3,0,0.5,0c12.3-8.5,23.9-18.3,39.6-23.3c11.6-3.7,24.1,0.4,28.8-11c4.3-10.5,2.9-24.1,5-37.2 c0.1-5.3,5.5-71.5,1.4-85.7c-7.1-25.2-21.1-44.4-33.6-64.3c-14.8-23.8-29.8-47-44.6-70.6c-12.1-7-18.7-14.3-25.4-23.8 c-6.2-8.8-27-35.9-30.2-52.1C1263.6,793.7,1270.8,791.6,1276.9,788.6z"},
+            {"name":"extensor_digitorum_longus", "d":"M1230.8,765 c9.9,0.1,17.4,13.4,21.8,19.7c14.6,20.7,25.6,43.6,38.4,66.5c9.1,18.1,17.3,34.5,26.4,52.6c17.8,23.7,51.2,61.2,47.3,56.9 c9.2,11.9,13.5,17,22.8,38.6c2.5,5.9,3.7,14.7,5.5,21.4c2.5,9.5,4.2,26.3,6.7,36.2c1.9,7.5,5.6,18.5,6.5,25.9 c6.8,56.1,1.1,61.9-3.8,67.2c-5,5.3-22.8,8.4-29.5,17c-3.5,4.4-10.5,15-15.8,25.9c0.2-10.5,4-17.6,13.4-28.1 c5.2-5.8,11.2-8,16.3-11c3.8-2.2,10.1-3.5,13-6.7c9.5-10.6,4.2-50.5,3.8-66.2c-0.2,0.1-0.6,11-0.7,11c0.1,11.8-0.9,37.7-5.3,43.9 c-4.3,6.1-12.9,8-19.4,12c-2.8,2.5-5.6,5-8.4,7.4c-5,6.2-10.3,12.3-15.1,18.5c-2.9,3.7-7.6,8-11.8,10.3 c0.3-1.1,7.2-9.1,11.8-16.3c5.8-8,12.4-13.4,18.2-21.4c5.3-2.1,11-5.8,16.3-7.9c6-3.6,5.9-4.5,8.2-12c0.8-2.7,4.1-40,2.6-43.2 c-2.9,34.9-3.7,47.8-11.8,52.6c-5.8,2.3-12.6,2.5-18.5,4.8c-4.5,3.2-12.9,16.1-16.6,20.9c-3.3,4.3-13.6,15.8-20.4,14.6 c3-3.6,8.2-2.6,23.5-25c2.9-4.3,7.2-8.2,10.1-12.5c4-5,13.2-2.5,19.4-5.5c8.7-4.2,10.8-40.8,11-54c-3.3,21-2.5,40.9-13,50.4 c-3.2,2.9-15.5,3.1-19.7,5c-6.5,3.1-7.2,8.6-12,13.4c-3.4,3.4-14,14.8-22.6,16.3c0.2-1.6,7.2-5,14.9-13 c6.3-6.5,8.7-16.9,16.8-20.4c5.7-2.5,17.7-1.3,21.8-5.5c4.7-4.7,5.4-13,7.2-20.6c5.2-22.5,2.1-53.2-2.4-74.6 c-1.2-7.8-2.4-15.5-3.6-23.3c-8.5-28.1-29-46.3-45.8-66.2c-9.4-11.2-17.4-23.2-26.2-35c-5.5-6.4-11-12.8-16.6-19.2 c-14.6-19.3-29.3-38.6-43.9-57.8c-9.2-12.6-19.7-25.1-25.4-40.8c-2.1-5.6-5.3-15.8-1-20.4C1226.8,766,1228.8,765.9,1230.8,765z"}
+        ];
+
+        var vcn_deep_coordinates = [{"name":"Rhomboid_cervicus", "d":"M318.8,95.3c0.8,0.3,14.1,13.3,43.4,41.8 c25.2,25.2,52.2,49.8,74.2,78c17.1,22,34.1,42.3,56.6,58.8c19.5,14.3,32.7,18.6,59.9,25.4c5,1.3,3.4,14.4,1.8,19.2 c-3.5,10.6-15.6,33.1-27.4,33.8c-5.5-2.3-8.6-7.6-12-12c-5.3-6.8-11.3-14.3-18.2-19.4c-11.8-8.6-22.8-6.5-23-6.5 c-3.5-1-6.5-3.7-9.1-5.8c-10.5-8.4-18.2-22.3-25.4-33.8c-15.1-24.2-28.4-50-43.2-74.9c-8.2-13.9-16.1-28.4-25.7-41 c3.5,3.8-32.2-35.4-54-58.1C317.4,99,318.1,97.2,318.8,95.3z"},
+            {"name":"paravertebrals", "d":"M380.6,278c0,0,17.6,83.3,48,100.6 c30.4,17.2,196.3-21.2,249.4-30.5c53.1-9.3,266.5-30.8,292.6-30.7c26.1,0.1,22.3-20,47.8-22.1c25.5-2-69.3-12-132-2.4 c-62.7,9.6-137.1,19.4-185.3,23.8c-48.2,4.4-125.8-7.5-158.4-11.8C472.6,295.7,380.6,278,380.6,278z"},
+            {"name":"supraspinatus", "d":"M469.5,314.7c1.9,3.2-1,14-16.1,38.6 c-18.5,30.3-39.8,58.8-54.7,92.6c-5.8,13.1-14.3,26.9-17,42.5c-1.9-0.3-5.6-1.3-6.5-2.6c-2.9-9.2-2.7-18.8,0.2-39.6 c5.6-39.7,26.2-100,67.2-131.3C449.6,309.6,468.3,312.7,469.5,314.7z"},
+            {"name":"infraspinatus", "d":"M383.7,481.6c0,0,19.1-49.4,29.5-61.4 c10.4-12.1,58.5-100.1,68.9-103.9c10.4-3.8,35.5,12.2,37,28.6c1.4,16.3-28.8,51.1-45.6,68.4c-51,52.4-85,77.3-85,77.3 L383.7,481.6z"},
+            {"name":"pectoralis", "d":"M388.3,476.7c0,0,13.5,88.4,68.2,127.2 c-10.4-34.7-1-59.8-1-59.8s36.8,63.1,177.8,54.5c-167.6-60.3-213.8-151.2-213.8-151.2L388.3,476.7z"},
+            {"name":"anconeus", "d":"M461.3,604.6c0,0,48.6,44.2,50.2,55.7 c1.6,11.5-0.7,15.8-0.7,15.8l9.1,6.5c0,0,4.2-5.3,6.5-16.6c2.1-10,0.2-16.1,0.2-16.1s-13.5-14.5-26.6-24 C482.5,613.3,461.3,604.6,461.3,604.6z"},
+            {"name":"pronator_teres", "d":"M496.8,656c5.4,0.7,10.9,1.4,16.3,2.2 c-9.9,43.4-2.9,103.4-1.7,112.6c-1.7,1.4-3.4,2.7-5,4.1c-0.2-0.1-0.3-0.2-0.5-0.2c-2.2-6.4-4.5-12.8-6.7-19.2 C490.6,727.6,481.5,683.1,496.8,656z"},
+            {"name":"extensor_carpi_radialis", "d":"M471.8,631.8 c13.5,0.2,25.3,9,28.3,19.7c-0.1,4-0.2,8-0.2,12c0.3,12.2,0.6,24.5,1,36.7c0.8,16.1,1.6,32.2,2.4,48.2c0.8,9.8,1.6,19.5,2.4,29.3 c4.4,27.1,5.2,53.9,10.3,79.9c2.6,17.1,5.3,34.2,7.9,51.4c1.2,6,4.1,18.1,2.4,24.7c-0.1,0-0.2,0-0.2,0c-0.1-0.1-0.2-0.2-0.2-0.2 c-2.6-12.1-5.3-24.2-7.9-36.2c-3.9-21-7.8-41.9-11.8-62.9c-8.3-38-10.3-78.7-18.7-117.1c-3.8-19.1-7.5-38.2-11.3-57.4 C474.5,652.9,470.5,639.5,471.8,631.8z"},
+            {"name":"flex_carpi_radialis", "d":"M510.6,666.2c0,0-2.4,35.2-2.4,56.4 c0,10-4.4,44.5,6.6,74.7c4.3,37.4,10,71.6,14.5,85.2c8.5,25.5,10.8,39.2,9.6,49c-1.2,9.8-4.3,18.7-4.3,18.7l-1.9,17 c0,0,12.2-34.2,11.8-46.6c-0.5-12.4-9.3-37.1-13.2-55.4c-2.2-10.4-7.7-40.9-8.6-69.8c3.8-23.3,2.6-43.5,4.1-54.5 c3.3-25.2-10-88.6-10.6-81.8C515.6,664.6,510.6,666.2,510.6,666.2z"},
+            {"name":"abductor_pollicus_longus", "d":"M527.9,813.4 c2.7,5,1.4,17.6,2.4,24.2c4,26.1-0.6,49.9-4.3,73.9c-1.2,7.9-0.3,17,1,23.5c0.5,2.8,0.6,7.2-1,8.6c-0.2-0.1-0.3-0.2-0.5-0.2 c-2.3-7.5-6.9-16.5-5-27.6c1.4-8.4,3.2-22.1,2.2-30c-2-15.6-5.5-37.3-1.9-53.8C522.3,824.7,525.7,819.4,527.9,813.4z"},
+            {"name":"pronator_quadratus", "d":"M525.5,852.8c9.7,0.3,12.4,15.9,12.5,25.7 c-7.7-2.7-12.8,5.2-15.6,9.8c-0.2-0.2-0.5-0.5-0.7-0.7c-0.8-0.6-1.6-1.1-2.4-1.7C518.3,873.4,516.7,858.1,525.5,852.8z"},
+            {"name":"quadriceps_femoris_vastus_lateralis", "d":"M1107.9,414.5 c0,0-5.4,147.5-44.2,217.4c-8,14.4,20.9,69.4,20.9,69.4l-3.6,5.5c0,0-26.8-52-26.9-62.9c-0.1-10.9-35-140.3-5.5-185.3 c29.5-45,37.2-54,37.2-54l9.4,13.7L1107.9,414.5z"},
+            {"name":"soleus", "d":"M1100.9,639.4c28.5-7,57.9,70.8,73.4,107.5 c4.6,11.8,9.3,23.7,13.9,35.5c-1-1.4,16.8,24.1,26.2,38.4c7.4,11.8,15.1,23.5,22.6,35.5c3.1,5,9.1,11.4,9.8,18 c-0.1,0.1-0.2,0.2-0.2,0.2c-0.3,0-0.6,0-1,0c-24.2-16.2-35-42.5-50.4-67.2C1130.1,699.2,1108.7,668.1,1100.9,639.4z"},
+            {"name":"Tibialis_cranialis", "d":"M1101.3,699.6c22.4,0,26.6,15.6,33.4,31.2 c6.1,13.4,12.2,26.9,18.2,40.3c21.1,47.7,54.4,90.6,66,117.6c2.7,6.9,1.3,16.7,2.6,24.5c3.9,23.1,5.2,57.5,0.7,81.4 c-0.1,0-0.2,0-0.2,0c-4.4-13.3-6.3-45.8-7.7-98.9c-5.2-17.5-19.5-33.3-29.3-47c-33.8-47.2-98.4-130.4-95.3-126.2 c-2.7-4.7-2.9-13.7,0.2-18C1092.6,700.9,1096.7,701.4,1101.3,699.6z"},
+            {"name":"flexor_digitorum_profundus", "d":"M1129.2,691.4 c9.5,12.3,96.7,144.8,112.8,168.7c16.1,23.9,23.1,48.5,23,77.3c0,0.5-1,6.6,0,1.6c1-5-25.9,95.8-25.9,95.8l-4.8-1.9 c0,0,22-81.2,23.5-94.8c3.5-31.6-5.9-50.3-15.6-65.8c-6.7-10.6-11-21-22.6-37.2c-29-17.5-71.7-83.3-79-93.6 c-12.7-18.1-23.3-49.2-23.3-49.2S1119.6,679.1,1129.2,691.4z"},
+            {"name":"intercostals", "d":"M777.1,343c18.2,0,32.4,30.2,38.4,43.9 c3.5,7.9,7.5,16,10.8,24.5c5,13,7.5,26.8,11,41.3c1.1,4.6,5.8,22.8,4.8,27.4c-1.3,2.6-2.6,5.1-3.8,7.7 c-9.1,15.6-20.6,30.9-37,39.1c2.1-4.4,4.2-8.8,6.2-13.2c2.9-7.3,4.2-15.4,5.8-24.2c2.3-13.1-5.1-33.6-8.2-43.9 c-5.3-17.7-9.1-35.4-15.6-52.1c-6.6-15.5-13.1-31-19.7-46.6C771.8,344.6,774.1,344.4,777.1,343z M767,371.6 c6,9.2,7.8,19.1,12.5,30c2.4,5.5,5.4,10.9,7.7,16.8c8,20.6,11.5,45.4,16.1,68.9c3,15.2-2.4,29.7-8.6,37.7 c4.7-4.6-16.5,16.3-18.5,16.6c-0.4-0.5-0.8-1-1.2-1.4c0.9-2.4,0-0.8,2.6-14.6c2.7-13.9,7.6-18.2,0.7-44.6 c-0.4-6.6-1.3-11.4-1.7-18c-2.6-13.2-5.8-30.8-10.3-42.5c-3-13.8-14.4-40.2-20.6-53.5c-1.3-2.8-7.8-10.7-6.5-14.6 C740.3,349.5,745,337.8,767,371.6z M716.1,359.3c22.2-4.1,39.7,65.8,42.7,75.1c4.6,18.2,4.8,37.5,7.9,57.4 c0.9,5.6,0.6,39.2-0.7,42.5c-3.4,8.2-10.3,11-17,15.8c-2.5,1.8-4,4-7.2,5.3c-0.6-0.4-1.3-0.8-1.9-1.2c0.3-4.3,2.5-6,3.6-9.1 c0.8-3.9,2.4-19.8,2.4-24.5c0-15.7-1.6-29.5-3.8-42.5c0.2,2.9-4.7-46.3-11.8-70.3c-3.9-13-9.5-22.2-14.4-33.4 C713.5,369.1,712.8,364.1,716.1,359.3z M684.7,363.6c4.5,0.2,12.9,3,18,10.3c17.9,26,18.5,60.4,19.4,65.3 c2.5,11.2,5,22.4,7.4,33.6c4.8,24.2,2.3,56.7,2.6,47c-0.1,8.8,1.1,24.7-1.7,31.4c-2.8,6.7-9.3,10.4-14.9,14.4 c-15.7,11.2-13.2,4.9-13,5.5c0.1-0.7,6.9-12.3,8.2-19.2c1.2-6.4,0.5-15.4-0.5-21.4c-1.6-9.8-2-30-2.6-33.4 c-4.8-25.6-5.9-52.4-11-77c-3.7-13.4-7.4-26.9-11-40.3c-1.4-4.5-5.8-8.1-4.8-13.9C681.9,364.7,683.2,364.5,684.7,363.6z M655.6,367c13.8,0.6,19.8,28.4,23.5,40.8c5.3,17.8,8.5,37.7,11.8,57.6c0.9,17.1,1.8,34.2,2.6,51.4c-1-8.9,8.5,37.6,3.6,45.4 c-4.3,6.9-10.4,13.4-16.3,17.8c-0.9-0.2-1.8-0.3-2.6-0.5c-1.9-5.3,6.2-31.4,5-38.6c-1.7-10.5-2.3-20.7-4.1-31.7 c-0.6-8.9-1.1-17.8-1.7-26.6c-6.4-35.6-20.9-86.8-19.4-83c-0.9-2.3-9.4-26.8-7.7-29.3C651.4,368.2,653.8,368.2,655.6,367z M626.6,372.8c19.9,0.6,30.9,71.8,30.2,67c3.7,17.9,5.9,37.6,9.1,55.9c0.8,13.3,1.6,26.6,2.4,39.8c1.7,10.4,1.7,32.2-0.2,38.6 c-2,6.5-23.2,12.1-28.1,10.6c-4.9-1.6,0.7-10.7,1.4-14.2c2.1-9.5,3.3-23.5,1.4-34.3c-1-11.3-1.9-22.6-2.9-33.8 c-4.9-26.5-5.9-56.1-12.7-81.1c-2.6-10.3-5.3-20.6-7.9-31c-1.3-4.4-4.5-9.4-2.6-14.9C619.2,374.2,623.9,374.3,626.6,372.8z M603.1,375.9c4.2,0.1,8.4,23.8,8.2,23.3c-0.3-1.6,7.5,26.5,10.3,41.5c0.1-2.8,1.9,28.2,4.8,44.9c0,4.9,1,29.4,1.7,37 c1.2,7.4,1.5,30.2,1.7,33.1c2.4,14.9-0.8,28.6-10.8,32.2c-3,1.1-6.7,0.1-10.3,0.2c-3.1,0.1-6.3,0.7-8.9-0.2 c0.5-6.1,5.3-55.6,4.1-71c-0.6-9.6-1.1-19.2-1.7-28.8c-3.2-19.6-4.4-41.4-7.9-60.7c1.3,26.6-6.1-48.6-8.6-45.1 C587,380,600.9,377.3,603.1,375.9z M568.7,383.1c13.3,0.8,12.1,26.4,14.6,39.1c5.2,26.4,3.3,60.7,7.9,88.1 c0,0.6-0.6,24.6,1.2,35.8c1,6,2.7,14.4,1.4,21.8c-0.1,0.5-10.7,19.1-11.8,19.9c-6.4,4.9-17.4,1.1-21.6-3.4c0-1,4.6-19.2,7.4-31.2 c-0.6-36.9-1.1-73.8-1.7-110.6c-0.7-11.5-3.5-28.2-3.6-38.4c-0.2-13.7-1.2-16.9-1-17.3C562.9,386.4,567.6,383.6,568.7,383.1z M545.2,387.6c15,0.5,7.9,25.5,9.8,38.6c-0.2,10.2-0.3,20.3-0.5,30.5c0.2,21,0.3,42.1,0.5,63.1c0,14.1,2.6,35.9-1.2,47.8 c-1.3,4.1-7.7,12.2-11.8,13.2c-7,1.7-19.8-9.6-19.4-8.9c-6-0.7,8.6-19.7,8.2-38.2c-0.4-18.5,0.3-36.2,2.9-53 c1.5-30-0.1-88.7,4.1-90.2C535.4,391.4,542.8,388.8,545.2,387.6z M523.4,403.2c4.6,12.7,1.7,31.8-0.5,45.4 c-0.2,7-0.5,13.9-0.7,20.9c-2.9,18.5-0.3,40.6-3.6,58.1c-3.3,17.6,4.9,24.9-8.9,34.1c-1.6,1.1-4,3.2-6.7,2.9 c-4.3-0.5-13.8-8.4-12.5-13.7c1.8-4,3.5-8,5.3-12c3.1-8,4.9-17,6.5-26.2c2-22.9,4-45.8,6-68.6c1.8-11.2-1.9-24.4,1.9-33.6 C516.3,395.6,525.2,404.6,523.4,403.2z M495.1,422.4c1.7,0.2,2.3,0.6,2.6,1.9c-0.2,9.4-0.3,18.9-0.5,28.3 c-1.6,26.2-2.6,51.1-7.2,64.1c-4.6,13-1.6,25.6-16.1,22.6c-6.1-1.3-13.9-4.6-11.5-13.4c1.4-5.2,6-7.2,7.7-12.5 c5.2-16.6,9.2-69.4,11.3-74.4C484.5,431.5,491.2,429,495.1,422.4z M454,438.5c0.6,0.1,1.3,0.2,1.9,0.2c0.1,0.2,0.2,0.3,0.2,0.5 c2.5,11.4-4.7,29.5-8.2,37.9c-1.7,4.3-2.1,8.8-6.2,10.8c-0.3-0.1-0.6-0.2-1-0.2c-2.4-6.1,2.9-11.8,4.8-16.8 C450.2,458.8,446.2,448.6,454,438.5z M465.1,462.3c2,0.1,2.1,0.7,1.9,2.9c-0.3,5.3-0.6,10.6-1,15.8c-1.5,9-7,34.2-12.5,37.7 c-4.1,2.7-15.7-3.6-18.2-5.5c-3.1-2.4-6.2-5.2-8.4-8.4c1.3-5.8,7.7-5.6,12.7-7.7c2.2-1.4,4.3-2.9,6.5-4.3 C456.6,484.8,457.7,473,465.1,462.3z"},
+            {"name":"diaphragm", "d":"M790.7,538.1c0,0-117.8,35.5-157.4,1.9 c-24.9-21.1-38-50.2-36.2-85.7c1.7-35.2,27.8-71.7,73.7-86.6c45.8-14.9,87.6-25,87.6-25s39.5,65.8,45.6,120.7 C808.7,506.1,790.7,538.1,790.7,538.1z"}
+        ];
+
+        var vcn_organs_coordinates = [
+            {"name":"skin", "d":"M1213.6,734.5c-58.5-58-67.4-120.6-68-151 c-0.7-33.5-1.2-78.1-4-109c0.1,20.1,0.8,37.7-1,95c-1.9,60.6-2.2,131.6,25,176c11,16.7,29,41.3,40,58c6.4,9,16.9,20,20,32 c2.4,9.6-4.4,72.9-7,89c1.3,31.3-3.3,71-2.8,102.4c-10,9.1-20,20.7-36,29.5c-6.4,3.5-12.7,12.5-20.4,14c-8,1.5-17.4-4.6-26.8-6.9 c-0.5-0.3-18.6,5.9-25-11c-17.8-3.6-12.5-19.7-13-20c-1.5-6.5,14.3-13.3,22-22c7.4-8.4,6.6-18.6,13-20c5.3-3.7,25.4,0.3,29-5 c13.2-19.6-0.7-45.4-1-68c-0.9-73.4-58.9-134.5-96-179c7.3,8.8-49.1-44.5-79-115c-13.3-31.2-16.2-62.2-24-96 c-0.3,0-33.7,19-34,19c-19.1,6.3-30.5,0.5-38-16c2.6-8.2,5.8-12.7,9-20c-9-15.3-79.8,3.2-95,9c-37.9,14.4-72.7,26.3-107,43 c-27,13.2-70.1,33.4-61,28c-56.6,33.8-94.5,22.6-103,25c1.3,21.5-18.3,50.9-21,68c-0.3,55,3.3,86,3,141c1.3,21.8,17.1,56.8,12,72 c-2.1,6.4-13.1,15.1-17,30c-4.7,18.2-2.9,43.7-12,64c-5.9,13.1-22.1,10.8-27,16c-12.1,12.8-11.4,17.5-25,16 c-10.7-1.2-20.1,7.8-30.4-5.2c-15.2-1.8-22.9-23.4-12.6-28.8c10.3-5.4,19.1-21,28-29c9.2-8.3,22.2-8.8,28-21 c10.1-21.2,4.5-11.6,5-43c0.8-46.2-16.1-89.2-24-147c-7.9-58.2-0.4-87.7-24-115c-35.4-41-55-69-55-69s-16.1-36.7-28-61 c-21.2-43.3-18.5-67.6-25-102c0-0.7,0-1.3,0-2c-5.1-18.9-21.3-36.8-30-53c-6-14.7-12-29.3-18-44c-14.5-22.3-40.7-59.3-68.9-65.1 c-24.1-5-73.3,5.6-75.1-12.2c-8,1.7-14.2,5.7-30.2,2.2C72,223,20.9,158.9,43.9,141.4c7.4-4,65.9-35.9,80.4-43.9 c0.8-9.1,7.5-16.1,11.3-23c21-6.4,40-16.1,58-25c-0.6,0.3,63.9-46.6,122,35c16.8,23.6,43,41.3,60,65c12.2,17,39.4,58.9,52,72 c23.1,24.1,48,31,48,31s77.1,27,181,23c29.7-5,62.3-9,92-14c82.4-10.6,133.6-10.6,153-12c36.8,2.4,81.1,0.3,113,11 c32.4,10.9,67.3,24.4,95,43c21.2,14.2,38.4,31.6,51,54c34.8,61.9,4.5,144.3,15,252c1.6,16,9.7,32.5,16,49 c19.8,51.5,54.2,92.2,103,114C1317.6,791.7,1270.1,790.6,1213.6,734.5z"},
+            {"name":"brains", "d":"M228.2,74.4c6.8-0.1,24.3,2.5,28.1,5.8 c0.6,1,1.3,2.1,1.9,3.1c2.7,2.1,5.9,3.2,7.7,6.2c1.1,1.8,1.9,5.2,2.4,7c0.7,2.7-1.1,5.3-0.5,6.5c1.1,1.7,4,2.4,5,4.1 c0.9,1.4,4.2,8.7,4.3,9.8c0.3,2.3-1.7,4.4-2.6,6c-4.4,7.5-6.4,9-14.4,12.7c0.1,0.2,0.2,0.3,0.2,0.5c4.2,1.2,8.5,2.4,12.7,3.6 c-1.2,2.1-2.4,4.2-3.6,6.2c-9.9,0.2-24.6-3-31-6.5c-3-1.7-7.7-4.9-5.8-9.1c-1.7,1.5-3.7,2-6.7,1.7c-12.2-1.4-10.8-5.6-16.8-12 c-4.6,0.2-9.1,0.5-13.7,0.7c-7.3,1.5-18.4,7.8-25.2,3.6c-0.1-0.6-0.2-1.1-0.2-1.7c2.9-5.8,7.8-5.7,13-9.1 c-6.3-2.6-9.4-12.7-4.8-19.2c8.8-12.6,14.2-15.1,31.2-19.4C215.2,73.4,223.8,76.5,228.2,74.4z"},
+            {"name":"lungs", "d":"M628.1,340.6c3.6,11.1-11.1,49.5-12,52.3 c-16.7,41.8-35.9,98.5-56.2,118.3c-8.9,16-8.9,23.6-22.6,31.4c-19.5,15.1-84.1-14.5-128.4-31.2c-15.7-8-29-19.8-43.7-29 c-8.4-4.9-15.6-12.4-26.9-13.7c-13.6-6-16.6-17.8-11.3-28.6c2.8-5.8,10.9-7.7,16.3-11c1.8-1.1,52.3-41.2,80.4-54.2 c23.2-10.8,53.8-17.7,81.6-23.3c18.7-3.7,39.2-1.1,59-3.8C591.9,348,613.8,335.7,628.1,340.6z"},
+            {"name":"heart", "d":"M379,454.8c1,3.4,1.9,6.7,2.9,10.1 c1.9,4.4,13.3,16.7,20.9,13.7c1-1.6,2.1-3.2,3.1-4.8c3.5-5.1,9.1-9.4,15.4-11.8c12.1-4.5,27.1,0.5,36.5,4.1 c3.6,1.4,7.7,1.5,11.8,2.6c8.9,2.4,21.1,6.7,26.2,13.2c7,8.9,7.9,21.8,12,33.8c3.9,11.3,14.2,17.9,7.4,33.1 c-5.7,12.7-30.6,13.7-46.3,9.1c-9-2.6-18.4-2.9-26.2-6.2c-6.9-3-10.7-9.2-16.8-12.7c-9.2-5.3-17.8-7.7-23.8-16.1 c-2.3-3.2-4.9-7.8-6-11.8c-0.3-2.9-0.6-5.8-1-8.6c-14.7-2.9-26.2-13-32.9-24.2c-1.9-3.1-5.8-9.6-5-13.9 C364.4,461.2,371.7,458,379,454.8z"},
+            {"name":"liver", "d":"M599,349.4c27.2-0.1,36.1,16.7,45.6,34.6 c8.7,16.4,17.2,32.1,21.4,53.3c4,20.6-6.2,47.6-10.3,63.8c-1.9,7.7-1.7,15.8-4.1,22.8c-6.7,19.9-20.1,27.8-42.5,32.4 c-3.4,0.7-19.4,1.9-23.5,0.7c-13-3.7-26.7-3.4-37.2-8.9c-22.6-11.7-37.5-47.2-44.4-74.9c-3.3-13.1-2.7-31.3,1.9-42.2 c4.2-9.8,10.9-16.8,16.8-24.7c15.6-20.7,34-39.8,58.3-51.6c3.8-1.4,7.5-2.9,11.3-4.3C594.6,350.1,596.8,349.8,599,349.4z"},
+            {"name":"spleen", "d":"M661.2,339.4c5.2,1.1,11.8,0.9,16.3,3.8 c5.1,3.3,9.3,8.3,13,13c9.5,12.1,20.4,21.8,25,39.1c2.2,8.6,1.7,21.1,1,27.8c-1.2,10.4,2.6,19.3,0.5,29 c-3.6,16.6-19.8,25.6-37.7,27.8c-7.5,1-20.1,2.2-27.6-0.2c-16.9-5.6-27.5-21.4-36-35.5c-5.2-8.6-13-21.9-9.4-36.5 c5.8-23.5,24.2-52.7,41.8-64.3C651.9,340.8,656.7,341.2,661.2,339.4z"},
+            {"name":"kidney", "d":"M705.6,328.1c19.2-0.4,36.1,6.5,48,14.2 c6,3.9,12.1,6.9,12.7,15.4c0.7,9.1-7.5,13-12.2,17c-8.2,6.9-16.8,13.8-28.8,16.8c-7.9,2-17,1-25.7,2.4c-7.3,1.2-16.8,2.9-23.8,0 c-9.9-4.1-22.9-25.2-14.6-38.9c6.6-10.8,21.3-19.5,33.6-24.5C698.4,329.7,702,328.9,705.6,328.1z"},
+            {"name":"stomach", "d":"M626.6,339.4c41.1,4.1,47.7,21,61,54.7 c4.6,11.8,11.7,28.5,8.6,44.6c-2.8,15-8.6,27.7-13.4,40.6c-5.9,15.5-12.6,31.6-25.4,40.1c-13.3,8.7-26.5,2.4-36.7-4.6 c-18.4-12.5-28.1-31.8-33.1-57.8c-1.6-8.3,0.4-17.9-1.2-26.4c-1.1,0.1-2.2,0.2-3.4,0.2c1.3-8,2.6-16,3.8-24 c1.1-0.2,1.6-0.3,2.2-1.2c1.1-5.3,2.2-10.6,3.4-15.8c5.4-14.6,10.9-29.1,16.3-43.7C611.9,342.3,622.7,341.3,626.6,339.4z"},
+            {"name":"bladder", "d":"M1001.5,380.2c4.4,1.9,18.7,7.9,15.4,14.9 c-2.5,5.1-20.6,11.7-26.6,14.4c-27.3,12.2-77.5,38.7-102.5,5c-17.6-23.7,8.7-40,27.4-45.6C909.8,369.9,946,355.8,1001.5,380.2z"},
+            {"name":"aorta", "d":"M253.2,694.1c0,0-18.1,2.8-33.1-19 c-9.1-13.2-7.6-21.5-8.4-28.1c-0.8-6.6-3-11.2-9.8-15.8c-6.8-4.7-17-7.9-17-7.9s-1.5-13.7,3.1-13.7c4.6,0,20.9,9.1,25,8.4 c4.1-0.7,1.4-5.3-3.6-7.9c-5-2.6-12.7-5.3-12.7-5.3s1.5-11.1,7.9-11c6.4,0.1,19.7,13.7,25.7,14.4c6,0.7,31.7-15.6,39.1-16.8 s12.3,14.9,13,19c0.7,4-17.5,9-23.5,15.4c-6,6.3-18.1,23-13.9,29.8c9.5,15.6,26.6,12.6,27.6,20.9 C275.3,699,253.2,694.1,253.2,694.1z"},
+            {"name":"LA", "d":"M300.8,632.8c18.3,1.4,28.4,26.2,32.6,43 c1,2.6,1.9,5.1,2.9,7.7c-0.1,0-0.2,0-0.2,0c-6-3.1-17.8-14.1-28.3-10.8c-1,2.1-1.2,4.7-2.2,7.2c-2,5.4-14.5,21.4-19.2,24.2 c-2.4,0.6-4.8,1.1-7.2,1.7c-1.9,1.3-3.8,2.6-5.8,3.8c-3.5,1.4-11.4-0.1-13.7-1.9c-5.1-4-5.5-17.1-7.2-25.7 C258.8,667.2,265.6,647,300.8,632.8z"},
+            {"name":"RA", "d":"M206,639.5c0.5,0.1,1,0.2,1.4,0.2 c1.3,3.6,2.6,7.2,3.8,10.8c0.5,3.6,1,7.2,1.4,10.8c1.1,2.7,2.2,5.4,3.4,8.2c0.9,2.8,2.7,7.7,1.2,11c-1,2.2-3.7,3.8-5.5,5.3 c-2.2,2.3-4.3,4.6-6.5,7c-7.4,4.2-9.8,8.3-12.5,14.2c-0.2-0.1-0.3-0.2-0.5-0.2c-1.8-4.5-9-6.4-11.3-12 c-6-14.4,4.3-44.3,12.2-50.4C196.8,641.6,201.8,641.7,206,639.5z"},
+            {"name":"LV", "d":"M259,796.6c8.2,4.4,11.9,6.6,20.2,11 c14,8.2,28.9,15.2,45.8,20.4c7.3,2.2,18.2,3.9,25.9,0.7c5.1-2.1,9.6-6.4,11.8-11.5c7.4-17,3.3-62.8-0.7-80.9 c-3.1-14-7.1-27.4-13.7-37.9c-4-6.4-9.4-11.4-13.2-18c-2-3.4-19.8-11.1-24.5-11c-5.1,0.1-8,8.6-11.5,16.1 c-3.5,7.5-7.7,13.9-13.9,17c-11.6,5.8-12,4.6-16.6,6.7C254.2,746.5,265.3,775,259,796.6z"},
+            {"name":"RV", "d":"M270.7,709.4c-9.8,28-5.9,66.7-6.2,80.4 c-1.7,1.4-0.1,7.2-2.2,7.9c-10-5-18-3.9-31-9.8c-18-10.3-30.4-30.2-36-52.8c-1.4-5.7-3-13.9-1.9-21.1c0.2-2.6,0.5-5.1,0.7-7.7 C205.1,672.7,257,685.8,270.7,709.4z"},
+            {"name":"papillary_muscle", "d":"M346.8,746c0,0-10.3-11.1-19.2-18.7 c-8.1-6.9-15.6-19.6-20.4-19.7c-4.8-0.1,4.5,22,14.4,34.6c9.9,12.5,11,12.6,14.2,16.6c3.2,4,3.9,10.8,0,8.6 c-3.9-2.2-15.7-13-22.1-20.2c-7.5-8.4-16.1-18.2-15.4-8.6c0.8,9.5,7,22.9,12.7,30.5c5.7,7.6,17.6,20.8,21.4,22.3 c3.7,1.5,11.8,4.2,13.4-0.5c1.7-4.7,3.9-11.3,3.6-28.8C349.3,751.6,346.8,746,346.8,746z"},
+            {"name":"esophagus", "d":"M392.9,413.5c-15.9-0.7-49.6-11.9-56.6-20.9 c-6.2-7.9-18.4-29.9-20.2-34.1c-9.1-22.1-20-69.8-19.7-68.4c-9-28.4-18.6-55.1-35.3-75.6c-10.3-12.7-22.3-20.1-39.4-26.9 c-13.2-5.3-34.9-5.8-36.7-16.6c-1.3-7.7,17-4.3,37.2-2.4c7.2,0.7,14,5.6,20.2,8.4c28.6,13.1,48.5,40.3,60.5,69.8 c3.1,7.7,23.6,87.6,26.6,97.7c4.8,15.7,28.7,44.4,22.6,36.5c19.8,16.5,77,16.9,58.3,18c5.4-0.1,66.5-8.3,88.3-12.7 c32.9-5.9,115-31.4,109.2-31c-3.4,9,27.4,17.4-76.8,40.8C501.1,403,446.7,415.9,392.9,413.5z"},
+            {"name":"jejunum", "d":"M712.1,397.9c3.5,0.4,7,0.8,10.6,1.2 c1.2,0.9,2.4,1.8,3.6,2.6c2-3.3,5.5-6,6.2-10.6c-0.8,0-1.6,0-2.4,0c-2.3,0.2-4.6,0.3-7,0.5c0-3,16.5-12.6,19.9-14.9 c17.9-11.9,35.2-24.7,61.2-28.8c4.3-0.7,19.1-2.9,22.8-1.4c-1.6,0.1-3.9,0.4-4.8,1.2c10.2,0.9,16.6,5.4,23.8,9.1 c2.4,1.2,7.2,3.7,9.8,2.2c2.5-7.1,10.2-10.6,14.9-15.6c0-0.1,0-0.2,0-0.2c-3,0.3-8.4,1.8-11.5,0.5c0.2,0,0.3,0,0.5,0 c20.2-2.1,40.3-4.2,60.5-6.2c0.2,0.2,0.5,0.3,0.7,0.5c-0.2,0-0.3,0-0.5,0c-2.5,1.4-6,1.8-9.6,2.2c0.2,0.2,0.3,0.5,0.5,0.7 c2.6,1,5.3,2.1,7.9,3.1c5.7-4.9,29.4-11.7,38.9-5c2.8,2,3.2,5.8,5.3,8.6c1.2,1.6,3.2,2.8,4.3,4.6c3.7,5.8,0.6,14.7-2.2,19 c-7.4-1.8-14.9-3.7-22.3-5.5c0.8-3.1,1.6-6.2,2.4-9.4c0.7-1.7,2.2-2.7,2.6-4.8c-5-3.4-14.7-2.1-18.2,1.9c1.1,3.3,2.9,9.3,0.5,13 c-8.3,1.9-16.6,3.8-25,5.8c0-0.1,0-0.2,0-0.2c1.4-3.2,3.9-9.3,1.4-12.7c-3.8-5.2-23.7-2.9-27.1,1.4c0.1,0.2,0.2,0.3,0.2,0.5 c8.5,2,14.3,8.6,20.4,13.2c-0.6,0.6-1.1,1.3-1.7,1.9c-5.2,2.4-14,12.3-15.4,18.5c1,5.5,2.1,11,3.1,16.6c3,3.3,5.9,6.6,8.9,9.8 c1.8,2.2,3.5,4.3,5.3,6.5c2.4,0.6,4.8,1.1,7.2,1.7c4,1,8,2.1,12,3.1c9.2-2.6,18.4-5.1,27.6-7.7c-2.6,11.7-18.5,27.1-34.6,25.7 c-8.7-0.8-16.2-6.1-23.5-2.9c-5.6,2.5-6.6,6.4-9.8,11.3c-1.8,2.8-5.3,4-7.2,6.5c-2.6,4.8-5.1,9.6-7.7,14.4 c-6.5,8.8-13.3,10.5-25.2,13.9c-4.4,1.3-9.5,5.2-15.8,3.8c-2.3-0.5-5.6-0.3-7.9-1.2c-2-0.8-2.5-2.9-4.8-3.4 c-3.6,2.2-9.7,6.5-16.1,5.3c-5.6-1.1-11.2-4.8-18-2.9c-3.1,1.4-6.2,2.9-9.4,4.3c-4.2,1-8.5,1.9-12.7,2.9c-4.3,0.8-8.6,1.6-13,2.4 c-2.6,0.2-5.3,0.3-7.9,0.5c-10.4,3.1-19.1,9.7-30.7,11.8c-11.2,2-26.9-8.6-31.4-13.9c2.4-7,4.8-14.1,7.2-21.1 c9.3-3.8,18.6-7.7,27.8-11.5c1.2-1.9,2.4-3.8,3.6-5.8c4.3,1.2,10.1-0.2,13.9-0.7c3.8,0.3,7.5,0.6,11.3,1c0.9-0.8,1.8-1.6,2.6-2.4 c2.5-1.7,8.6-2.5,12.2-2.6c2.6,0.8,5.3,1.6,7.9,2.4c7.4,2.1,21.5,2.9,23.5-4.1l-10.3-7.7c-0.4-1.4-0.8-2.9-1.2-4.3 c-11.1,2.3-21.2,13.7-34.3,10.6c-8.4-2-12.5-8.4-19.4-11.8c-0.4,0.2-0.8,0.5-1.2,0.7C714.3,429.8,713.2,413.8,712.1,397.9z M809.3,367.9c2.9,1.1,5.8,1.3,9.4,1.7c0,0.1,0,0.2,0,0.2c-3.9,2.5-7.8,5-11.8,7.4c-2.1,1.6-3.9,6-6.5,6.7 c-3.2-0.1-6.4-0.2-9.6-0.2c-9.5-1.4-18.1,0.8-23,5.3c-3.5-0.7-4.6-3.3-8.6-3.6c0-0.1,0-0.2,0-0.2c3.3-2.1,6.6-4.2,9.8-6.2 c3.5-2.6,5.2-6.7,9.4-8.9c7.3-2.2,14.6-4.3,21.8-6.5C804.3,363.9,806.1,366.8,809.3,367.9z M871.2,394.8c0.3,1.2-0.1,1.7-0.7,2.6 c-2.7-0.2-5.4-1.2-8.4-0.5c-4.3,1.1-7.9,4.8-12.7,4.3c-0.5-1-1.1-1.2-2.4-1.4c1.2-1.6,3.8-1.4,5.5-2.4c2.2-1.8,4.5-3.7,6.7-5.5 C863.3,392.5,866.5,394.5,871.2,394.8z M793.9,405.6c1.8,2.9,2.9,6,4.8,8.6c-2.6,2.2-5.3,4.5-7.9,6.7c-3.8,6.1,1.8,12.6,1.9,19.7 c-0.2,0.1-0.3,0.2-0.5,0.2c-5.8-3.8-7.4-19-7.2-28.3c2.6-2.8,5-4.7,8.2-7C793.4,405.6,793.7,405.6,793.9,405.6z M753.4,414.7 c-0.5,3.4,2.5,6.4,1.4,10.3c-0.2,0.1-0.3,0.2-0.5,0.2c-4.1-4.2-5.8-8.8-13.4-9.6c-0.2-0.2-0.3-0.3-0.5-0.5c0.6-3,2.1-6.9,4.8-7.9 c1.3-1,4.1,1.4,6.7,0.7c1.4-0.3,2.7-0.6,4.1-1C755.8,410.3,753.7,412.3,753.4,414.7z M866.4,422.2c0.2,0.2,0.3,0.5,0.5,0.7 c-0.6-0.1-1.3-0.2-1.9-0.2c0.2-0.2,0.3-0.5,0.5-0.7C865.8,422,866.1,422.1,866.4,422.2z M847.9,428.2c1.6,4.5,5.5,7.9,8.2,11.5 c0,0.1,0,0.2,0,0.2c-0.3,0.2-0.6,0.3-1,0.5c-7,3-14.6-5.9-15.6-10.1c2.4-0.7,4.8-1.4,7.2-2.2 C847.1,428.2,847.5,428.2,847.9,428.2z M740.6,436.1c0.3,0.5,0.6,1,1,1.4c0,0.2,0,0.5,0,0.7c-3.3,0.6-3.9-0.9-6.5-1.9 c-0.1-0.2-0.2-0.3-0.2-0.5c0.2-0.1,0.3-0.2,0.5-0.2C737.1,435.8,738.9,435.9,740.6,436.1z M851.3,460.8c-0.6,3.3-3.1,9.2-5.5,11 c-3.3,2.4-8.7,2-13.4,3.1c-4.6,1.4-9.3,2.9-13.9,4.3c-4.3-0.2-8.6-0.3-13-0.5c0-0.1,0-0.2,0-0.2c4-5.3,10-8.9,15.4-13 c2.2-1.7,3.5-4.5,6-6c1.4-0.4,2.9-0.8,4.3-1.2C838.6,458.5,844.5,459.9,851.3,460.8z M705.8,492.2c3.5,1.6,8.6,0.3,12.7,0.2 c0.1,0.2,0.2,0.3,0.2,0.5c-2.6,1.2-5.1,2.4-7.7,3.6c-13,6.2-16.2,3.2-25.9-4.3c0-0.2,0-0.3,0-0.5c4.3-2.1,8.6-4.2,13-6.2 C701.2,486.6,702.7,490.8,705.8,492.2z"},
+            {"name":"colon", "d":"M948.5,304.6c10.9-0.2,12,5.2,19,6.7 c4.5,0.1,9,0.2,13.4,0.2c12.6,0.7,27.1,0.1,37.2,4.8c6.1,2.9,5.9,12.7,0,15.6c-6,3-15.6-3.3-23.3-2.4c-4.1,0.7-8.2,1.4-12.2,2.2 c-4-0.1-8-0.2-12-0.2c-5.3,1.1-10.6,3.2-17,4.3c-8.3,1.4-16.7-4.7-22.3-3.4c-6,1.4-9.9,6.1-16.8,7.4c-8.2,1.6-13.7-3.7-22.1-1.9 c-3,1.1-6.1,2.2-9.1,3.4c-5,0.8-10.1,1.6-15.1,2.4c-9.8,0.2-19.7,0.5-29.5,0.7c-7.4,1.3-14.9,2.6-22.3,3.8 c-8.1,0.5-16.2,1-24.2,1.4c-7.4,3-14.9,6.1-22.3,9.1c0.2-0.6,0.5-1.3,0.7-1.9c-13-7.5-26.1-15-39.1-22.6c0.1-0.1,0.2-0.2,0.2-0.2 c9.7,0.1,15.7-2.9,24.5-2.9c7.8,0,14,3.8,21.8,1.9c6.7-1.6,12.9-4.7,20.4-6.2c9-0.4,17.9-0.8,26.9-1.2c6.4-1.3,9.9-5.6,17-7 c9.9-1.8,17,1.6,26.4-0.2c5.1-1,10.9-2.2,16.8-3.1c3.5,0.1,7,0.2,10.6,0.2c6.9-1.8,13.8-3.5,20.6-5.3c5.5-1,9.7,2.6,14.4,1.2 c2.9-1.8,5.8-3.5,8.6-5.3C942.6,305.7,945.5,305.1,948.5,304.6z"},
+            {"name":"trachea", "d":"M264.2,207.1c5.5,1.5,5,7.8,6.7,13.2 c2.4,7.5,6.1,13.7,10.6,19.2c-0.3,1.4-1,1.9-1.7,2.9c0.2,0.3,0.3,0.6,0.5,1c1.4-1,2.2-1.5,3.8-0.5c0.9,3.1-0.5,5.6-0.2,8.2 c0.2,0.1,0.3,0.2,0.5,0.2c1-0.5,1.4-0.8,2.9-1c0.2,0.2,0.3,0.3,0.5,0.5c0.9,2.8,0.2,4.7-0.2,7.4c0.3,0.6,0.6,1.3,1,1.9 c0.9-0.2,1.8-0.5,2.6-0.7c0.2,0.3,0.5,0.6,0.7,1c0.8,2.1,0,3.9-0.5,5.5c0.5,1,1,2.1,1.4,3.1c1.1-0.2,1.6-0.2,2.4,0.2 c2.3,12,7.9,22.3,11,34.8c1,7,1.9,13.9,2.9,20.9c0.4,0.9,1.4,1.3,1.7,2.6c0.4,2.4-0.2,4.7,0.5,6.7c1,0.1,0.9,0.2,1.4,0.5 c0.6,3.3,0.4,6.7,1.4,9.4c0.8-0.4,1.1-0.4,2.2-0.2c1,3.3,0.2,6.5,1.2,9.6c0.7-0.2,1.4-0.3,2.2-0.5c0.1,0.2,0.2,0.5,0.2,0.7 c2,2.3,0.2,5.7,1.4,7.9c1.1-0.5,1.6-0.5,2.6,0c0.8,3,0.3,6.8,2.2,8.6c1.3-0.5,1.6-0.7,3.1-0.2c0.5,3.7,0.2,6.3,2.4,8.6 c1.5-1.1,2.4-1,3.8,0c0.5,1.9,0.6,3.5,0.5,5.8c0.4,0.4,0.8,0.8,1.2,1.2c0.9-0.6,1.9-1.2,2.9-0.5c2.2,1.4,1.4,5.4,4.1,7.4 c1.3-0.9,2.2-1.2,3.6-0.2c0.8,3.5,1.6,4.8,4.1,6.5c0.9-0.2,1.8-0.5,2.6-0.7c2,1.8,2.5,4.5,4.8,6c1.2-0.6,1.2-0.6,2.6-0.2 c1.2,1.7,2.6,4.7,4.8,5.3c1.4,0.4,2.1-1,3.4,0c0.6,0.6,0.7,0.6,1,1.7c-3.7,3.4-7.4,6.7-11,10.1c-2.9,1.4-5.8,2.9-8.6,4.3 c-1-0.6-1.9-1.1-2.9-1.7c-1,1.2-2.3,1.7-4.6,1.7c-1.4-0.7-2.5-1.4-3.4-2.6c0.4-1.7,1.1-2.1,2.2-3.1c-0.2-0.2-0.3-0.5-0.5-0.7 c-0.4-0.2-0.8-0.5-1.2-0.7c-1.4,0.6-2.2,1.1-4.3,1.2c-1.5-0.9-3.1-1.7-3.4-3.8c1.2-1.4,1.7-1.5,0.7-2.9c-0.7-0.6-1.4-1.1-2.2-1.7 c-3.6,0.8-5.4,1.1-7-2.4c0.4-1,0.8-1.9,1.2-2.9c-0.6-0.6-1.3-1.1-1.9-1.7c-1.1,0.4-2.2,0.5-3.4,0.2c-1.3-0.9-1.9-2-2.6-3.4 c0.6-1.9,1.6-2.1,0-3.4c-2.5-3-6,0.9-4.8-6.7c-2.2-2-1.9-2.5-5.3-3.4c-1-2.3-1.4-3.1-0.7-5.8c-3-2.9-6.1-3.9-4.8-8.6 c-1-1.3-3.2-2.7-3.8-4.1c-1.4-2.7,0.2-5.3-1.7-7.9c-0.7-0.9-2.1-1.2-2.6-2.4c-1.1-2.7,0.8-4.8-1-7.2c-0.7-0.9-1.9-0.8-2.4-2.2 c0-2,0-4,0-6c-0.6-1.5-2.4-1.7-2.9-3.6c-0.8-3,1.1-4.2,0-7.7c-3.8-0.6-2.3-5-1-6.7c-0.2-0.9-0.3-1.8-0.5-2.6 c-1.5,0-2.5-0.2-3.1-1.2c-1.2-1.2-1.1-3.6,0-4.6c1.2-1.6,2.3-1,1.9-3.8c-1.4,0.6-2.9,0.4-4.3,0c-0.4-1.4-0.8-2.9-1.2-4.3 c2.5-2,3.9-2,3.1-5.8c-1.9,0.1-3.1,0.2-4.6-0.2c-0.6-1.3-1-2.2-1-4.3c1.1-0.8,2.5-1.6,2.9-3.1c-0.2-0.5-0.5-1-0.7-1.4 c-1.6,0.2-3,0.1-4.3-0.2c-0.4-1.4-0.8-2.7-1.2-4.1c1-0.8,1.3-1.4,2.6-1.9c-0.2-0.7-0.3-1.4-0.5-2.2c-1.3-0.2-2.6-0.3-3.8-0.5 c-0.4-1.4-0.8-2.7-1.2-4.1c0.6-0.6,1.3-1.3,1.9-1.9c-0.6-1.1-1.3-2.2-1.9-3.4c-1.1,0.3-1.7,0.1-2.6-0.2c-0.6-1.2-1.1-2-1.2-3.8 c0.5-0.6,1-1.1,1.4-1.7c-0.5-0.9-1-1.8-1.4-2.6c-2.2,0.1-3-0.4-3.6-1.9c-0.2-0.8-0.3-1.6-0.5-2.4c0.4-0.5,0.8-1,1.2-1.4 c-0.4-0.8-0.8-1.6-1.2-2.4c-2,0-2.5-0.4-3.1-1.7c-0.2-0.8-0.5-1.6-0.7-2.4c0.4-0.5,0.8-1,1.2-1.4c-0.3-0.7-0.6-1.4-1-2.2 c-1.6-0.5-3.3-0.7-4.3-1.7c-1.3-2.6-2.6-5.3-3.8-7.9c-2.5-3.9-8.9-4.5-8.6-10.3c3.2-5.2,8.5-2.5,12.5-5.5 c0.4-1.3,0.8-2.6,1.2-3.8C258.8,216.7,260.6,210.3,264.2,207.1z"},
+            {"name":"cerebellum", "d":"M605.5,189.1c0,0,0.6,9.9,10.8,14.6 c9.2,7,21.8,14.2,35.3,11.6c4.4-0.8,6.3-3.5,10.3-4.9c10.8-0.5,25.6-9.8,28.6-18.5c5.1-5.6,9.7-9.2,10.6-14.2 c-3.1-28.9-15.3-37.9-15.3-37.9s-25.7,26.7-52.8,29.5C622.8,182.3,605.5,189.1,605.5,189.1z"},
+            {"name":"brainstem", "d":"M699.4,230.6l-41.8-17.5c0,0-15.1,8.2-38.9-9.1 c-11.5-5.6-14.2-15.6-14.2-15.6l-4.1,0.2l-3.4,2.6c0,0-18.5,20.1,43.9,39.1c17,6.6,46.1,11.8,46.1,11.8L699.4,230.6z"},
+            {"name":"temporal_lobe", "d":"M543.1,161.5c-2.5-12.2-0.2-19.9,8.9-25.7 c9.1-5.8,18.3-8,27.8-12.7c12-6,17.5-0.7,29.3-9.4c35.6-26.1,38.9,33.1,38.9,33.1s-5.5,21.1-14.2,21.1c-8.6,0.1-6.1,15.3-29,20.4 c-14.7,3.2-0.7,14.2-35.8,5C560.1,191.1,544.1,166.2,543.1,161.5z"},
+            {"name":"frontal_lobe", "d":"M571.7,128.2c0,0-8.6-0.9-15.1,3.4 c-10,6.6-15.1,13.7-15.1,13.7s-31.6-5.8-53.8-3.6c-12.4-1.4-14.9-25-14.4-28.3c1-7.6,2-17,11.5-19.9c-1.3-6.1,10-12.6,18.7-18.2 c5.3-3.4,8.1-7.6,11.3-8.2c8.4-1.5,39.2-7.8,45.8-7c12.7,1.6-2.3,9.5,4.1,9.4c3.3-0.1-8.1,8.2-6.2,20.9c0.8,5.8-7.5,7.3-6.2,13.9 c1.3,6.6,4.3,13.7,11.5,13.7S571.7,128.2,571.7,128.2z"}
+        ];
+
+        var tg_organs_coordinates = [
+            //{"name":"Outline", "d":"M1213.6,734.5c-58.5-58-67.4-120.6-68-151 c-0.7-33.5-1.2-78.1-4-109c0.1,20.1,0.8,37.7-1,95c-1.9,60.6-2.2,131.6,25,176c11,16.7,29,41.3,40,58c6.4,9,16.9,20,20,32 c2.4,9.6-4.4,72.9-7,89c1.3,31.3-3.3,71-2.8,102.4c-10,9.1-20,20.7-36,29.5c-6.4,3.5-12.7,12.5-20.4,14c-8,1.5-17.4-4.6-26.8-6.9 c-0.5-0.3-18.6,5.9-25-11c-17.8-3.6-12.5-19.7-13-20c-1.5-6.5,14.3-13.3,22-22c7.4-8.4,6.6-18.6,13-20c5.3-3.7,25.4,0.3,29-5 c13.2-19.6-0.7-45.4-1-68c-0.9-73.4-58.9-134.5-96-179c7.3,8.8-49.1-44.5-79-115c-13.3-31.2-16.2-62.2-24-96 c-0.3,0-33.7,19-34,19c-19.1,6.3-30.5,0.5-38-16c2.6-8.2,5.8-12.7,9-20c-9-15.3-79.8,3.2-95,9c-37.9,14.4-72.7,26.3-107,43 c-27,13.2-70.1,33.4-61,28c-56.6,33.8-94.5,22.6-103,25c1.3,21.5-18.3,50.9-21,68c-0.3,55,3.3,86,3,141c1.3,21.8,17.1,56.8,12,72 c-2.1,6.4-13.1,15.1-17,30c-4.7,18.2-2.9,43.7-12,64c-5.9,13.1-22.1,10.8-27,16c-12.1,12.8-11.4,17.5-25,16 c-10.7-1.2-20.1,7.8-30.4-5.2c-15.2-1.8-22.9-23.4-12.6-28.8c10.3-5.4,19.1-21,28-29c9.2-8.3,22.2-8.8,28-21 c10.1-21.2,4.5-11.6,5-43c0.8-46.2-16.1-89.2-24-147c-7.9-58.2-0.4-87.7-24-115c-35.4-41-55-69-55-69s-16.1-36.7-28-61 c-21.2-43.3-18.5-67.6-25-102c0-0.7,0-1.3,0-2c-5.1-18.9-21.3-36.8-30-53c-6-14.7-12-29.3-18-44c-14.5-22.3-40.7-59.3-68.9-65.1 c-24.1-5-73.3,5.6-75.1-12.2c-8,1.7-14.2,5.7-30.2,2.2C72,223,20.9,158.9,43.9,141.4c7.4-4,65.9-35.9,80.4-43.9 c0.8-9.1,7.5-16.1,11.3-23c21-6.4,40-16.1,58-25c-0.6,0.3,63.9-46.6,122,35c16.8,23.6,43,41.3,60,65c12.2,17,39.4,58.9,52,72 c23.1,24.1,48,31,48,31s77.1,27,181,23c29.7-5,62.3-9,92-14c82.4-10.6,133.6-10.6,153-12c36.8,2.4,81.1,0.3,113,11 c32.4,10.9,67.3,24.4,95,43c21.2,14.2,38.4,31.6,51,54c34.8,61.9,4.5,144.3,15,252c1.6,16,9.7,32.5,16,49 c19.8,51.5,54.2,92.2,103,114C1317.6,791.7,1270.1,790.6,1213.6,734.5z"},
+            {"name":"Brain", "d":"M228.2,74.4c6.8-0.1,24.3,2.5,28.1,5.8 c0.6,1,1.3,2.1,1.9,3.1c2.7,2.1,5.9,3.2,7.7,6.2c1.1,1.8,1.9,5.2,2.4,7c0.7,2.7-1.1,5.3-0.5,6.5c1.1,1.7,4,2.4,5,4.1 c0.9,1.4,4.2,8.7,4.3,9.8c0.3,2.3-1.7,4.4-2.6,6c-4.4,7.5-6.4,9-14.4,12.7c0.1,0.2,0.2,0.3,0.2,0.5c4.2,1.2,8.5,2.4,12.7,3.6 c-1.2,2.1-2.4,4.2-3.6,6.2c-9.9,0.2-24.6-3-31-6.5c-3-1.7-7.7-4.9-5.8-9.1c-1.7,1.5-3.7,2-6.7,1.7c-12.2-1.4-10.8-5.6-16.8-12 c-4.6,0.2-9.1,0.5-13.7,0.7c-7.3,1.5-18.4,7.8-25.2,3.6c-0.1-0.6-0.2-1.1-0.2-1.7c2.9-5.8,7.8-5.7,13-9.1 c-6.3-2.6-9.4-12.7-4.8-19.2c8.8-12.6,14.2-15.1,31.2-19.4C215.2,73.4,223.8,76.5,228.2,74.4z"},
+            {"name":"Lings", "d":"M628.1,340.6c3.6,11.1-11.1,49.5-12,52.3 c-16.7,41.8-35.9,98.5-56.2,118.3c-8.9,16-8.9,23.6-22.6,31.4c-19.5,15.1-84.1-14.5-128.4-31.2c-15.7-8-29-19.8-43.7-29 c-8.4-4.9-15.6-12.4-26.9-13.7c-13.6-6-16.6-17.8-11.3-28.6c2.8-5.8,10.9-7.7,16.3-11c1.8-1.1,52.3-41.2,80.4-54.2 c23.2-10.8,53.8-17.7,81.6-23.3c18.7-3.7,39.2-1.1,59-3.8C591.9,348,613.8,335.7,628.1,340.6z"},
+            {"name":"Liver", "d":"M599,349.4c27.2-0.1,36.1,16.7,45.6,34.6 c8.7,16.4,17.2,32.1,21.4,53.3c4,20.6-6.2,47.6-10.3,63.8c-1.9,7.7-1.7,15.8-4.1,22.8c-6.7,19.9-20.1,27.8-42.5,32.4 c-3.4,0.7-19.4,1.9-23.5,0.7c-13-3.7-26.7-3.4-37.2-8.9c-22.6-11.7-37.5-47.2-44.4-74.9c-3.3-13.1-2.7-31.3,1.9-42.2 c4.2-9.8,10.9-16.8,16.8-24.7c15.6-20.7,34-39.8,58.3-51.6c3.8-1.4,7.5-2.9,11.3-4.3C594.6,350.1,596.8,349.8,599,349.4z"},
+            {"name":"Spleen", "d":"M661.2,339.4c5.2,1.1,11.8,0.9,16.3,3.8 c5.1,3.3,9.3,8.3,13,13c9.5,12.1,20.4,21.8,25,39.1c2.2,8.6,1.7,21.1,1,27.8c-1.2,10.4,2.6,19.3,0.5,29 c-3.6,16.6-19.8,25.6-37.7,27.8c-7.5,1-20.1,2.2-27.6-0.2c-16.9-5.6-27.5-21.4-36-35.5c-5.2-8.6-13-21.9-9.4-36.5 c5.8-23.5,24.2-52.7,41.8-64.3C651.9,340.8,656.7,341.2,661.2,339.4z"},
+            {"name":"Kidney", "d":"M705.6,328.1c19.2-0.4,36.1,6.5,48,14.2 c6,3.9,12.1,6.9,12.7,15.4c0.7,9.1-7.5,13-12.2,17c-8.2,6.9-16.8,13.8-28.8,16.8c-7.9,2-17,1-25.7,2.4c-7.3,1.2-16.8,2.9-23.8,0 c-9.9-4.1-22.9-25.2-14.6-38.9c6.6-10.8,21.3-19.5,33.6-24.5C698.4,329.7,702,328.9,705.6,328.1z"},
+            {"name":"Stomach", "d":"M626.6,339.4c41.1,4.1,47.7,21,61,54.7 c4.6,11.8,11.7,28.5,8.6,44.6c-2.8,15-8.6,27.7-13.4,40.6c-5.9,15.5-12.6,31.6-25.4,40.1c-13.3,8.7-26.5,2.4-36.7-4.6 c-18.4-12.5-28.1-31.8-33.1-57.8c-1.6-8.3,0.4-17.9-1.2-26.4c-1.1,0.1-2.2,0.2-3.4,0.2c1.3-8,2.6-16,3.8-24 c1.1-0.2,1.6-0.3,2.2-1.2c1.1-5.3,2.2-10.6,3.4-15.8c5.4-14.6,10.9-29.1,16.3-43.7C611.9,342.3,622.7,341.3,626.6,339.4z"},
+            {"name":"Bladder", "d":"M1001.5,380.2c4.4,1.9,18.7,7.9,15.4,14.9 c-2.5,5.1-20.6,11.7-26.6,14.4c-27.3,12.2-77.5,38.7-102.5,5c-17.6-23.7,8.7-40,27.4-45.6C909.8,369.9,946,355.8,1001.5,380.2z"},
+            {"name":"Aorta", "d":"M253.4,643.4c0,0-18.1,2.8-33.1-19 c-9.1-13.2-7.6-21.5-8.4-28.1c-0.8-6.6-3-11.2-9.8-15.8c-6.8-4.7-17-7.9-17-7.9s-1.5-13.7,3.1-13.7c4.6,0,20.9,9.1,25,8.4 c4.1-0.7,1.4-5.3-3.6-7.9c-5-2.6-12.7-5.3-12.7-5.3s1.5-11.1,7.9-11c6.4,0.1,19.7,13.7,25.7,14.4c6,0.7,31.7-15.6,39.1-16.8 s12.3,14.9,13,19c0.7,4-17.5,9-23.5,15.4c-6,6.3-18.1,23-13.9,29.8c9.5,15.6,26.6,12.6,27.6,20.9 C275.5,648.4,253.4,643.4,253.4,643.4z"},
+            {"name":"LA", "d":"M301.6,581.2c18.3,1.4,28.4,26.2,32.6,43 c1,2.6,1.9,5.1,2.9,7.7c-0.1,0-0.2,0-0.2,0c-6-3.1-17.8-14.1-28.3-10.8c-1,2.1-1.2,4.7-2.2,7.2c-2,5.4-14.5,21.4-19.2,24.2 c-2.4,0.6-4.8,1.1-7.2,1.7c-1.9,1.3-3.8,2.6-5.8,3.8c-3.5,1.4-11.4-0.1-13.7-1.9c-5.1-4-5.5-17.1-7.2-25.7 C259.5,615.6,266.3,595.4,301.6,581.2z"},
+            {"name":"RA", "d":"M206.8,588.6c0.5,0.1,1,0.2,1.4,0.2 c1.3,3.6,2.6,7.2,3.8,10.8c0.5,3.6,1,7.2,1.4,10.8c1.1,2.7,2.2,5.4,3.4,8.2c0.9,2.8,2.7,7.7,1.2,11c-1,2.2-3.7,3.8-5.5,5.3 c-2.2,2.3-4.3,4.6-6.5,7c-7.4,4.2-9.8,8.3-12.5,14.2c-0.2-0.1-0.3-0.2-0.5-0.2c-1.8-4.5-9-6.4-11.3-12 c-6-14.4,4.3-44.3,12.2-50.4C197.5,590.8,202.5,590.9,206.8,588.6z"},
+            {"name":"LV", "d":"M259.9,745.4c8.2,4.4,11.9,6.6,20.2,11 c14,8.2,28.9,15.2,45.8,20.4c7.3,2.2,18.2,3.9,25.9,0.7c5.1-2.1,9.6-6.4,11.8-11.5c7.4-17,3.3-62.8-0.7-80.9 c-3.1-14-7.1-27.4-13.7-37.9c-4-6.4-9.4-11.4-13.2-18c-2-3.4-19.8-11.1-24.5-11c-5.1,0.1-8,8.6-11.5,16.1 c-3.5,7.5-7.7,13.9-13.9,17c-11.6,5.8-12,4.6-16.6,6.7C255.2,695.4,266.2,723.9,259.9,745.4z"},
+            {"name":"RV", "d":"M270.2,656.6c-9.8,28-5.9,66.7-6.2,80.4 c-1.7,1.4-0.1,7.2-2.2,7.9c-10-5-18-3.9-31-9.8c-18-10.3-30.4-30.2-36-52.8c-1.4-5.7-3-13.9-1.9-21.1c0.2-2.6,0.5-5.1,0.7-7.7 C204.6,619.9,256.5,633,270.2,656.6z"},
+            {"name":"papillary_muscle", "d":"M342.7,699c0,0-10.3-11.1-19.2-18.7 c-8.1-6.9-15.6-19.6-20.4-19.7c-4.8-0.1,4.5,22,14.4,34.6c9.9,12.5,11,12.6,14.2,16.6c3.2,4,3.9,10.8,0,8.6 c-3.9-2.2-15.7-13-22.1-20.2c-7.5-8.4-16.1-18.2-15.4-8.6c0.8,9.5,7,22.9,12.7,30.5c5.7,7.6,17.6,20.8,21.4,22.3 c3.7,1.5,11.8,4.2,13.4-0.5c1.7-4.7,3.9-11.3,3.6-28.8C345.2,704.6,342.7,699,342.7,699z"}
+        ];
+
+        var tg_muscles_coordinates = [
+            {"name":"biceps_bra", "d":"M416.1,445.7c0,0-3.8,8.5-4.3,24 c-0.5,14.9,1.2,21.6,1.2,21.6s11.1,29.5,34.1,66c19.9,31.6,48.7,64.4,52.1,77.8c2.4,7.9,30.5,32.5,36.5,37 c6.3,4.7-2.4,10.6-2.4,10.6l-24.5-30.2c0,0,8.2,14.8,10.3,22.8c2.1,8-5.5,4.3-5.5,4.3s3-13-18-39.8c-4-5.1-19.8-17.7-33.2-31.4 c-16.2-16.6-23.6-25.6-35-42.1c-10.1-14.5-25.6-41.9-18.5-73.9c-3.9-25.4,1-45.4,1-45.4L416.1,445.7z"},
+            {"name":"triceps", "d":"M513.2,377.9c13.8,0.2,17.1,20,21.4,30.5 c1,2.5,11.8,28.3,14.2,40.3c0.6,6.2,1.3,12.3,1.9,18.5c2.1,8.5,13.4,44,14.4,61c0.5,14.8-1.7,50-1.4,46.8 c5.1,13.7,10,38.2,10.8,43c0.1,2-7.2,13.3-7.2,22.6c-2.3-4.9-15.7-16.3-21.6-17.3c-6.3-1-21.1,4.8-44.6-9.6 c-18.6-11.4-33.9-29.9-47-46.8c-7.1-9.1-15.6-18-20.2-29.5c-1.3-3.3-7.8-39.5-10.3-53.5c0.1,0,0.2,0,0.2,0 c22.3,8.2,43.3,16.2,63.1,26.4c-7.1-9.5-16-17.2-22.3-27.8c-5-8.4-11-25.8-12.5-32.6c-2.1-9.7,7.4-21.1,9.4-24 C475,405.2,492.5,391.2,513.2,377.9z"},
+            {"name":"TALKTOKATE", "d":"M524,541.8c8.7,15.8,17.4,31.5,26.2,47.3 c4.3,7.3,7.9,16.7,13.9,22.3c-8.2-17.6-18-34.7-27.8-50.9C533.2,555.5,528.6,544.9,524,541.8z"},
+            {"name":"_Vastus_lateralis", "d":"M1123.7,403c0,0-5.4,147.5-44.2,217.4 c-8,14.4,20.9,69.4,20.9,69.4l-3.6,5.5c0,0-26.8-52-26.9-62.9c-0.1-10.9-35-140.3-5.5-185.3c29.5-45,37.2-54,37.2-54l9.4,13.7 L1123.7,403z"},
+            {"name":"Biceps_femoris", "d":"M1167.3,357.6c4.3,0.6,14.6,5.6,21.1,28.1 c2.4,8.2,0.8,15.9,3.1,30.5c2.7,44.5-1.4,185.8-1.4,204.7c6,37.4,9.3,74,16.3,110.4c2.8,14.3-7.1,40.1-11.5,51.4 c-2.2,5.6-3.7,13.2-8.2,16.6c-0.1,0-0.2,0-0.2,0c-3.4-7.8-12.5-16-17.8-22.6c-13.7-17.2-30.1-31.9-43-49.9 c-29-40.6-56.9-81.1-75.4-132.5c-1-4-23.1-94.4-25-120.7c0.1,0.3-12.8-22.1-0.5-42.2c16.7-27.4,57.3-54.4,91.4-64.8 C1133.5,361.3,1168.5,357.5,1167.3,357.6z"},
+            {"name":"gastrocnemius", "d":"M1120.7,604.3c16.4-0.2,27.5,8.9,36.7,16.3 c25.5,20.4,36.8,58.6,46.1,95c4.4,17.1,5.3,35.8,13,49c14.6,25.1,32.5,46.6,49.4,69.1c3.5,4.7,8.1,12,4.8,19.9 c-0.7,1.6-1.1,3-2.9,2.6c-2.8-1.2-8.1-14.9-10.1-18.2c-9.3-15.6-18.5-31.4-28.8-46.1c-6-8.6-12.5-16.9-19-25 c-2.8-2.6-5.6-5.1-8.4-7.7c-5.7-5.7-11.1-12.1-15.8-18.7c-14.6-20.4-25.9-42.8-38.9-65c-6.5-12-13-24-19.4-36 C1125.2,627.8,1123,616.1,1120.7,604.3z"},
+            {"name":"Tibialis_cranialis", "d":"M1117.1,688.1c22.4,0,26.6,15.6,33.4,31.2 c6.1,13.4,12.2,26.9,18.2,40.3c21.1,47.7,54.4,90.6,66,117.6c2.7,6.9,1.3,16.7,2.6,24.5c3.9,23.1,5.2,57.5,0.7,81.4 c-0.1,0-0.2,0-0.2,0c-4.4-13.3-6.3-45.8-7.7-98.9c-5.2-17.5-19.5-33.3-29.3-47c-33.8-47.2-98.4-130.4-95.3-126.2 c-2.7-4.7-2.9-13.7,0.2-18C1108.4,689.4,1112.6,689.9,1117.1,688.1z"},
+            {"name":"paravertebrals", "d":"M396.4,267.9c0,0,17.6,83.3,48,100.6 c30.4,17.2,196.3-21.2,249.4-30.5c53.1-9.3,266.5-30.8,292.6-30.7c26.1,0.1,22.3-20,47.8-22.1c25.5-2-69.3-12-132-2.4 c-62.7,9.6-137.1,19.4-185.3,23.8c-48.2,4.4-125.8-7.5-158.4-11.8C488.5,285.6,396.4,267.9,396.4,267.9z"},
+            {"name":"intercostals", "d":"M790,328.6c18.2,0,32.4,30.2,38.4,43.9 c3.5,7.9,7.5,16,10.8,24.5c5,13,7.5,26.8,11,41.3c1.1,4.6,5.8,22.8,4.8,27.4c-1.3,2.6-2.6,5.1-3.8,7.7 c-9.1,15.6-20.6,30.9-37,39.1c2.1-4.4,4.2-8.8,6.2-13.2c2.9-7.3,4.2-15.4,5.8-24.2c2.3-13.1-5.1-33.6-8.2-43.9 c-5.3-17.7-9.1-35.4-15.6-52.1c-6.6-15.5-13.1-31-19.7-46.6C784.7,330.1,787.1,329.9,790,328.6z M779.9,357.1 c6,9.2,7.8,19.1,12.5,30c2.4,5.5,5.4,10.9,7.7,16.8c8,20.6,11.5,45.4,16.1,68.9c3,15.2-2.4,29.7-8.6,37.7 c4.7-4.6-16.5,16.3-18.5,16.6c-0.4-0.5-0.8-1-1.2-1.4c0.9-2.4,0-0.8,2.6-14.6c2.7-13.9,7.6-18.2,0.7-44.6 c-0.4-6.6-1.3-11.4-1.7-18c-2.6-13.2-5.8-30.8-10.3-42.5c-3-13.8-14.4-40.2-20.6-53.5c-1.3-2.8-7.8-10.7-6.5-14.6 C753.2,335.1,757.9,323.4,779.9,357.1z M729,344.9c22.2-4.1,39.7,65.8,42.7,75.1c4.6,18.2,4.8,37.5,7.9,57.4 c0.9,5.6,0.6,39.2-0.7,42.5c-3.4,8.2-10.3,11-17,15.8c-2.5,1.8-4,4-7.2,5.3c-0.6-0.4-1.3-0.8-1.9-1.2c0.3-4.3,2.5-6,3.6-9.1 c0.8-3.9,2.4-19.8,2.4-24.5c0-15.7-1.6-29.5-3.8-42.5c0.2,2.9-4.7-46.3-11.8-70.3c-3.9-13-9.5-22.2-14.4-33.4 C726.5,354.6,725.8,349.7,729,344.9z M697.6,349.2c4.5,0.2,12.9,3,18,10.3c17.9,26,18.5,60.4,19.4,65.3c2.5,11.2,5,22.4,7.4,33.6 c4.8,24.2,2.3,56.7,2.6,47c-0.1,8.8,1.1,24.7-1.7,31.4c-2.8,6.7-9.3,10.4-14.9,14.4c-15.7,11.2-13.2,4.9-13,5.5 c0.1-0.7,6.9-12.3,8.2-19.2c1.2-6.4,0.5-15.4-0.5-21.4c-1.6-9.8-2-30-2.6-33.4c-4.8-25.6-5.9-52.4-11-77 c-3.7-13.4-7.4-26.9-11-40.3c-1.4-4.5-5.8-8.1-4.8-13.9C694.8,350.3,696.1,350.1,697.6,349.2z M668.6,352.6 c13.8,0.6,19.8,28.4,23.5,40.8c5.3,17.8,8.5,37.7,11.8,57.6c0.9,17.1,1.8,34.2,2.6,51.4c-1-8.9,8.5,37.6,3.6,45.4 c-4.3,6.9-10.4,13.4-16.3,17.8c-0.9-0.2-1.8-0.3-2.6-0.5c-1.9-5.3,6.2-31.4,5-38.6c-1.7-10.5-2.3-20.7-4.1-31.7 c-0.6-8.9-1.1-17.8-1.7-26.6c-6.4-35.6-20.9-86.8-19.4-83c-0.9-2.3-9.4-26.8-7.7-29.3C664.3,353.7,666.8,353.8,668.6,352.6z M639.5,358.3c19.9,0.6,30.9,71.8,30.2,67c3.7,17.9,5.9,37.6,9.1,55.9c0.8,13.3,1.6,26.6,2.4,39.8c1.7,10.4,1.7,32.2-0.2,38.6 c-2,6.5-23.2,12.1-28.1,10.6c-4.9-1.6,0.7-10.7,1.4-14.2c2.1-9.5,3.3-23.5,1.4-34.3c-1-11.3-1.9-22.6-2.9-33.8 c-4.9-26.5-5.9-56.1-12.7-81.1c-2.6-10.3-5.3-20.6-7.9-31c-1.3-4.4-4.5-9.4-2.6-14.9C632.1,359.7,636.9,359.8,639.5,358.3z M616,361.4c4.2,0.1,8.4,23.8,8.2,23.3c-0.3-1.6,7.5,26.5,10.3,41.5c0.1-2.8,1.9,28.2,4.8,44.9c0,4.9,1,29.4,1.7,37 c1.2,7.4,1.5,30.2,1.7,33.1c2.4,14.9-0.8,28.6-10.8,32.2c-3,1.1-6.7,0.1-10.3,0.2c-3.1,0.1-6.3,0.7-8.9-0.2 c0.5-6.1,5.3-55.6,4.1-71c-0.6-9.6-1.1-19.2-1.7-28.8c-3.2-19.6-4.4-41.4-7.9-60.7c1.3,26.6-6.1-48.6-8.6-45.1 C600,365.6,613.8,362.9,616,361.4z M581.7,368.6c13.3,0.8,12.1,26.4,14.6,39.1c5.2,26.4,3.3,60.7,7.9,88.1 c0,0.6-0.6,24.6,1.2,35.8c1,6,2.7,14.4,1.4,21.8c-0.1,0.5-10.7,19.1-11.8,19.9c-6.4,4.9-17.4,1.1-21.6-3.4c0-1,4.6-19.2,7.4-31.2 c-0.6-36.9-1.1-73.8-1.7-110.6c-0.7-11.5-3.5-28.2-3.6-38.4c-0.2-13.7-1.2-16.9-1-17.3C575.8,372,580.6,369.1,581.7,368.6z M558.2,373.2c15,0.5,7.9,25.5,9.8,38.6c-0.2,10.2-0.3,20.3-0.5,30.5c0.2,21,0.3,42.1,0.5,63.1c0,14.1,2.6,35.9-1.2,47.8 c-1.3,4.1-7.7,12.2-11.8,13.2c-7,1.7-19.8-9.6-19.4-8.9c-6-0.7,8.6-19.7,8.2-38.2c-0.4-18.5,0.3-36.2,2.9-53 c1.5-30-0.1-88.7,4.1-90.2C548.3,376.9,555.8,374.4,558.2,373.2z M536.3,388.8c4.6,12.7,1.7,31.8-0.5,45.4 c-0.2,7-0.5,13.9-0.7,20.9c-2.9,18.5-0.3,40.6-3.6,58.1c-3.3,17.6,4.9,24.9-8.9,34.1c-1.6,1.1-4,3.2-6.7,2.9 c-4.3-0.5-13.8-8.4-12.5-13.7c1.8-4,3.5-8,5.3-12c3.1-8,4.9-17,6.5-26.2c2-22.9,4-45.8,6-68.6c1.8-11.2-1.9-24.4,1.9-33.6 C529.3,381.2,538.2,390.2,536.3,388.8z M508,408c1.7,0.2,2.3,0.6,2.6,1.9c-0.2,9.4-0.3,18.9-0.5,28.3 c-1.6,26.2-2.6,51.1-7.2,64.1c-4.6,13-1.6,25.6-16.1,22.6c-6.1-1.3-13.9-4.6-11.5-13.4c1.4-5.2,6-7.2,7.7-12.5 c5.2-16.6,9.2-69.4,11.3-74.4C497.4,417,504.2,414.6,508,408z M467,424.1c0.6,0.1,1.3,0.2,1.9,0.2c0.1,0.2,0.2,0.3,0.2,0.5 c2.5,11.4-4.7,29.5-8.2,37.9c-1.7,4.3-2.1,8.8-6.2,10.8c-0.3-0.1-0.6-0.2-1-0.2c-2.4-6.1,2.9-11.8,4.8-16.8 C463.2,444.3,459.2,434.1,467,424.1z M478,447.8c2,0.1,2.1,0.7,1.9,2.9c-0.3,5.3-0.6,10.6-1,15.8c-1.5,9-7,34.2-12.5,37.7 c-4.1,2.7-15.7-3.6-18.2-5.5c-3.1-2.4-6.2-5.2-8.4-8.4c1.3-5.8,7.7-5.6,12.7-7.7c2.2-1.4,4.3-2.9,6.5-4.3 C469.6,470.4,470.7,458.5,478,447.8z"},
+            {"name":"diaphragm", "d":"M806.6,526.6c0,0-117.8,35.5-157.4,1.9 c-24.9-21.1-38-50.2-36.2-85.7c1.7-35.2,27.8-71.7,73.7-86.6s87.6-25,87.6-25s39.5,65.8,45.6,120.7 C824.5,494.5,806.6,526.6,806.6,526.6z"}
+        ];
+
+        var svgViewData = {
+            //"vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
+            "vcn_superficial": {"viewBox": "0 0 1727.9 1439.9", "enablebackground": "new 0 0 1727.9 1439.9"},
+            "vcn_deep": {"viewBox": "0 0 1408.4 1160.9", "enablebackground": "new 0 0 1408.4 1160.9"},
+            "vcn_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
+            "tg_organs": {"viewBox": "0 0 1407.6 1201.7", "enablebackground": "new 0 0 1407.6 1201.7"},
+            "tg_muscles": {"viewBox": "0 0 1447 1179.1", "enablebackground": "new 0 0 1447 1179.1"}
+        };
+
+
+        var imageData = {
+            "vcn_superficial": {"overflow":"visible", "width":"6029", "height":"4913", "source":"svgs/3-2-2016_VECTORS_VCN_SUPERFICIAL_MUSCLES.png",  "transform":"matrix(0.24 0 0 0.24 140.4754 118.9179)"},
+            "vcn_deep": {"overflow":"visible", "width":"6029", "height":"4913", "source":"svgs/3-2-2016_VECTORS_VCN_DEEP_MUSCLES.png",  "transform":"matrix(0.24 0 0 0.24 -18.913 9.9981)"},
+            "vcn_organs": {"overflow":"visible", "width":"5865", "height":"5007", "source":"svgs/3-2-2016_REV_VECTORS_VCN_ORGANS.png",  "transform":"matrix(0.24 0 0 0.24 0 0)"},
+            "tg_organs": {"overflow":"visible", "width":"5865", "height":"5007", "source":"svgs/3-7-2016_REV_VECTORS_TG_ORGANS.png",  "transform":"matrix(0.24 0 0 0.24 0 0)"},
+            "tg_muscles": {"overflow":"visible", "width":"6029", "height":"4913", "source":"svgs/3-2-2016_VECTORS_TG_MUSCLES.png",  "transform":"matrix(0.24 0 0 0.24 -1.9381 -1.208173e-03)"}
+        };
+
+        var svg =  d3.select("body")
+                .append("svg")
+                .attr("x", "0px")
+                .attr("y", "0px")
+                .attr("viewBox", function() {
+                    return svgViewData[dogType]["viewBox"];
+                })
+                .attr("enable-background", function() {
+                    return svgViewData[dogType]["enablebackground"];
+                })
+                .attr("xml:space", "preserve")
+                .attr("class", function() {
+                    return windowNumber+' '+svgPortClass;
+                });
+        var image = svg.append("image")
+                .attr("overflow","visible")
+                .attr("width",function() {
+                    return imageData[dogType]["width"];
+                })
+                .attr("height", function() {
+                    return imageData[dogType]["height"];
+                })
+                .attr("xlink:href", function() {
+                    return imageData[dogType]["source"];
+                })
+                .attr("transform", function() {
+                    return imageData[dogType]["transform"];
+                });
+        var group = svg.append("g").attr("id", function() {
+            return groupid[dogType];
+        });
+
+        var paths = group.selectAll("path")
+                .data(function() {
+                    if (dogType === "vcn_superficial") {
+                        return vcn_superficial_coordinates;
+                    }
+                    else if (dogType === "vcn_deep") {
+                        return vcn_deep_coordinates;
+                    }
+                    else if (dogType === "vcn_organs") {
+                        return vcn_organs_coordinates;
+                    }
+                    else if (dogType === "tg_organs") {
+                        return tg_organs_coordinates;
+                    }
+                    else if (dogType === "tg_muscles") {
+                        return tg_muscles_coordinates;
+                    }
+                    else {
+                        alert("NO DATA");
+                    }
+                })
+                .enter()
+                .append("path")
+                .attr("d", function(d) {
+                    return d.d;
+                })
+                .attr("id", function(d) {
+                    return d.name;
+                })
+                .attr("class", dogNumber)
+                .attr("fill", "none");
+    }
+
+
+
+    function organizeIntoTable() {
+        $(".window_0").detach().appendTo('.LD1');
+        $(".window_1").detach().appendTo('.MD1');
+        $(".window_2").detach().appendTo('.HD1');
+        $(".window_3").detach().appendTo('.LD2');
+        $(".window_4").detach().appendTo('.MD2');
+        $(".window_5").detach().appendTo('.HD2');
+        $(".window_6").detach().appendTo('.LD3');
+        $(".window_7").detach().appendTo('.MD3');
+        $(".window_8").detach().appendTo('.HD3');
+    }
+
+    function organizeIntoTableTransGene() {
+        $(".window_9").detach().appendTo('.TGLD1');
+        $(".window_10").detach().appendTo('.TGMD1');
+        $(".window_11").detach().appendTo('.TGHD1');
+        $(".window_12").detach().appendTo('.TGLD2');
+        $(".window_13").detach().appendTo('.TGMD2');
+        $(".window_14").detach().appendTo('.TGHD2');
+    }
+
+    /// Adding the color scale
+    var colorbarport = d3.select("body").append("svg")
+            .attr("id", "colorbarport")
+            .attr("width","100%");
+    var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
+    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
+    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
+    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
+    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+//    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
+    var colorbar = colorbarport.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", "30")
+            .attr("width", "100%")
+            .attr("id", "colorbar");
+
+    var outlierBar = d3.select("body").append("svg")
+            .attr("id", "outlierBar")
+            .attr("width","25%")
+            .attr("height","5%");
+
+    var outlierSquare = outlierBar.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", "30")
+            .attr("width", "100%")
+            .attr("id", "outlierBar")
+            .style("fill", "#00441b");
+
+
+</script>
+
+
+</body>
+</html>

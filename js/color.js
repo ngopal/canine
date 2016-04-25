@@ -31,7 +31,8 @@ function getTransgeneScale(max){
         //.range(colorbrewer.Greens[9].slice(9-max,10));
         //.range(colorbrewer.Greens[max]);
         //.range(["#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45"])
-        .range(["#a1d99b", "#74c476", "#41ab5d", "#238b45"])
+        .range(["#a1d99b", "#74c476", "#41ab5d", "#238b45"]);
+        //.range(["#74c476", "#41ab5d", "#238b45", "#006d2c"])
 }
 
 function getVectorScale(max){
@@ -50,4 +51,13 @@ function getRedFiveStepScale(){
     return d3.scale.quantize()
         .domain([0,1])
         .range(red2);
+}
+
+function getTransgeneScalePurple(max){
+    return d3.scale.linear()
+        .domain(d3.range(0,max))
+        //.range(colorbrewer.Greens[9].slice(9-max,10));
+        //.range(colorbrewer.Greens[max]);
+        //.range(["#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45"])
+        .range(["#bcbddc", "#9e9ac8", "#807dba", "#6a51a3"])
 }
