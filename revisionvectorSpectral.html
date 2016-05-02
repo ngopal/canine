@@ -272,7 +272,15 @@
                     .map(function(d) { return highdosestats.averages[d];}));
             var topendofcolorscale = 4; //was happy with 7
 //            console.log(Object.keys(highdosestats.averages).map(function(k) {return highdosestats.averages[k]}));
-            scaleChoice = getVectorScale(topendofcolorscale);
+
+            function getVectorScaleSpectral(){
+                return d3.scale.quantize()
+                        .domain([0,4])
+                        .range(colorbrewer.Spectral[9].reverse());
+            }
+
+            scaleChoice = getVectorScaleSpectral();
+
             var nodosestats = calculateSummaryStatsByPart(vdata, nodose_dog_names);
             var summarystats = calculateSummaryStatsByPart(vdata, dog_names);
             var fill_order = [lowdosestats, middosestats, highdosestats,
@@ -393,14 +401,21 @@
                     var svgPart = this.id;
                     if (vectorBioDistToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[vectorBioDistToSVGPart[svgPart]];
-                        if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
+//                        return scaleChoice(value);
+                        if (value <= scaleChoice.domain()[1]) {
                             return scaleChoice(value);
                         }
                         else {
-//                            return "#333333";
                             return "#67000d";
-//                            return scaleChoice.range()[scaleChoice.range().length-1];
                         }
+//                        if (value > scaleChoice.domain()[0] & value < scaleChoice.domain()[scaleChoice.domain().length-1]) {
+//                            return scaleChoice(value);
+//                        }
+//                        else {
+////                            return "#333333";
+//                            return "#67000d";
+////                            return scaleChoice.range()[scaleChoice.range().length-1];
+//                        }
                     }
                     else {
                         return "#333333";
@@ -644,35 +659,56 @@
 
 
     /// Adding the color scale
-    var colorbarport = d3.select("body").append("svg")
-            .attr("id", "colorbarport")
-            .attr("height","5%")
-            .attr("width","100%");
-    var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
-    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
-    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
-    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
-    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
-//    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
-    var colorbar = colorbarport.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("height", "30")
-            .attr("width", "100%")
-            .attr("id", "colorbar");
+//    var colorbarport = d3.select("body").append("svg")
+//            .attr("id", "colorbarport")
+//            .attr("height","5%")
+//            .attr("width","100%");
+//    var lineargrad = colorbarport.append("linearGradient").attr("id", "Gradient1");
+//    lineargrad.append("stop").attr("class", "stop1").attr("offset", "25%");
+//    lineargrad.append("stop").attr("class", "stop2").attr("offset", "50%");
+//    lineargrad.append("stop").attr("class", "stop3").attr("offset", "75%");
+//    lineargrad.append("stop").attr("class", "stop4").attr("offset", "100%");
+////    lineargrad.append("stop").attr("class", "stop5").attr("offset", "100%");
+//    var colorbar = colorbarport.append("rect")
+//            .attr("x", 0)
+//            .attr("y", 0)
+//            .attr("height", "30")
+//            .attr("width", "100%")
+//            .attr("id", "colorbar");
+
+    var spectralColors = ["#3288bd", "#66c2a5", "#abdda4", "#e6f598", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d53e4f", "#67000d"];
+    var numberRanges = ["0.00 - 0.44", "0.45 - 0.88", "0.89 - 1.32",
+        "1.33 - 1.76", "1.77 - 2.20", "2.21 - 2.64",
+        "2.65 - 3.08", "3.09 - 3.52", "3.54 - 3.96", " >= 3.97"];
 
     var outlierBar = d3.select("body").append("svg")
             .attr("id", "outlierBar")
             .attr("width","25%")
-            .attr("height","5%");
+            .attr("height","400");
 
-    var outlierSquare = outlierBar.append("rect")
+    var outlierSquare = outlierBar.selectAll("rect")
+            .data(spectralColors)
+            .enter()
+            .append("rect")
             .attr("x", 0)
-            .attr("y", 0)
+            .attr("y", function(d,i) {
+                return i*40;
+            })
             .attr("height", "30")
-            .attr("width", "100%")
-            .attr("id", "outlierBar")
-            .style("fill", "#67000d");
+            .attr("width", "50%")
+            .style("fill", function(d) {
+                return d;
+            });
+
+    var outlierText = outlierBar.selectAll("text")
+            .data(numberRanges)
+            .enter()
+            .append("text")
+            .attr("x", 120)
+            .attr("y", function(d,i) {
+                return i*40 + 20;
+            })
+            .text(function(d) { return d;});
 
 
 

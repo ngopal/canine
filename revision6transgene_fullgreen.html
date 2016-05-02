@@ -428,7 +428,13 @@
                     var svgPart = this.id;
                     if (anatomyToSVGPart[svgPart] !== undefined) {
                         var value = avgObj[anatomyToSVGPart[svgPart]];
-                        return scaleChoice(value);
+//                        return scaleChoice(value);
+                        if (value <= scaleChoice.domain()[1]) {
+                            return scaleChoice(value);
+                        }
+                        else {
+                            return "#67000d";
+                        }
 //                        if (value > 0 & value < 3) {
 //                            return scaleChoice(value);
 //                        }
@@ -682,10 +688,10 @@
 //            .attr("width", "100%")
 //            .attr("id", "colorbar");
 
-    var spectralColors = ["#3288bd", "#66c2a5", "#abdda4", "#e6f598", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d53e4f"];
+    var spectralColors = ["#3288bd", "#66c2a5", "#abdda4", "#e6f598", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d53e4f", "#67000d"];
     var numberRanges = ["0.00 - 0.33", "0.34 - 0.66", "0.67 - 0.99",
                         "1.00 - 1.33", "1.34 - 1.66", "1.67 - 1.99",
-                        "2.00 - 2.33", "2.34 - 2.66", "2.67 - 2.99"];
+                        "2.00 - 2.33", "2.34 - 2.66", "2.67 - 2.99", " >= 3.0"];
 
     var outlierBar = d3.select("body").append("svg")
             .attr("id", "outlierBar")
