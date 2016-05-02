@@ -19,3 +19,18 @@ boxplot.stats(highdosestats_averages_vector)$stats
 plot(highdosestats_averages_vector[order(highdosestats_averages_vector)])
 
 #both seem linear until 4, then higher values.
+
+# Trying with Medians Now
+lowdose_medians_tg = c(0.003075533, 0.03257428, 0.081, 0.068847935, 0.03026593, 0.1034675, 0.0368221, 0.06190365, 0.02581979, 0.124584, 0.6213191, 0.2567377, 0.3191931, 0.2161231, 0.4499772, 0.2904873, 0.0034901050000000003, 0.2881442, 0.47251944999999995, 0.08333361, 0.012957484500000001)
+middose_medians_tg = c(0.5107814, 0.2409603, 0.6327748, 0.4371227, 0.1707618, 0.3637295, 0.2503069, 0.08029448, 0.20835755, 1.090892, 1.638679, 2.995993, 2.90886, 0.5508192, 0.06959362, 0.2073134, 0.024466315, 0.2497955, 0.4008127, 0.2435437, 0.09686715)
+higdose_medians_tg = c(1.439661, 1.194788, 1.610182, 1.02102, 0.1831229, 1.645691, 1.597524, 1.034663, 2.392086, 3.468092, 1.882847, 3.128663, 3.634292, 2.014283, 0.2483875, 0.3058072, 0.1503816, 0.976489, 0.04047742, 0.2309242, 0.08056907)
+summary(lowdose_medians_tg)
+summary(middose_medians_tg)
+summary(higdose_medians_tg)
+boxplot(lowdose_medians_tg)
+boxplot(middose_medians_tg)
+boxplot(higdose_medians_tg)
+boxplot.stats(higdose_medians_tg)$stats
+plot(higdose_medians_tg[order(higdose_medians_tg)])
+
+
