@@ -695,7 +695,7 @@
 
     var outlierBar = d3.select("body").append("svg")
             .attr("id", "outlierBar")
-            .attr("width","25%")
+            .attr("width","50%")
             .attr("height","400");
 
     var outlierSquare = outlierBar.selectAll("rect")
@@ -707,7 +707,7 @@
                 return i*40;
             })
             .attr("height", "30")
-            .attr("width", "50%")
+            .attr("width", "25%")
             .style("fill", function(d) {
                 return d;
             });
