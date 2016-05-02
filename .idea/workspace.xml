@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rExploration.r" afterPath="$PROJECT_DIR$/rExploration.r" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revision6transgene_fullgreen.html" afterPath="$PROJECT_DIR$/revision6transgene_fullgreen.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revisionvectorSpectral.html" afterPath="$PROJECT_DIR$/revisionvectorSpectral.html" />
     </list>
@@ -36,21 +34,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="revisionvectorSpectral.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="revisionvectorSpectral.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/revisionvectorSpectral.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.26087">
-              <caret line="678" column="133" selection-start-line="678" selection-start-column="127" selection-end-line="678" selection-end-column="133" />
+            <state vertical-scroll-proportion="0.2589438">
+              <caret line="425" column="4" selection-start-line="425" selection-start-column="4" selection-end-line="425" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="revision6transgene_fullgreen.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="revision6transgene_fullgreen.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/revision6transgene_fullgreen.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.05451448">
-              <caret line="693" column="71" selection-start-line="693" selection-start-column="71" selection-end-line="693" selection-end-column="71" />
+            <state vertical-scroll-proportion="-3.9">
+              <caret line="283" column="56" selection-start-line="283" selection-start-column="33" selection-end-line="283" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -113,8 +111,8 @@
         <option value="$PROJECT_DIR$/revision6transgene.html" />
         <option value="$PROJECT_DIR$/revision5vector.html" />
         <option value="$PROJECT_DIR$/js/color.js" />
-        <option value="$PROJECT_DIR$/revisionvectorSpectral.html" />
         <option value="$PROJECT_DIR$/revision6transgene_fullgreen.html" />
+        <option value="$PROJECT_DIR$/revisionvectorSpectral.html" />
       </list>
     </option>
   </component>
@@ -657,18 +655,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/revisionvectorSpectral.html">
+    <entry file="file://$PROJECT_DIR$/revision6transgene_fullgreen.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.26087">
-          <caret line="678" column="133" selection-start-line="678" selection-start-column="127" selection-end-line="678" selection-end-column="133" />
+        <state vertical-scroll-proportion="-3.9">
+          <caret line="283" column="56" selection-start-line="283" selection-start-column="33" selection-end-line="283" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/revision6transgene_fullgreen.html">
+    <entry file="file://$PROJECT_DIR$/revisionvectorSpectral.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05451448">
-          <caret line="693" column="71" selection-start-line="693" selection-start-column="71" selection-end-line="693" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.2589438">
+          <caret line="425" column="4" selection-start-line="425" selection-start-column="4" selection-end-line="425" selection-end-column="4" />
           <folding />
         </state>
       </provider>
