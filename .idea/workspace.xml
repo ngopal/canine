@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38205c72-f3f9-4759-97d1-6b86cbd813ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/revision6transgene_fullgreen.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/revisionvectorSpectral.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/color.js" afterPath="$PROJECT_DIR$/js/color.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rExploration.r" afterPath="$PROJECT_DIR$/rExploration.r" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revision5vector.html" afterPath="$PROJECT_DIR$/revision5vector.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/revision6transgene_fullgreen.html" afterPath="$PROJECT_DIR$/revision6transgene_fullgreen.html" />
     </list>
     <ignored path="canine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,11 +30,19 @@
       <file leaf-file-name="color.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/color.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.925926">
-              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="76" selection-end-column="1" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="63" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="revisionvectorSpectral.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/revisionvectorSpectral.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-22.826086">
+              <caret line="272" column="38" selection-start-line="272" selection-start-column="38" selection-end-line="272" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,8 +50,8 @@
       <file leaf-file-name="revision6transgene_fullgreen.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/revision6transgene_fullgreen.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56558776">
-              <caret line="684" column="0" selection-start-line="684" selection-start-column="2" selection-end-line="695" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.33560476">
+              <caret line="663" column="0" selection-start-line="663" selection-start-column="2" selection-end-line="682" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -56,7 +65,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/js/mouseover.js" />
         <option value="$PROJECT_DIR$/node_modules/jquery.tipsy/src/jquery.tipsy.css" />
         <option value="$PROJECT_DIR$/svgs/VECTORS_ORGANS.svg" />
         <option value="$PROJECT_DIR$/index.html" />
@@ -99,13 +107,14 @@
         <option value="$PROJECT_DIR$/colorScale4.html" />
         <option value="$PROJECT_DIR$/revision4transgene.html" />
         <option value="$PROJECT_DIR$/revision4vector.html" />
-        <option value="$PROJECT_DIR$/revision5vector.html" />
         <option value="$PROJECT_DIR$/methods.txt" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/revision5transgene.html" />
         <option value="$PROJECT_DIR$/revision6transgene_purple.html" />
         <option value="$PROJECT_DIR$/revision6transgene.html" />
+        <option value="$PROJECT_DIR$/revision5vector.html" />
         <option value="$PROJECT_DIR$/js/color.js" />
+        <option value="$PROJECT_DIR$/revisionvectorSpectral.html" />
         <option value="$PROJECT_DIR$/revision6transgene_fullgreen.html" />
       </list>
     </option>
@@ -288,13 +297,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/all_dogs_vector_leftmean.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.869565">
-          <caret line="229" column="52" selection-start-line="229" selection-start-column="52" selection-end-line="229" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/all_dogs_vector_rightmean.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.478261">
@@ -616,14 +618,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/revision5vector.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.65217394">
-          <caret line="272" column="38" selection-start-line="272" selection-start-column="38" selection-end-line="272" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/revision6transgene_purple.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3664495">
@@ -648,20 +642,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/revision5vector.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65217394">
+          <caret line="272" column="58" selection-start-line="272" selection-start-column="58" selection-end-line="272" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/color.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.925926">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="76" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="63" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/revisionvectorSpectral.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.826086">
+          <caret line="272" column="38" selection-start-line="272" selection-start-column="38" selection-end-line="272" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/revision6transgene_fullgreen.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56558776">
-          <caret line="684" column="0" selection-start-line="684" selection-start-column="2" selection-end-line="695" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.33560476">
+          <caret line="663" column="0" selection-start-line="663" selection-start-column="2" selection-end-line="682" selection-end-column="38" />
           <folding />
         </state>
       </provider>
